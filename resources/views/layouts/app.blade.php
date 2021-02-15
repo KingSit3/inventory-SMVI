@@ -52,7 +52,7 @@
                     </a>
                 </div>
                 <div class="mt-1 mr-3 group">
-                    <a href="#">
+                    <a href="/users">
                     <div class="w-full pl-1 py-2 group-hover:bg-indigo-800 rounded duration-150">
                         <div class="flex">
                             <svg class="group-hover:text-white duration-150 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -64,7 +64,7 @@
                     </a>
                 </div>
                 <div class="mt-1 mr-3 group">
-                    <a href="#">
+                    <a href="/perangkat">
                     <div class="w-full pl-1 py-2 group-hover:bg-indigo-800 rounded duration-150">
                         <div class="flex">
                             <svg class="group-hover:text-white duration-150 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -76,7 +76,7 @@
                     </a>
                 </div>
                 <div class="mt-1 mr-3 group">
-                    <a href="#">
+                    <a href="/tipe">
                     <div class="w-full pl-1 py-2 group-hover:bg-indigo-800 rounded duration-150">
                         <div class="flex">
                             <svg class="group-hover:text-white duration-150 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -88,7 +88,7 @@
                     </a>
                 </div>
                 <div class="mt-1 mr-3 group">
-                    <a href="#">
+                    <a href="/witel">
                     <div class="w-full pl-1 py-2 group-hover:bg-indigo-800 rounded duration-150">
                         <div class="flex">
                             <svg class="group-hover:text-white duration-150 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -100,7 +100,7 @@
                     </a>
                 </div>
                 <div class="mt-1 mr-3 group">
-                    <a href="#">
+                    <a href="/image">
                     <div class="w-full pl-1 py-2 group-hover:bg-indigo-800 rounded duration-150">
                         <div class="flex">
                             <svg class="group-hover:text-white duration-150 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -112,7 +112,7 @@
                     </a>
                 </div>
                 <div class="mt-1 mr-3 group">
-                    <a href="#">
+                    <a href="/do">
                     <div class="w-full pl-1 py-2 group-hover:bg-indigo-800 rounded duration-150">
                         <div class="flex">
                             <svg class="group-hover:text-white duration-150 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
