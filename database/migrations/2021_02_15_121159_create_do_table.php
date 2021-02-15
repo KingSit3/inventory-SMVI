@@ -16,6 +16,7 @@ class CreateDoTable extends Migration
         Schema::create('do', function (Blueprint $table) {
             $table->id();
             $table->string('no_do');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
