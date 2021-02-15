@@ -22,7 +22,7 @@ class CreatePerangkatTable extends Migration
             $table->bigInteger('nik_user');
             $table->bigInteger('id_image');
             $table->bigInteger('id_witel');
-            $table->bigInteger('id_do');
+            $table->bigInteger('id_do')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
