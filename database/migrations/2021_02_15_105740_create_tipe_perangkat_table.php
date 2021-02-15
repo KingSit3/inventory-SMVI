@@ -18,7 +18,7 @@ class CreateTipePerangkatTable extends Migration
             $table->string('nama_perangkat');
             $table->string('tipe_perangkat');
             $table->string('kode_perangkat');
-            $table->softDeletes('deleted_at');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

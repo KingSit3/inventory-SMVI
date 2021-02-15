@@ -19,9 +19,7 @@ class CreateWitelTable extends Migration
             $table->string('kode_witel');
             $table->string('regional');
             $table->string('alamat_witel');
-            $table->string('pic');
-            $table->string('kode_pic');
-            $table->string('no_telp_pic');
+            $table->string('nik_pic');
             $table->softDeletes();
             $table->timestamps();
         });

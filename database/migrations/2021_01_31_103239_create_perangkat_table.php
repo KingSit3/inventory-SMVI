@@ -16,7 +16,6 @@ class CreatePerangkatTable extends Migration
         Schema::create('perangkat', function (Blueprint $table) {
             $table->id();
             $table->string('serial_number')->unique();
-            $table->string('regional')->unique();
             $table->timestamps();
         });
     }
