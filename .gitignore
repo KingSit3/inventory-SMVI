@@ -1,0 +1,34 @@
+/node_modules
+/public/hot
+/public/storage
+/storage/*.key
+/vendor
+.env.backup
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+
+### Windows ###
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+*.lnk
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+$RECYCLE.BIN/
+
+### VisualStudioCode Patch ###
+.history
+.ionide
+.vscode/*
+!.vscode/tasks.json
+!.vscode/launch.json
+*.code-workspace
