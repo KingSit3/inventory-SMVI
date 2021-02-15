@@ -14,7 +14,8 @@ class CreateDoTable extends Migration
     public function up()
     {
         Schema::create('do', function (Blueprint $table) {
-            $table->id();
+            $table->id();   
+            $table->string('no_do');
             $table->timestamps();
         });
     }
