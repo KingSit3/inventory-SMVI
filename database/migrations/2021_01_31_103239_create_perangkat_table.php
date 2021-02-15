@@ -15,7 +15,7 @@ class CreatePerangkatTable extends Migration
     {
         Schema::create('perangkat', function (Blueprint $table) {
             $table->id();
-            $table->string('sn_lama')->unique();
+            $table->string('sn_lama')->unique()->nullable();
             $table->bigInteger('tipe_perangkat');
             $table->string('sn_pengganti')->unique();
             $table->string('sn_monitor')->unique()->nullable();
@@ -23,6 +23,7 @@ class CreatePerangkatTable extends Migration
             $table->bigInteger('id_image');
             $table->bigInteger('id_witel');
             $table->bigInteger('id_do')->nullable();
+            $table->text('keterangan')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
