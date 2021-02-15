@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('name');
             $table->bigInteger('nik')->unique();
-            $table->bigInteger('no_telp')->nullable();
+            $table->string('no_telp')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
