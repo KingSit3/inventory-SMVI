@@ -142,9 +142,7 @@
     {{-- Right Content --}}
         <div class="w-full">
             {{-- Content --}}
-            <div class="p-7">
                 @yield('content')
-            </div>
             {{-- End Content --}}
         </div>
     {{-- End Right Content --}}
