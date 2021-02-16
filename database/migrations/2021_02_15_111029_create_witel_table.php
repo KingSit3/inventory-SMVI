@@ -16,7 +16,7 @@ class CreateWitelTable extends Migration
         Schema::create('witel', function (Blueprint $table) {
             $table->id();
             $table->string('nama_witel');
-            $table->string('kode_witel');
+            $table->string('kode_witel')->unique();
             $table->string('regional');
             $table->string('alamat_witel');
             $table->string('id_pic')->unique();

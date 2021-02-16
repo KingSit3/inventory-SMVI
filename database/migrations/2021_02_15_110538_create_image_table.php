@@ -15,7 +15,7 @@ class CreateImageTable extends Migration
     {
         Schema::create('image', function (Blueprint $table) {
             $table->id();
-            $table->string('kode_image');
+            $table->string('kode_image')->unique();
             $table->softDeletes();
             $table->timestamps();
         });
