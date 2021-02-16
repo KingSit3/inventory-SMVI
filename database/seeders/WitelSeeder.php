@@ -20,14 +20,14 @@ class WitelSeeder extends Seeder
                 'kode_witel' => 'R02',
                 'regional' => '2',
                 'alamat_witel' => 'IS Service Support GMP Telkom lt. M, Jl. Gatot Subroto Kav.52',
-                'nik_pic' => '670472',
+                'id_pic' => '1',
             ],
             [
                 'nama_witel' => 'MADURA',
                 'kode_witel' => 'P55',
                 'regional' => '5',
                 'alamat_witel' => 'l. P. Trunojoyo No.67, Barurambat Kota, Pamekasan, 69313',
-                'nik_pic' => '670472',
+                'id_pic' => '4',
             ],
         ]);
     }
