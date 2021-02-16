@@ -1,4 +1,4 @@
 @extends('layouts.app')
 @section('content')
-    Test Content
+    Dashboard will be here...
 @endsection

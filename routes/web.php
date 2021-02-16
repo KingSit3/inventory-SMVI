@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Dashboard;
-use App\Http\Controllers\UserController;
 use App\Http\Livewire\User\Users;
 use Illuminate\Support\Facades\Route;
 use RealRashid\SweetAlert\Facades\Alert;
