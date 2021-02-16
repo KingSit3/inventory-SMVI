@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'name' => 'PrasetyoWidodo',
-                'nik' => '',
+                'nik' => null,
                 'no_telp' => '62 811373790',
             ],
             [
