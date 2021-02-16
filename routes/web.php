@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\UserController;
+use App\Http\Livewire\User\Users;
 use Illuminate\Support\Facades\Route;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -22,4 +23,4 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 // Route::get('/', Books::class);
 Route::get('/', [Dashboard::class, 'index']);
-Route::get('/users', [UserController::class, 'index']);
+Route::get('/users', Users::class);
