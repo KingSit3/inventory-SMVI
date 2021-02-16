@@ -7,6 +7,8 @@ use Livewire\Component;
 
 class Users extends Component
 {
+    public $modal = false;
+
     public function render()
     {
         $data = [

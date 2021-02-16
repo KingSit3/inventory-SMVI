@@ -1,4 +1,15 @@
 <div>
+    <div x-data="{ open: false }">
+        <button @click="open = true">Open Dropdown</button>
+    
+        <ul
+            x-show="open"
+            @click.away="open = false"
+        >
+            Dropdown Body
+        </ul>
+    </div>
+
     <div class="p-7 flex flex-col justify-between h-screen">
         <div>
             {{-- Top Section --}}
