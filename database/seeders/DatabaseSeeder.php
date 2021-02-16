@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             PerangkatSeeder::class,
             TipePerangkat::class,
             WitelSeeder::class,
+            DoSeeder::class,
         ]);
     }
 }

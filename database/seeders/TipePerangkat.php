@@ -26,6 +26,11 @@ class TipePerangkat extends Seeder
                 'kode_perangkat' => 'NB1-A',
             ],
             [
+                'nama_perangkat' => 'PC HP',
+                'tipe_perangkat' => 'KOM',
+                'kode_perangkat' => 'PC',
+            ],
+            [
                 'nama_perangkat' => 'Projector',
                 'tipe_perangkat' => 'INF',
                 'kode_perangkat' => 'MOB',
