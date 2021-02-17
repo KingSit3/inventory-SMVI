@@ -5,6 +5,7 @@ namespace App\Http\Livewire\User;
 use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class Users extends Component
 {
@@ -63,5 +64,8 @@ class Users extends Component
 
         // Tutup Modal
         $this->isOpen = false;
+
+        // Alert 
+        session()->flash('success', "Data Berhasil Ditambahkan");
     }
 }
