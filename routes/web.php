@@ -16,10 +16,5 @@ use RealRashid\SweetAlert\Facades\Alert;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
-// Route::get('/', Books::class);
 Route::get('/', [Dashboard::class, 'index']);
 Route::get('/users', Users::class);

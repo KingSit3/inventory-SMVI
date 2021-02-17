@@ -55,7 +55,7 @@ class Users extends Component
         User::create([
             'name' => $this->name,
             'nik' => $this->nik,
-            'no_telp' => $this->nik,
+            'no_telp' => $this->no_telp,
         ]);
         
         // Reset data
