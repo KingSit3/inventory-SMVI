@@ -6,6 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script src="{{ asset('js/app.js') }}" defer></script>
+
+    {{-- Sweet Alert --}}
+        {{-- CDN --}}
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+        {{-- Lokal (gagal) --}}
+        {{-- <script src="{{ '/node_modules/sweetalert2/dist/sweetalert2.min.js' }}"></script> --}}
     <title>Admin</title>
     @livewireStyles
 </head>
@@ -16,10 +22,6 @@
             <div class="pl-5 pt-4">
             {{-- Logo --}}
                 <div class="mt-3">
-                    {{-- Image Logo --}}
-                    {{-- <a href="#">
-                        <img class="hover:opacity-75 hover:shadow-lg" src="{{ asset('image/ponytown.png') }}" alt="Logo">
-                    </a> --}}
 
                     {{-- SVG Logo --}}
                     <div class="flex group">
@@ -128,7 +130,7 @@
             </div>
             <div class="flex space-x-3 py-2 mb-2 border-t-2 border-indigo-600 border-opacity-80">
                 <div class="mx-4 flex items-center">
-                    <img class="w-9 rounded-full" src="{{ asset('image/logo.jpg') }}" alt="Profile">
+                    {{-- <img class="w-9 rounded-full" src="{{ asset('image/logo.jpg') }}" alt="Profile"> --}}
                 </div>
                 <div class="font-normal flex flex-col leading-8">
                     <span class="text-white cursor-default">MyPonyAsia</span>
@@ -149,5 +151,6 @@
     {{-- End Right Content --}}
 
     @livewireScripts
+    @stack('script')
 </body>
 </html>

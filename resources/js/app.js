@@ -1,3 +1,3 @@
 require('./bootstrap');
 import 'alpinejs';
-import Swal from 'sweetalert2';
+import 'sweetalert2';
