@@ -6,10 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <title>Document</title>
+    <title>Admin</title>
     @livewireStyles
 </head>
-<body>
+<body class="flex bg-gray-100">
 
     {{-- Sidabar --}}
         <div class="w-72 h-screen flex flex-col justify-between bg-gradient-to-t from-indigo-700 to-indigo-600 text-indigo-100 text-opacity-80  font-semibold">
@@ -147,25 +147,7 @@
             {{-- End Content --}}
         </div>
     {{-- End Right Content --}}
-    
-    
 
-    @include('sweetalert::alert')
     @livewireScripts
-</body>
-</html>
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <title>Admin Panel</title>
-</head>
-<body class="flex bg-gray-100">
-    
 </body>
 </html>

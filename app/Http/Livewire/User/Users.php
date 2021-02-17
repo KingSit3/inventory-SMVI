@@ -11,9 +11,7 @@ class Users extends Component
 {
     use WithPagination;
 
-    public $nik = null;
-    public $name = null;
-    public $no_telp = null;
+    public $userId, $nik, $name, $no_telp;
     public $isOpen = false;
 
     public function render()
@@ -30,9 +28,15 @@ class Users extends Component
     {
         // Jika nik == null maka jangan pakai validation unique
         if ($this->nik === null) {
-            $nikValidation = 'numeric';
+            $nikValidation = '';
         } else {
             $nikValidation = 'unique:App\Models\User,nik|numeric';
+        }
+
+        if ($this->no_telp === null) {
+            $noValidation = '';
+        } else {
+            $noValidation = 'numeric';
         }
 
         // Validasi
@@ -41,7 +45,7 @@ class Users extends Component
             [
                 'nik' => $nikValidation,
                 'name' => 'required',
-                'no_telp' => 'numeric',
+                'no_telp' => $noValidation,
             ],
             // Message
             [
@@ -66,6 +70,12 @@ class Users extends Component
         $this->isOpen = false;
 
         // Alert 
-        session()->flash('success', "Data Berhasil Ditambahkan");
+        session()->flash("success", "Data Berhasil Ditambahkan");
+    }
+
+    public function delete($id)
+    {
+      User::where(['id' => $id])->delete();
+      session()->flash('success', 'Data Berhasil Dihapus');
     }
 }
