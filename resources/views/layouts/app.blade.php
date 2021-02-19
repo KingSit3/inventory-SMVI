@@ -8,10 +8,8 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
 
     {{-- Sweet Alert --}}
-        {{-- CDN --}}
-        <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-        {{-- Lokal (gagal) --}}
-        {{-- <script src="{{ '/node_modules/sweetalert2/dist/sweetalert2.min.js' }}"></script> --}}
+    {{-- Lokal --}}
+        <script src="{{ asset('vendor/sweetalert/sweetalert.all.js') }}"></script>
     <title>Admin</title>
     @livewireStyles
 </head>
@@ -149,7 +147,7 @@
             {{-- End Content --}}
         </div>
     {{-- End Right Content --}}
-
+    
     @livewireScripts
     @stack('script')
 </body>
