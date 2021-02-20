@@ -68,12 +68,11 @@ class Users extends Component
         
         // Panggil fungsi Reset data
         $this->resetData();
+        $this->resetValidation();
 
         // Tutup Modal
         $this->isOpen = false;
 
-        // Alert 
-        session()->flash("success", "Data Berhasil Ditambahkan");
     }
 
     public function delete($id)
@@ -90,6 +89,8 @@ class Users extends Component
         $this->nik = $this->userData['nik'];
         $this->name = $this->userData['name'];
         $this->no_telp = $this->userData['no_telp'];
+
+        $this->resetValidation();
     }
 
     public function resetData() 
