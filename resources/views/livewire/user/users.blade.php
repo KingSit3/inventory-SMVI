@@ -1,54 +1,13 @@
 <div>
 
-    <div class="p-7 flex flex-col justify-between h-screen">
+    {{-- entangle agar interaksi dari controller: setelah data di save, modal tertutup --}}
+    <div x-data="{isOpen: @entangle('isOpen').defer}" class="p-7 flex flex-col justify-between h-screen">
         <div>
             {{-- Top Section --}}
                 <div class="flex justify-between px-5 mb-5">
                     {{-- Tambah Button --}}
-                        {{-- entangle agar interaksi dari controller: setelah data di save, modal tertutup --}}
-                        <div x-data="{isOpen: @entangle('isOpen').defer}">
-                            <button @click="isOpen = true" class="bg-blue-500 hover:shadow-md hover:bg-blue-700 px-3 py-2 rounded-xl text-white font-semibold duration-150">Tambah Data</button>
-                            {{-- Tambah Button & modal --}}
-                                <div 
-                                    x-show="isOpen"
-                                    class="z-50 fixed inset-0 bg-black bg-opacity-50 flex justify-center items-start">
-                                    <div x-show.transition.duration.150ms="isOpen" @click.away="isOpen = false" class="w-1/3 mt-10 bg-white opacity-100 rounded-xl shadow-xl">
-                                        <form wire:submit.prevent="tambah">
-                                            <div class="px-8 py-6">
-                                                <div class="text-center">
-                                                    <span class="text-xl font-semibold">Tambah Data</span>
-                                                </div>
-                                                <div class="mt-4 space-y-1 mx-10 font-semibold">
-                                                    <p class="cursor-default">NIK</p>
-                                                    <input wire:model.defer="nik" class="ring-2 ring-gray-300 rounded-md pl-2.5 pr-2.5 focus:outline-none outline-none duration-200 focus:ring-2 focus:ring-blue-400 focus:shadow-lg w-full"  type="text">
-                                                    @error('nik')
-                                                        <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
-                                                    @enderror
-                                                    <p class="cursor-default pt-3">Nama</p>
-                                                    <input wire:model.defer="name" class="ring-2 ring-gray-300 rounded-md pl-2.5 pr-2.5 focus:outline-none outline-none duration-200 focus:ring-2 focus:ring-blue-400 focus:shadow-lg w-full"  type="text">
-                                                    @error('name')
-                                                        <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
-                                                    @enderror
-                                                    <p class="cursor-default pt-3">Nomor Telepon</p>
-                                                    <input wire:model.defer="no_telp" class="ring-2 ring-gray-300 rounded-md pl-2.5 pr-2.5 focus:outline-none outline-none duration-200 focus:ring-2 focus:ring-blue-400 focus:shadow-lg w-full"  type="text">
-                                                    @error('no_telp')
-                                                        <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-                                            </div>
-                                            <div class="border-t-2 border-gray-200 mt-5">
-                                                <div class="flex justify-end space-x-8 p-3">
-                                                <button @click="isOpen = false" class="text-red-500 font-semibold focus:outline-none">Close</button>
-                                                <button type="submit" class="bg-blue-500 font-semibold text-white px-4 py-2 rounded-xl hover:bg-blue-700 duration-200 focus:outline-none">Simpan</button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            {{-- End Modal --}}
-                        </div>
-                    {{-- End tambah Button & modal --}}
-                    
+                    <button @click="isOpen = true" class="bg-blue-500 hover:shadow-md hover:bg-blue-700 px-3 py-2 rounded-xl text-white font-semibold duration-150">Tambah Data</button>
+                        
                     {{-- Search --}}
                     <div>
                         <svg xmlns="http://www.w3.org/2000/svg" class="absolute w-4 mt-2.5 ml-2 opacity-50" viewBox="0 0 20 20" fill="currentColor">
@@ -77,56 +36,13 @@
                             <td>{{ ($user['nik']) ? $user['nik'] : '-' }}</td>
                             <td>{{ $user['name'] }}</td>
                             <td>{{ ($user['no_telp']) ? $user['no_telp'] : '-' }}</td>
-                            <td class="space-x-4 pb-1 flex flex-row justify-center items-center">
+                            <td class="space-x-4 pb-1">
                             
-                                {{-- Edit Button & modal --}}
-                                    {{-- entangle agar interaksi dari controller: setelah data di save, modal tertutup --}}
-                                    <div class="flex-none" x-data="{isOpen: @entangle('isOpen').defer}">
-                                        <button @click="isOpen = true" x-on:click="$wire.edit({{ $user['id'] }})" class="focus:outline-none">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="w-6 text-gray-500 hover:text-yellow-500 py-1 duration-150" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                            </svg>
-                                        </button>
-                                    {{-- Tambah Button --}}
-                                                <div 
-                                                    x-show="isOpen"
-                                                    class="z-50 fixed inset-0 bg-black bg-opacity-50 flex justify-center items-start">
-                                                    <div x-show.transition.duration.150ms="isOpen" @click.away="isOpen = false" class="w-1/3 mt-10 bg-white opacity-100 rounded-xl shadow-xl">
-                                                        <form wire:submit.prevent="edit">
-                                                            <div class="px-8 py-6">
-                                                                <div class="text-center">
-                                                                    <span class="text-xl font-semibold">Edit Data</span>
-                                                                </div>
-                                                                <div class="mt-4 space-y-1 mx-10 font-semibold">
-                                                                    <p class="cursor-default">NIK</p>
-                                                                    <input wire:model.defer="nik" class="ring-2 ring-gray-300 rounded-md pl-2.5 pr-2.5 focus:outline-none outline-none duration-200 focus:ring-2 focus:ring-blue-400 focus:shadow-lg w-full" type="text" value="{{ ($userData) ? $userData['nik'] : "" }}">
-                                                                    @error('nik')
-                                                                        <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
-                                                                    @enderror
-                                                                    <p class="cursor-default pt-3">Nama</p>
-                                                                    <input wire:model.defer="name" class="ring-2 ring-gray-300 rounded-md pl-2.5 pr-2.5 focus:outline-none outline-none duration-200 focus:ring-2 focus:ring-blue-400 focus:shadow-lg w-full"  type="text">
-                                                                    @error('name')
-                                                                        <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
-                                                                    @enderror
-                                                                    <p class="cursor-default pt-3">Nomor Telepon</p>
-                                                                    <input wire:model.defer="no_telp" class="ring-2 ring-gray-300 rounded-md pl-2.5 pr-2.5 focus:outline-none outline-none duration-200 focus:ring-2 focus:ring-blue-400 focus:shadow-lg w-full"  type="text">
-                                                                    @error('no_telp')
-                                                                        <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
-                                                                    @enderror
-                                                                </div>
-                                                            </div>
-                                                            <div class="border-t-2 border-gray-200 mt-5">
-                                                                <div class="flex justify-end space-x-8 p-3">
-                                                                <button @click="isOpen = false" class="text-red-500 font-semibold focus:outline-none">Close</button>
-                                                                <button type="submit" class="bg-blue-500 font-semibold text-white px-4 py-2 rounded-xl hover:bg-blue-700 duration-200 focus:outline-none">Simpan</button>
-                                                                </div>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            {{-- End Modal --}}
-                                    </div>
-                                {{-- End tambah Button & modal --}}
+                                <button @click="isOpen = true" x-on:click="$wire.edit({{ $user['id'] }})" class="focus:outline-none">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="w-6 text-gray-500 hover:text-yellow-500 py-1 duration-150" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                        </svg>
+                                </button>
 
                                 <button wire:click="$emit('delete', {{ $user['id'] }})" class="focus:outline-none">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="w-6 text-gray-500 hover:text-red-500 py-1 duration-150" viewBox="0 0 24 24" stroke="currentColor">
@@ -150,6 +66,45 @@
                 </div>
             {{-- End Pagination --}}
         </div>
+
+        {{-- modal --}}
+            <div 
+                x-show="isOpen"
+                class="z-50 fixed inset-0 bg-black bg-opacity-50 flex justify-center items-start">
+                <div x-show.transition.duration.150ms="isOpen" @click.away="isOpen = false" class="w-1/3 mt-10 bg-white opacity-100 rounded-xl shadow-xl">
+                    <form wire:submit.prevent="tambah">
+                        <div class="px-8 py-6">
+                            <div class="text-center">
+                                <span class="text-xl font-semibold">Tambah Data</span>
+                            </div>
+                            <div class="mt-4 space-y-1 mx-10 font-semibold">
+                                <p class="cursor-default">NIK</p>
+                                <input wire:model="nik" class="ring-2 ring-gray-300 rounded-md pl-2.5 pr-2.5 focus:outline-none outline-none duration-200 focus:ring-2 focus:ring-blue-400 focus:shadow-lg w-full"  type="text">
+                                @error('nik')
+                                    <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
+                                @enderror
+                                <p class="cursor-default pt-3">Nama</p>
+                                <input wire:model="name" class="ring-2 ring-gray-300 rounded-md pl-2.5 pr-2.5 focus:outline-none outline-none duration-200 focus:ring-2 focus:ring-blue-400 focus:shadow-lg w-full"  type="text">
+                                @error('name')
+                                    <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
+                                @enderror
+                                <p class="cursor-default pt-3">Nomor Telepon</p>
+                                <input wire:model="no_telp" class="ring-2 ring-gray-300 rounded-md pl-2.5 pr-2.5 focus:outline-none outline-none duration-200 focus:ring-2 focus:ring-blue-400 focus:shadow-lg w-full"  type="text">
+                                @error('no_telp')
+                                    <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="border-t-2 border-gray-200 mt-5">
+                            <div class="flex justify-end space-x-8 p-3">
+                            <button @click="isOpen = false" class="text-red-500 font-semibold focus:outline-none">Close</button>
+                            <button type="submit" class="bg-blue-500 font-semibold text-white px-4 py-2 rounded-xl hover:bg-blue-700 duration-200 focus:outline-none">Simpan</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        {{-- End Modal --}}
     </div>
 
     {{-- Push Script To Template --}}

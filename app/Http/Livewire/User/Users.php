@@ -25,6 +25,8 @@ class Users extends Component
 
     public function tambah()
     {
+        $this->reset('name', 'nik', 'no_telp');
+
         // Jika nik == null maka jangan pakai validation unique
         if ($this->nik === null) {
             $nikValidation = '';
@@ -80,5 +82,10 @@ class Users extends Component
     public function edit($id) 
     {
         $this->userData = User::where('id', $id)->first();
+
+        // Masukkan value
+        $this->nik = $this->userData['nik'];
+        $this->name = $this->userData['name'];
+        $this->no_telp = $this->userData['no_telp'];
     }
 }
