@@ -11,6 +11,7 @@ class Users extends Component
     use WithPagination;
 
     public $userId, $nik, $name, $no_telp, $userData;
+    public $submitType = '';
     public $isOpen = false;
 
     public function render()
@@ -25,7 +26,8 @@ class Users extends Component
 
     public function tambah()
     {
-        $this->reset('name', 'nik', 'no_telp');
+        // Panggil fungsi Reset data
+        $this->submitType = 'tambah';
 
         // Jika nik == null maka jangan pakai validation unique
         if ($this->nik === null) {
@@ -64,8 +66,8 @@ class Users extends Component
             'no_telp' => $this->no_telp,
         ]);
         
-        // Reset data
-        $this->reset('name', 'nik', 'no_telp');
+        // Panggil fungsi Reset data
+        $this->resetData();
 
         // Tutup Modal
         $this->isOpen = false;
@@ -81,11 +83,17 @@ class Users extends Component
 
     public function edit($id) 
     {
+        $this->submitType = 'edit';
         $this->userData = User::where('id', $id)->first();
 
         // Masukkan value
         $this->nik = $this->userData['nik'];
         $this->name = $this->userData['name'];
         $this->no_telp = $this->userData['no_telp'];
+    }
+
+    public function resetData() 
+    {
+        $this->reset('name', 'nik', 'no_telp', 'submitType', 'userData');
     }
 }

@@ -6,7 +6,7 @@
             {{-- Top Section --}}
                 <div class="flex justify-between px-5 mb-5">
                     {{-- Tambah Button --}}
-                    <button @click="isOpen = true" class="bg-blue-500 hover:shadow-md hover:bg-blue-700 px-3 py-2 rounded-xl text-white font-semibold duration-150">Tambah Data</button>
+                    <button @click="isOpen = true" x-on:click="$wire.tambah()" class="bg-blue-500 hover:shadow-md hover:bg-blue-700 px-3 py-2 rounded-xl text-white font-semibold duration-150">Tambah Data</button>
                         
                     {{-- Search --}}
                     <div>
@@ -17,7 +17,6 @@
                     </div>
                 </div>
             {{-- End Top Section --}}
-
             {{-- Table --}}
                 <table class="table-auto w-full">
                     <thead>
@@ -51,11 +50,8 @@
                                 </button>
                             </td>
                         </tr>
-
                         @endforeach
-
                     </tbody>
-
                 </table>
             {{-- End Table --}}
         </div>
@@ -71,11 +67,11 @@
             <div 
                 x-show="isOpen"
                 class="z-50 fixed inset-0 bg-black bg-opacity-50 flex justify-center items-start">
-                <div x-show.transition.duration.150ms="isOpen" @click.away="isOpen = false" class="w-1/3 mt-10 bg-white opacity-100 rounded-xl shadow-xl">
-                    <form wire:submit.prevent="tambah">
+                <div x-show.transition.duration.150ms="isOpen" @click.away="isOpen = false" x-on:click.away="$wire.resetData()" class="w-1/3 mt-10 bg-white opacity-100 rounded-xl shadow-xl">
+                    <form wire:submit.prevent="{{ $submitType }}">
                         <div class="px-8 py-6">
                             <div class="text-center">
-                                <span class="text-xl font-semibold">Tambah Data</span>
+                                <span class="text-xl font-semibold capitalize">{{ $submitType }} Data</span>
                             </div>
                             <div class="mt-4 space-y-1 mx-10 font-semibold">
                                 <p class="cursor-default">NIK</p>
@@ -97,7 +93,8 @@
                         </div>
                         <div class="border-t-2 border-gray-200 mt-5">
                             <div class="flex justify-end space-x-8 p-3">
-                            <button @click="isOpen = false" class="text-red-500 font-semibold focus:outline-none">Close</button>
+                            {{-- Type button agar tidak dianggap submit ama livewire --}}
+                            <button type="button" @click="isOpen = false" x-on:click="$wire.resetData()" class="text-red-500 font-semibold focus:outline-none">Close</button>
                             <button type="submit" class="bg-blue-500 font-semibold text-white px-4 py-2 rounded-xl hover:bg-blue-700 duration-200 focus:outline-none">Simpan</button>
                             </div>
                         </div>
