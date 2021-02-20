@@ -10,7 +10,7 @@ class Users extends Component
 {
     use WithPagination;
 
-    public $userId, $nik, $name, $no_telp;
+    public $userId, $nik, $name, $no_telp, $userData;
     public $isOpen = false;
 
     public function render()
@@ -75,6 +75,10 @@ class Users extends Component
     public function delete($id)
     {
       User::where(['id' => $id])->delete();
-      session()->flash('success', 'Data Berhasil Dihapus');
+    }
+
+    public function edit($id) 
+    {
+        $this->userData = User::where('id', $id)->first();
     }
 }
