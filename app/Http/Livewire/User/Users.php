@@ -68,7 +68,6 @@ class Users extends Component
         
         // Panggil fungsi Reset data
         $this->resetData();
-        $this->resetValidation();
 
         // Tutup Modal
         $this->isOpen = false;
@@ -82,7 +81,7 @@ class Users extends Component
 
     public function edit($id) 
     {
-        $this->submitType = 'edit';
+        $this->submitType = 'update';
         $this->userData = User::where('id', $id)->first();
 
         // Masukkan value
@@ -90,11 +89,60 @@ class Users extends Component
         $this->name = $this->userData['name'];
         $this->no_telp = $this->userData['no_telp'];
 
+    }
+
+    public function update($id)
+    {
+        dd($id);
+        // Jika nik == null maka jangan pakai validation unique
+        if ($this->nik === null) {
+            $nikValidation = '';
+        } else {
+            $nikValidation = 'unique:App\Models\User,nik|numeric';
+        }
+
+        if ($this->no_telp === null) {
+            $noValidation = '';
+        } else {
+            $noValidation = 'numeric';
+        }
+
+        $this->validate(
+            // Rules
+            [
+                'nik' => $nikValidation,
+                'name' => 'required',
+                'no_telp' => $noValidation,
+            ],
+            // Message
+            [
+                'nik.unique' => 'Nik sudah ada',
+                'nik.numeric' => 'Harus berupa nomor',
+                'name.required' => 'Nama harus diisi',
+                'no_telp.numeric' => 'Harus berupa nomor',
+            ]
+        );
+
+        // Save data
+        User::where('')->update([
+            'name' => $this->name,
+            'nik' => $this->nik,
+            'no_telp' => $this->no_telp,
+        ]);
+        
+        // Panggil fungsi Reset data
+        $this->resetData();
         $this->resetValidation();
+
+        // Tutup Modal
+        $this->isOpen = false;
     }
 
     public function resetData() 
     {
+        // Reset input field
         $this->reset('name', 'nik', 'no_telp', 'submitType', 'userData');
+        // Reset Validasi
+        $this->resetValidation();
     }
 }

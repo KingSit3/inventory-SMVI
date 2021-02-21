@@ -6,7 +6,7 @@
             {{-- Top Section --}}
                 <div class="flex justify-between px-5 mb-5">
                     {{-- Tambah Button --}}
-                    <button $wire:click="$refresh" @click="isOpen = true" x-on:click="$wire.tambah()" class="bg-blue-500 hover:shadow-md hover:bg-blue-700 px-3 py-2 rounded-xl text-white font-semibold duration-150">Tambah Data</button>
+                    <button @click="isOpen = true" wire:click="tambah()" class="bg-blue-500 hover:shadow-md hover:bg-blue-700 px-3 py-2 rounded-xl text-white font-semibold duration-150">Tambah Data</button>
                         
                     {{-- Search --}}
                     <div>
@@ -74,6 +74,7 @@
                                 <span class="text-xl font-semibold capitalize">{{ $submitType }} Data</span>
                             </div>
                             <div class="mt-4 space-y-1 mx-10 font-semibold">
+                                <input type="hidden" wire:model="">
                                 <p class="cursor-default">NIK</p>
                                 <input wire:model="nik" class="ring-2 ring-gray-300 rounded-md pl-2.5 pr-2.5 focus:outline-none outline-none duration-200 focus:ring-2 focus:ring-blue-400 focus:shadow-lg w-full"  type="text">
                                 @error('nik')
