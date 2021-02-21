@@ -12,13 +12,23 @@ class Users extends Component
     use WithPagination;
 
     public $userId, $nik, $name, $no_telp, $userData;
-    public $submitType = '';
+    public $submitType, $keyword = '';
     public $isOpen = false;
+
+    // Method dari Livewire untuk reset filter saat pagination
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
 
     public function render()
     {
+        $keyword = '%'.$this->keyword.'%';
+
         $data = [
-            'users' => User::paginate(10),
+            'users' => User::where('name', 'like', $keyword)
+                        ->orWhere('nik', 'like', $keyword)
+                        ->paginate(10),
         ];
 
         return view('livewire.user.users', $data)
@@ -123,27 +133,16 @@ class Users extends Component
                 $message
             );
         } else {
-
             $this->validate(
                 // Rules
                 [
-                    'nik' => [
-                        'numeric',
-                        Rule::unique('users')->ignore($this->nik, 'nik'),
-                    ],
+                    'nik' => ['numeric', Rule::unique('users', 'nik')->ignore($this->nik, 'nik')],
                     'name' => 'required',
                     'no_telp' => $noValidation,
                 ],
                 $message
             );
         }
-
-        // Save data
-        // $dataUser = User::findOrFail($this->userId);
-        // $dataUser->name = $this->name;
-        // $dataUser->nik = $this->nik;
-        // $dataUser->no_telp = $this->no_telp;
-        // $dataUser->save();
 
         User::where('id', $this->userId)->update([
             'nik' => $this->nik,
