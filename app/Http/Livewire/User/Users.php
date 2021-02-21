@@ -25,13 +25,12 @@ class Users extends Component
         ->extends('layouts.app');
     }
 
-    public function tambah()
+    public function add()
     {
-        $this->resetData();
-        $this->submitType = 'save';
+        $this->submitType = 'tambah';
     }
 
-    public function save() 
+    public function tambah()
     {
         // Jika nik == null maka jangan pakai validation unique
         if ($this->nik === null) {
