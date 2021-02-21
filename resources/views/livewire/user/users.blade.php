@@ -15,34 +15,34 @@
                             </svg>
                             {{-- Search Loading Animation --}}
 
-                            <div wire:loading class="absolute ml-52 mt-2 animate-spin opacity-50">
+                            <div wire:loading wire:target="keyword" class="absolute ml-52 mt-2 animate-spin opacity-50">
                                 <svg xmlns="http://www.w3.org/2000/svg" class=" w-4 " fill="currentColor" class="bi bi-circle-half" viewBox="0 0 16 16">
                                     <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
                                 </svg>
                             </div>
-                            <input wire:model.debounce="keyword" class=" focus:ring-4 outline-none focus:outline-none ring-blue-300 rounded-full pl-7 py-1 duration-150" type="text" placeholder="Cari user...">
+                            <input wire:model.debounce="keyword" class=" focus:ring-4 outline-none focus:outline-none ring-blue-300 rounded-full pl-7 py-1 duration-150" type="text" placeholder="Cari User & NIK...">
                         </div>
                 </div>
             {{-- End Top Section --}}
             {{-- Table --}}
-                <table class="table-auto w-full">
+                <table class="table-fixed w-full">
                     <thead>
                         <tr>
-                            <th>No</th>
-                            <th>NIK</th>
-                            <th>Nama</th>
-                            <th>No Telp</th>
-                            <th>Aksi</th>
+                            <th class="w-1/12">No</th>
+                            <th class="w-1/6">NIK</th>
+                            <th class="w-1/3">Nama</th>
+                            <th class="w-1/3">No Telp</th>
+                            <th class="w-1/5">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($users as $user)
-                        <tr class="text-center items-center">
+                        <tr class="text-center items-center {{ ($loop->odd) ? "bg-indigo-100" : "" }}">
                             <td>{{ ($users->firstItem()-1) + $loop->iteration }}</td>
                             <td>{{ ($user['nik']) ? $user['nik'] : '-' }}</td>
-                            <td>{{ $user['name'] }}</td>
+                            <td class="truncate">{{ $user['name'] }}</td>
                             <td>{{ ($user['no_telp']) ? $user['no_telp'] : '-' }}</td>
-                            <td class="space-x-4 pb-1">
+                            <td class="space-x-4 py-1 flex items-center justify-center">
                             
                                 <button @click="isOpen = true" wire:click="edit({{ $user['id'] }})" class="focus:outline-none">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="w-6 text-gray-500 hover:text-yellow-500 py-1 duration-150" viewBox="0 0 24 24" stroke="currentColor">
