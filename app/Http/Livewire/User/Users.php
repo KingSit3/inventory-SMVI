@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Illuminate\Support\Str;
 
 class Users extends Component
 {
@@ -28,7 +29,7 @@ class Users extends Component
         $data = [
             'users' => User::where('name', 'like', $keyword)
                         ->orWhere('nik', 'like', $keyword)
-                        ->paginate(10),
+                        ->paginate(11),
         ];
 
         return view('livewire.user.users', $data)
@@ -72,9 +73,11 @@ class Users extends Component
             ]
         );
 
+        // $newNik = ;
+
         // Save data
         User::create([
-            'name' => $this->name,
+            'name' => Str::title($this->name),
             'nik' => $this->nik,
             'no_telp' => $this->no_telp,
         ]);
@@ -143,7 +146,6 @@ class Users extends Component
                 $message
             );
         }
-
         User::where('id', $this->userId)->update([
             'nik' => $this->nik,
             'name' => $this->name,

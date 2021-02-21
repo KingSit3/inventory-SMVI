@@ -9,21 +9,25 @@
                         <button @click="isOpen = true" wire:click="add" class="bg-blue-500 hover:shadow-md hover:bg-blue-700 px-3 py-2 rounded-xl text-white font-semibold duration-150">Tambah Data</button>
                         
                     {{-- Search --}}
-                        <div>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="absolute w-4 mt-2.5 ml-2 opacity-50" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
-                            </svg>
-                            {{-- Search Loading Animation --}}
-
-                            <div wire:loading wire:target="keyword" class="absolute ml-52 mt-2 animate-spin opacity-50">
-                                <svg xmlns="http://www.w3.org/2000/svg" class=" w-4 " fill="currentColor" class="bi bi-circle-half" viewBox="0 0 16 16">
-                                    <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
+                        <div class="flex justify-between items-center space-x-6">
+                            <button class="bg-red-500 hover:shadow-md hover:bg-red-700 px-3 py-2 rounded-xl text-white font-semibold duration-150">Deleted Users</button>
+                            <div class="">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="absolute w-4 mt-2.5 ml-2 opacity-50" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
                                 </svg>
+                                {{-- Search Loading Animation --}}
+
+                                <div wire:loading wire:target="keyword" class="absolute ml-52 mt-2 animate-spin opacity-50">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class=" w-4 " fill="currentColor" class="bi bi-circle-half" viewBox="0 0 16 16">
+                                        <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
+                                    </svg>
+                                </div>
+                                <input wire:model.debounce="keyword" class=" focus:ring-4 outline-none focus:outline-none ring-blue-300 rounded-full pl-7 py-1 duration-150" type="text" placeholder="Cari User & NIK...">
                             </div>
-                            <input wire:model.debounce="keyword" class=" focus:ring-4 outline-none focus:outline-none ring-blue-300 rounded-full pl-7 py-1 duration-150" type="text" placeholder="Cari User & NIK...">
                         </div>
                 </div>
             {{-- End Top Section --}}
+            
             {{-- Table --}}
                 <table class="table-fixed w-full">
                     <thead>
@@ -40,7 +44,7 @@
                         <tr class="text-center items-center {{ ($loop->odd) ? "bg-indigo-100" : "" }}">
                             <td>{{ ($users->firstItem()-1) + $loop->iteration }}</td>
                             <td>{{ ($user['nik']) ? $user['nik'] : '-' }}</td>
-                            <td class="truncate">{{ $user['name'] }}</td>
+                            <td class="truncate capitalize">{{ $user['name'] }}</td>
                             <td>{{ ($user['no_telp']) ? $user['no_telp'] : '-' }}</td>
                             <td class="space-x-4 py-1 flex items-center justify-center">
                             
@@ -119,8 +123,8 @@
             @this.on('delete', id => {
                 // Jalankan sweet alert
                 Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
+                title: 'Yakin ingin menghapusnya?',
+                // text: "User ".name." akan dihapus",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -146,9 +150,10 @@
             @this.on('success', message => {
                 Swal.fire({
                 icon: 'success',
-                title: message,
+                title: "Berhasil",
+                text: message,
                 showConfirmButton: false,
-                timer: 1000
+                timer: 1500
                     })
                 })
         })
