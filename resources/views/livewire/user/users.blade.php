@@ -134,6 +134,17 @@
                 })
             })
         })
+
+        document.addEventListener('livewire:load', function () {
+            @this.on('success', message => {
+                Swal.fire({
+                icon: 'success',
+                title: message,
+                showConfirmButton: false,
+                timer: 1000
+                    })
+                })
+        })
     </script>
     @endpush
 </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\User;
 
 use App\Models\User;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -72,6 +73,9 @@ class Users extends Component
         // Tutup Modal
         $this->isOpen = false;
 
+        // Panggil SweetAlert berhasil
+        $this->emit('success', 'Data Berhasil Ditambahkan');
+
     }
 
     public function delete($id)
@@ -85,22 +89,21 @@ class Users extends Component
         $this->userData = User::where('id', $id)->first();
 
         // Masukkan value
+        $this->userId = $id;
         $this->nik = $this->userData['nik'];
         $this->name = $this->userData['name'];
         $this->no_telp = $this->userData['no_telp'];
-
-        
-
     }
 
-    public function update($id)
+    public function update()
     {
-        // Jika nik == null maka jangan pakai validation unique
-        if ($this->nik === null) {
-            $nikValidation = '';
-        } else {
-            $nikValidation = 'unique:App\Models\User,nik|numeric';
-        }
+
+        $message = [
+            'nik.unique' => 'Nik sudah ada',
+            'nik.numeric' => 'Harus berupa nomor',
+            'name.required' => 'Nama harus diisi',
+            'no_telp.numeric' => 'Harus berupa nomor',
+        ];
 
         if ($this->no_telp === null) {
             $noValidation = '';
@@ -108,42 +111,60 @@ class Users extends Component
             $noValidation = 'numeric';
         }
 
-        $this->validate(
-            // Rules
-            [
-                'nik' => $nikValidation,
-                'name' => 'required',
-                'no_telp' => $noValidation,
-            ],
-            // Message
-            [
-                'nik.unique' => 'Nik sudah ada',
-                'nik.numeric' => 'Harus berupa nomor',
-                'name.required' => 'Nama harus diisi',
-                'no_telp.numeric' => 'Harus berupa nomor',
-            ]
-        );
+        // Jika nik == null maka jangan pakai validation unique
+        if ($this->nik == null) {
+            $this->validate(
+                // Rules
+                [
+                    'name' => 'required',
+                    'no_telp' => $noValidation,
+                ],
+                $message
+            );
+        } else {
+
+            $this->validate(
+                // Rules
+                [
+                    'nik' => [
+                        'numeric',
+                        Rule::unique('users')->ignore($this->nik, 'nik'),
+                    ],
+                    'name' => 'required',
+                    'no_telp' => $noValidation,
+                ],
+                $message
+            );
+        }
 
         // Save data
-        User::where('')->update([
-            'name' => $this->name,
+        // $dataUser = User::findOrFail($this->userId);
+        // $dataUser->name = $this->name;
+        // $dataUser->nik = $this->nik;
+        // $dataUser->no_telp = $this->no_telp;
+        // $dataUser->save();
+
+        User::where('id', $this->userId)->update([
             'nik' => $this->nik,
+            'name' => $this->name,
             'no_telp' => $this->no_telp,
         ]);
         
         // Panggil fungsi Reset data
         $this->resetData();
-        $this->resetValidation();
 
         // Tutup Modal
         $this->isOpen = false;
+
+        // Panggil SweetAlert berhasil
+        $this->emit('success', 'Data Berhasil Diubah');
     }
 
     public function resetData() 
     {
-        // Reset input field
-        $this->reset('name', 'nik', 'no_telp', 'submitType', 'userData');
         // Reset Validasi
         $this->resetValidation();
+        // Reset input field
+        $this->reset('name', 'nik', 'no_telp', 'submitType', 'userData', 'userId');
     }
 }
