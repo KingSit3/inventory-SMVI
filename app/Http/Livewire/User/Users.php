@@ -27,9 +27,12 @@ class Users extends Component
 
     public function tambah()
     {
-        // Panggil fungsi Reset data
-        $this->submitType = 'tambah';
+        $this->resetData();
+        $this->submitType = 'save';
+    }
 
+    public function save() 
+    {
         // Jika nik == null maka jangan pakai validation unique
         if ($this->nik === null) {
             $nikValidation = '';
@@ -75,7 +78,6 @@ class Users extends Component
 
         // Panggil SweetAlert berhasil
         $this->emit('success', 'Data Berhasil Ditambahkan');
-
     }
 
     public function delete($id)
@@ -112,7 +114,7 @@ class Users extends Component
         }
 
         // Jika nik == null maka jangan pakai validation unique
-        if ($this->nik == null) {
+        if ($this->nik === null) {
             $this->validate(
                 // Rules
                 [
