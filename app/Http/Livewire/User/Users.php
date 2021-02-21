@@ -89,11 +89,12 @@ class Users extends Component
         $this->name = $this->userData['name'];
         $this->no_telp = $this->userData['no_telp'];
 
+        
+
     }
 
     public function update($id)
     {
-        dd($id);
         // Jika nik == null maka jangan pakai validation unique
         if ($this->nik === null) {
             $nikValidation = '';

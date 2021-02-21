@@ -96,7 +96,7 @@
                             <div class="flex justify-end space-x-8 p-3">
                             {{-- Type button agar tidak dianggap submit ama livewire --}}
                             <button type="button" @click="isOpen = false" x-on:click="$wire.resetData()" class="text-red-500 font-semibold focus:outline-none">Close</button>
-                            <button type="submit" class="bg-blue-500 font-semibold text-white px-4 py-2 rounded-xl hover:bg-blue-700 duration-200 focus:outline-none">Simpan</button>
+                            <button type="submit" wire:click="update({{ $user }})" class="bg-blue-500 font-semibold text-white px-4 py-2 rounded-xl hover:bg-blue-700 duration-200 focus:outline-none">Simpan</button>
                             </div>
                         </div>
                     </form>
