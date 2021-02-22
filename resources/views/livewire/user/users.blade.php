@@ -26,7 +26,7 @@
                                         <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
                                     </svg>
                                 </div>
-                                <input wire:model.debounce="keyword" class=" focus:ring-4 outline-none focus:outline-none ring-blue-300 rounded-full pl-7 py-1 duration-150" type="text" placeholder="Cari User & NIK...">
+                                <input wire:model.debounce.200="keyword" class=" focus:ring-4 outline-none focus:outline-none ring-blue-300 rounded-full pl-7 py-1 duration-150" type="text" placeholder="Cari User & NIK...">
                             </div>
                         </div>
                 </div>
@@ -45,7 +45,7 @@
                     </thead>
                     <tbody>
                         @foreach ($users as $user)
-                        <tr class="text-center items-center {{ ($loop->odd) ? "bg-indigo-100" : "" }}">
+                        <tr class="text-center items-center {{ ($loop->odd) ? "bg-indigo-100 bg-opacity-75" : "" }}">
                             <td>{{ ($users->firstItem()-1) + $loop->iteration }}</td>
                             <td>{{ ($user['nik']) ? $user['nik'] : '-' }}</td>
                             <td class="truncate capitalize">{{ $user['name'] }}</td>
