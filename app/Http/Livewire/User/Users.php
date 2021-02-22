@@ -29,7 +29,7 @@ class Users extends Component
         $data = [
             'users' => User::where('name', 'like', $keyword)
                         ->orWhere('nik', 'like', $keyword)
-                        ->paginate(11),
+                        ->paginate(10),
         ];
 
         return view('livewire.user.users', $data)

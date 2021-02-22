@@ -1,8 +1,13 @@
 <div>
-
     {{-- entangle agar interaksi dari controller: setelah data di save, modal tertutup --}}
-    <div x-data="{isOpen: @entangle('isOpen').defer}" class="p-7 flex flex-col justify-between h-screen">
+    <div x-data="{isOpen: @entangle('isOpen').defer}" class="px-7 py-3 flex flex-col justify-between h-screen">
         <div>
+            {{-- Top Bar --}}
+            <div class="text-2xl text-center font-bold text-indigo-600 cursor-default">
+                <p>Users Menu</p>
+            </div>
+            {{-- End Top Bar --}}
+
             {{-- Top Section --}}
                 <div class="flex justify-between px-5 mb-5">
                     {{-- Tambah Button --}}
@@ -10,7 +15,6 @@
                         
                     {{-- Search --}}
                         <div class="flex justify-between items-center space-x-6">
-                            <button class="bg-red-500 hover:shadow-md hover:bg-red-700 px-3 py-2 rounded-xl text-white font-semibold duration-150">Deleted Users</button>
                             <div class="">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="absolute w-4 mt-2.5 ml-2 opacity-50" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
@@ -68,7 +72,7 @@
         </div>
         <div>
             {{-- Pagination --}}
-                <div class="mt-4 mx-5">
+                <div class="mt-2 mx-5">
                     {{ $users->links() }}
                 </div>
             {{-- End Pagination --}}

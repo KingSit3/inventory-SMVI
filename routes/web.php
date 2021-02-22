@@ -1,9 +1,9 @@
 <?php
 
 use App\Http\Controllers\Dashboard;
+use App\Http\Livewire\User\DeletedUsers;
 use App\Http\Livewire\User\Users;
 use Illuminate\Support\Facades\Route;
-use RealRashid\SweetAlert\Facades\Alert;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,3 +18,4 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 Route::get('/', [Dashboard::class, 'index']);
 Route::get('/users', Users::class);
+Route::get('/deletedusers', DeletedUsers::class);
