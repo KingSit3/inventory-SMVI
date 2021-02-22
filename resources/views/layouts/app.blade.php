@@ -52,18 +52,35 @@
                     </div>
                     </a>
                 </div>
-                <div class="mt-1 mr-3 group">
-                    <a href="/users">
-                    <div class="w-full pl-1 py-2 group-hover:bg-indigo-800 rounded duration-150">
-                        <div class="flex">
-                            <svg class="group-hover:text-white duration-150 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                            </svg>
-                            <span class="ml-3 group-hover:text-white flex items-center duration-150">Users</span>
+                {{-- Users --}}
+                <div x-data="{open: false}">
+                    <div class="mt-1 mr-3 group">
+                        <a class="cursor-pointer" @click="open = true">
+                        <div class="w-full pl-1 py-2 group-hover:bg-indigo-800 rounded duration-150">
+                            <div class="flex">
+                                <svg class="group-hover:text-white duration-150 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                </svg>
+                                <span class="ml-3 group-hover:text-white flex items-center duration-150">Users</span>
+                            </div>
+                            
                         </div>
+                        </a>
                     </div>
-                    </a>
-                </div>
+                    <div x-show="open"
+                        @click.away="open = false" 
+                        x-transition:enter="transition ease-out duration-200"
+                        x-transition:enter-start="opacity-0 transform scale-90"
+                        x-transition:enter-end="opacity-100 transform scale-100"
+                        x-transition:leave="transition ease-in duration-200"
+                        x-transition:leave-start="opacity-100 transform scale-100"
+                        x-transition:leave-end="opacity-0 transform scale-90"
+                        class="bg-gray-100 space-y-2 mr-4 py-2 rounded-xl">
+                        <a href="users" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Users</a>
+                        <a href="#" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Deleted Users</a>
+                    </div>
+                </div>  
+                {{-- End Users --}}
                 <div class="mt-1 mr-3 group">
                     <a href="/perangkat">
                     <div class="w-full pl-1 py-2 group-hover:bg-indigo-800 rounded duration-150">
