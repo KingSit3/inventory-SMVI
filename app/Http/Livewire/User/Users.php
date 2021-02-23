@@ -89,7 +89,7 @@ class Users extends Component
         $this->isOpen = false;
 
         // Panggil SweetAlert berhasil
-        $this->emit('success', 'Data Berhasil Ditambahkan');
+        $this->emit('success', 'Data User Berhasil Ditambahkan');
     }
 
     public function delete($id)
@@ -111,7 +111,6 @@ class Users extends Component
 
     public function update()
     {
-
         $message = [
             'nik.unique' => 'Nik sudah ada',
             'nik.numeric' => 'Harus berupa nomor',
@@ -159,8 +158,6 @@ class Users extends Component
             return $this->addError('nik', 'NIK Sudah Terdaftar');
         }
 
-        
-        
         // Panggil fungsi Reset data
         $this->resetData();
 
@@ -168,7 +165,7 @@ class Users extends Component
         $this->isOpen = false;
 
         // Panggil SweetAlert berhasil
-        $this->emit('success', 'Data Berhasil Diubah');
+        $this->emit('success', 'Data User Berhasil Diubah');
     }
 
     public function resetData() 
