@@ -19,8 +19,12 @@ class Tipe extends Component
 
     public function render()
     {
+        $keyword = '%'.$this->keyword.'%';
+
         $data = [
-            'tipe_perangkat' => tipePerangkat::paginate(10),
+            'tipe_perangkat' => tipePerangkat::where('nama_perangkat', 'like', $keyword)
+                                        ->orWhere('kode_perangkat', 'like', $keyword)
+                                        ->paginate(10),
         ];
 
         return view('livewire.perangkat.tipe', $data)
@@ -101,8 +105,6 @@ class Tipe extends Component
             return $this->addError('kode', 'Kode Perangkat Sudah Ada');
         }
 
-        
-        
         // Panggil fungsi Reset data
         $this->resetData();
 

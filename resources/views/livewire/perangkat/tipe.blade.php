@@ -12,7 +12,6 @@
                 <div class="flex justify-between px-5 mb-5">
                     {{-- Tambah Button --}}
                         <button @click="isOpen = true" wire:click="add" class="bg-blue-500 hover:shadow-md hover:bg-blue-700 px-3 py-2 rounded-xl text-white font-semibold duration-150">Tambah Tipe</button>
-                        
                     {{-- Search --}}
                         <div class="flex justify-between items-center space-x-6">
                             <div class="">
