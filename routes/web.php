@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Dashboard;
+use App\Http\Livewire\Perangkat\DeletedTipe;
 use App\Http\Livewire\User\DeletedUsers;
 use App\Http\Livewire\User\Users;
 use Illuminate\Support\Facades\Route;
@@ -21,3 +22,4 @@ Route::get('/', [Dashboard::class, 'index']);
 Route::get('/users', Users::class);
 Route::get('/deletedusers', DeletedUsers::class);
 Route::get('/tipe', Tipe::class);
+Route::get('/deletedtipe', DeletedTipe::class);
