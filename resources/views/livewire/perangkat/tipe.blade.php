@@ -4,14 +4,14 @@
         <div>
             {{-- Top Bar --}}
             <div class="text-2xl text-center font-bold text-indigo-600 cursor-default">
-                <p>Users Menu</p>
+                <p>Tipe Perangkat Menu</p>
             </div>
             {{-- End Top Bar --}}
 
             {{-- Top Section --}}
                 <div class="flex justify-between px-5 mb-5">
                     {{-- Tambah Button --}}
-                        <button @click="isOpen = true" wire:click="add" class="bg-blue-500 hover:shadow-md hover:bg-blue-700 px-3 py-2 rounded-xl text-white font-semibold duration-150">Tambah User</button>
+                        <button @click="isOpen = true" wire:click="add" class="bg-blue-500 hover:shadow-md hover:bg-blue-700 px-3 py-2 rounded-xl text-white font-semibold duration-150">Tambah Tipe</button>
                         
                     {{-- Search --}}
                         <div class="flex justify-between items-center space-x-6">
@@ -26,7 +26,7 @@
                                         <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
                                     </svg>
                                 </div>
-                                <input wire:model.debounce.200="keyword" class=" focus:ring-4 outline-none focus:outline-none ring-blue-300 rounded-full pl-7 py-1 duration-150" type="text" placeholder="Cari User & NIK...">
+                                <input wire:model.debounce.200="keyword" class=" focus:ring-4 outline-none focus:outline-none ring-blue-300 rounded-full pl-7 py-1 duration-150" type="text" placeholder="Cari Tipe Perangkat">
                             </div>
                         </div>
                 </div>
@@ -37,28 +37,28 @@
                     <thead>
                         <tr>
                             <th class="w-1/12">No</th>
-                            <th class="w-1/6">NIK</th>
-                            <th class="w-1/3">Nama</th>
-                            <th class="w-1/3">No Telp</th>
+                            <th class="w-1/3">Kode Perangkat</th>
+                            <th class="w-1/6">Nama Perangkat</th>
+                            <th class="w-1/3">Tipe Perangkat</th>
                             <th class="w-1/5">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($users as $user)
+                        @foreach ($tipe_perangkat as $value)
                         <tr class="text-center items-center {{ ($loop->odd) ? "bg-indigo-100 bg-opacity-75" : "" }}">
-                            <td>{{ ($users->firstItem()-1) + $loop->iteration }}</td>
-                            <td>{{ ($user['nik']) ? $user['nik'] : '-' }}</td>
-                            <td class="truncate capitalize">{{ $user['name'] }}</td>
-                            <td>{{ ($user['no_telp']) ? $user['no_telp'] : '-' }}</td>
+                            <td>{{ ($tipe_perangkat->firstItem()-1) + $loop->iteration }}</td>
+                            <td>{{ ($value['kode_perangkat']) ? $value['kode_perangkat'] : '-' }}</td>
+                            <td class="truncate capitalize">{{ $value['nama_perangkat'] }}</td>
+                            <td>{{ ($value['tipe_perangkat']) ? $value['tipe_perangkat'] : '-' }}</td>
                             <td class="space-x-4 py-1 flex items-center justify-center">
                             
-                                <button @click="isOpen = true" wire:click="edit({{ $user['id'] }})" class="focus:outline-none">
+                                <button @click="isOpen = true" wire:click="edit({{ $value['id'] }})" class="focus:outline-none">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="w-6 text-gray-500 hover:text-yellow-500 py-1 duration-150" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                         </svg>
                                 </button>
 
-                                <button wire:click="$emit('delete', {{ $user['id'] }})" class="focus:outline-none">
+                                <button wire:click="$emit('delete', {{ $value['id'] }})" class="focus:outline-none">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="w-6 text-gray-500 hover:text-red-500 py-1 duration-150" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                     </svg>
@@ -73,13 +73,13 @@
         <div>
             {{-- Pagination --}}
                 <div class="mt-2 mx-5">
-                    {{ $users->links() }}
+                    {{ $tipe_perangkat->links() }}
                 </div>
             {{-- End Pagination --}}
         </div>
 
         {{-- modal --}}
-            <div 
+            <div
                 x-show="isOpen"
                 class="z-50 fixed inset-0 bg-black bg-opacity-50 flex justify-center items-start">
                 <div x-show.transition.duration.150ms="isOpen" @click.away="isOpen = false" x-on:click.away="$wire.resetData()" class="w-1/3 mt-10 bg-white opacity-100 rounded-xl shadow-xl">
@@ -89,19 +89,19 @@
                                 <span class="text-xl font-semibold capitalize">{{ $submitType }} Data</span>
                             </div>
                             <div class="mt-4 space-y-1 mx-10 font-semibold">
-                                <p class="cursor-default">NIK</p>
-                                <input wire:model="nik" class="ring-2 ring-gray-300 rounded-md pl-2.5 pr-2.5 focus:outline-none outline-none duration-200 focus:ring-2 focus:ring-blue-400 focus:shadow-lg w-full"  type="text">
-                                @error('nik')
+                                <p class="cursor-default">Kode Perangkat</p>
+                                <input wire:model="kode" class="ring-2 ring-gray-300 rounded-md pl-2.5 pr-2.5 focus:outline-none outline-none duration-200 focus:ring-2 focus:ring-blue-400 focus:shadow-lg w-full"  type="text" required>
+                                @error('kode')
                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                 @enderror
-                                <p class="cursor-default pt-3">Nama</p>
-                                <input wire:model="name" class="ring-2 ring-gray-300 rounded-md pl-2.5 pr-2.5 focus:outline-none outline-none duration-200 focus:ring-2 focus:ring-blue-400 focus:shadow-lg w-full"  type="text">
-                                @error('name')
+                                <p class="cursor-default pt-3">Nama Perangkat</p>
+                                <input wire:model="nama" class="ring-2 ring-gray-300 rounded-md pl-2.5 pr-2.5 focus:outline-none outline-none duration-200 focus:ring-2 focus:ring-blue-400 focus:shadow-lg w-full"  type="text" required>
+                                @error('nama')
                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                 @enderror
-                                <p class="cursor-default pt-3">Nomor Telepon</p>
-                                <input wire:model="no_telp" class="ring-2 ring-gray-300 rounded-md pl-2.5 pr-2.5 focus:outline-none outline-none duration-200 focus:ring-2 focus:ring-blue-400 focus:shadow-lg w-full"  type="text">
-                                @error('no_telp')
+                                <p class="cursor-default pt-3">Tipe Perangkat</p>
+                                <input wire:model="tipe" class="ring-2 ring-gray-300 rounded-md pl-2.5 pr-2.5 focus:outline-none outline-none duration-200 focus:ring-2 focus:ring-blue-400 focus:shadow-lg w-full"  type="text" required>
+                                @error('tipe')
                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -141,7 +141,7 @@
                     // Pesan berhasil
                     Swal.fire(
                     'Deleted!',
-                    'Data berhasil dihapus',
+                    'Tipe Perangkat berhasil dihapus',
                     'success'
                     )
                 }

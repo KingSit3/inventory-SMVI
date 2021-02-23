@@ -25,7 +25,7 @@ class Users extends Component
     public function render()
     {
         $keyword = '%'.$this->keyword.'%';
-
+        
         $data = [
             'users' => User::where('name', 'like', $keyword)
                         ->orWhere('nik', 'like', $keyword)
@@ -139,6 +139,7 @@ class Users extends Component
             $this->validate(
                 // Rules
                 [
+                    // Gagal validasi unique
                     'nik' => ['numeric', Rule::unique('users', 'nik')->ignore($this->nik, 'nik')],
                     'name' => 'required',
                     'no_telp' => $noValidation,
@@ -146,11 +147,19 @@ class Users extends Component
                 $message
             );
         }
-        User::where('id', $this->userId)->update([
-            'nik' => $this->nik,
-            'name' => $this->name,
-            'no_telp' => $this->no_telp,
-        ]);
+
+        // Pakai fitur Try Catch Untuk mengatasi eror unique
+        try {
+            User::where('id', $this->userId)->update([
+                'nik' => $this->nik,
+                'name' => $this->name,
+                'no_telp' => $this->no_telp,
+            ]);
+        } catch (\Exception $ex) {
+            return $this->addError('nik', 'NIK Sudah Terdaftar');
+        }
+
+        
         
         // Panggil fungsi Reset data
         $this->resetData();

@@ -1,6 +1,5 @@
 <div>
-    {{-- entangle agar interaksi dari controller: setelah data di save, modal tertutup --}}
-    <div x-data="{isOpen: @entangle('isOpen').defer}" class="px-7 py-3 flex flex-col justify-between h-screen">
+    <div class="px-7 py-3 flex flex-col justify-between h-screen">
         <div>
             {{-- Top Bar --}}
             <div class="text-2xl text-center font-bold text-red-500 cursor-default">
