@@ -77,7 +77,7 @@ class Users extends Component
 
         // Save data
         User::create([
-            'name' => Str::title($this->name),
+            'name' => $this->name,
             'nik' => $this->nik,
             'no_telp' => $this->no_telp,
         ]);

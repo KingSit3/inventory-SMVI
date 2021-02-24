@@ -12,6 +12,11 @@ class User extends Model
     use SoftDeletes;
     protected $guarded = [];
 
+    public function setNameAttribute($value)
+    {
+        return $this->attributes['name'] = ucwords($value);
+    }
+
     // Ubah format deleted_at dengan Accessor
     public function getDeletedAtAttribute($value)
     {
