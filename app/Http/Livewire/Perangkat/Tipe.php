@@ -5,9 +5,11 @@ namespace App\Http\Livewire\Perangkat;
 use App\Models\tipePerangkat;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Tipe extends Component
 {
+    use WithPagination;
     public $idPerangkat, $dbPerangkat, $kode, $nama, $tipe, $submitType, $keyword;
     public $isOpen = false;
 
