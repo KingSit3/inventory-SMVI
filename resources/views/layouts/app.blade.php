@@ -102,7 +102,7 @@
                                     <svg class="group-hover:text-white duration-150 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                                     </svg>
-                                    <span class="ml-3 group-hover:text-white flex items-center duration-150">Tipe</span>
+                                    <span class="ml-3 group-hover:text-white flex items-center duration-150">Tipe Perangkat</span>
                                 </div>
                                 
                             </div>
@@ -136,18 +136,35 @@
                     </a>
                 </div>
 
-                <div class="mt-1 mr-3 group">
-                    <a href="/image">
-                    <div class="w-full pl-1 py-2 group-hover:bg-indigo-800 rounded duration-150">
-                        <div class="flex">
-                            <svg class="group-hover:text-white duration-150 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
-                            </svg>
-                            <span class="ml-3 group-hover:text-white flex items-center duration-150">Image</span>
+                {{-- Image --}}
+                    <div x-data="{open: false}">
+                        <div class="mt-1 mr-3 group">
+                            <a class="cursor-pointer" @click="open = true">
+                            <div class="w-full pl-1 py-2 group-hover:bg-indigo-800 rounded duration-150">
+                                <div class="flex">
+                                    <svg class="group-hover:text-white duration-150 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+                                    </svg>
+                                    <span class="ml-3 group-hover:text-white flex items-center duration-150">Image</span>
+                                </div>
+                                
+                            </div>
+                            </a>
                         </div>
-                    </div>
-                    </a>
-                </div>
+                        <div x-show="open"
+                            @click.away="open = false" 
+                            x-transition:enter="transition ease-out duration-200"
+                            x-transition:enter-start="opacity-0 transform scale-90"
+                            x-transition:enter-end="opacity-100 transform scale-100"
+                            x-transition:leave="transition ease-in duration-200"
+                            x-transition:leave-start="opacity-100 transform scale-100"
+                            x-transition:leave-end="opacity-0 transform scale-90"
+                            class="bg-gray-100 space-y-2 mr-4 py-2 rounded-xl">
+                            <a href="/image" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Image</a>
+                            <a href="/deletedimage" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Deleted Image</a>
+                        </div>
+                    </div>  
+                {{-- End Image --}}
                 
                 <div class="mt-1 mr-3 group">
                     <a href="/do">
