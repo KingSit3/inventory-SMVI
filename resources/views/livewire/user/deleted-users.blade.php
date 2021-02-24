@@ -92,7 +92,7 @@
                         // Pesan berhasil
                         Swal.fire(
                         'Berhasil!',
-                        'Data berhasil dikembalikkan',
+                        'User berhasil dikembalikkan',
                         'success'
                         )
                     }
