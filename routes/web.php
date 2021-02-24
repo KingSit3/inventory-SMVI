@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dashboard;
+use App\Http\Livewire\Perangkat\DeletedImage;
 use App\Http\Livewire\Perangkat\Tipe;
 use App\Http\Livewire\Perangkat\DeletedTipe;
 use App\Http\Livewire\User\Users;
@@ -25,4 +26,4 @@ Route::get('/deletedusers', DeletedUsers::class);
 Route::get('/tipe', Tipe::class);
 Route::get('/deletedtipe', DeletedTipe::class);
 Route::get('/image', Image::class);
-// Route::get('/deletedimage', Image::class);
+Route::get('/deletedimage', DeletedImage::class);
