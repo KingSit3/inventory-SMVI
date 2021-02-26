@@ -43,26 +43,13 @@ class Users extends Component
 
     public function tambah()
     {
-        // Jika nik == null maka jangan pakai validation unique
-        if ($this->nik === null) {
-            $nikValidation = '';
-        } else {
-            $nikValidation = 'unique:App\Models\User,nik|numeric';
-        }
-
-        if ($this->no_telp === null) {
-            $noValidation = '';
-        } else {
-            $noValidation = 'numeric';
-        }
-
         // Validasi
         $this->validate(
             // Rules
             [
-                'nik' => $nikValidation,
+                'nik' => 'unique:App\Models\User,nik|numeric|nullable',
                 'name' => 'required',
-                'no_telp' => $noValidation,
+                'no_telp' => 'numeric|nullable',
             ],
             // Message
             [
@@ -117,35 +104,16 @@ class Users extends Component
             'name.required' => 'Nama harus diisi',
             'no_telp.numeric' => 'Harus berupa nomor',
         ];
-
-        if ($this->no_telp === null) {
-            $noValidation = '';
-        } else {
-            $noValidation = 'numeric';
-        }
-
-        // Jika nik == null maka jangan pakai validation unique
-        if ($this->nik === null) {
-            $this->validate(
-                // Rules
-                [
-                    'name' => 'required',
-                    'no_telp' => $noValidation,
-                ],
-                $message
-            );
-        } else {
             $this->validate(
                 // Rules
                 [
                     // Gagal validasi unique
-                    'nik' => ['numeric', Rule::unique('users', 'nik')->ignore($this->nik, 'nik')],
+                    'nik' => ['numeric', 'nullable', Rule::unique('users', 'nik')->ignore($this->nik, 'nik')],
                     'name' => 'required',
-                    'no_telp' => $noValidation,
+                    'no_telp' => 'numeric|nullable',
                 ],
                 $message
             );
-        }
 
         // Pakai fitur Try Catch Untuk mengatasi eror unique
         try {
