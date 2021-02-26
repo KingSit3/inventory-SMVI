@@ -8,6 +8,7 @@ use App\Http\Livewire\Perangkat\DeletedTipe;
 use App\Http\Livewire\User\Users;
 use App\Http\Livewire\User\DeletedUsers;
 use App\Http\Livewire\Perangkat\Image;
+use App\Http\Livewire\Witel\Witel;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,3 +28,4 @@ Route::get('/tipe', Tipe::class);
 Route::get('/deletedtipe', DeletedTipe::class);
 Route::get('/image', Image::class);
 Route::get('/deletedimage', DeletedImage::class);
+Route::get('/witel', Witel::class);
