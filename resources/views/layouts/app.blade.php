@@ -123,18 +123,35 @@
                     </div>  
                 {{-- End Tipe --}}
 
-                <div class="mt-1 mr-3 group">
-                    <a href="/witel">
-                    <div class="w-full pl-1 py-2 group-hover:bg-indigo-800 rounded duration-150">
-                        <div class="flex">
-                            <svg class="group-hover:text-white duration-150 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            <span class="ml-3 group-hover:text-white flex items-center duration-150">Witel</span>
+                {{-- Witel --}}
+                    <div x-data="{open: false}">
+                        <div class="mt-1 mr-3 group">
+                            <a class="cursor-pointer" @click="open = true">
+                            <div class="w-full pl-1 py-2 group-hover:bg-indigo-800 rounded duration-150">
+                                <div class="flex">
+                                    <svg class="group-hover:text-white duration-150 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    <span class="ml-3 group-hover:text-white flex items-center duration-150">Witel</span>
+                                </div>
+                                
+                            </div>
+                            </a>
                         </div>
-                    </div>
-                    </a>
-                </div>
+                        <div x-show="open"
+                            @click.away="open = false" 
+                            x-transition:enter="transition ease-out duration-200"
+                            x-transition:enter-start="opacity-0 transform scale-90"
+                            x-transition:enter-end="opacity-100 transform scale-100"
+                            x-transition:leave="transition ease-in duration-200"
+                            x-transition:leave-start="opacity-100 transform scale-100"
+                            x-transition:leave-end="opacity-0 transform scale-90"
+                            class="bg-gray-100 space-y-2 mr-4 py-2 rounded-xl">
+                            <a href="witel" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Witel</a>
+                            <a href="deletedwitel" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Deleted Witel</a>
+                        </div>
+                    </div>  
+                {{-- End Witel --}}
 
                 {{-- Image --}}
                     <div x-data="{open: false}">

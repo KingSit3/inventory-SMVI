@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -15,6 +16,11 @@ class Witel extends Model
     public function Users() 
     {
       return $this->hasOne(User::class, 'id', 'id_pic');
+    }
+
+    public function getDeletedAtAttribute($value) 
+    {
+      return $this->attributes['deleted_at'] = Carbon::parse($value)->format('d-M-Y');
     }
 
 }
