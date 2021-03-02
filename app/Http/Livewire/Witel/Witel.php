@@ -11,7 +11,7 @@ class Witel extends Component
 {
     public  $idWitel, $dbWitel, $submitType, $nama, 
             $kode, $regional, $alamat;
-    public $picNik, $picId, $no_telp, $picName, $picSearch;
+    public $picNik, $picId, $no_telp, $picName, $picSearch, $dbUser;
     public $isOpen, $addNewPic = false;
 
     public function render()
@@ -83,7 +83,7 @@ class Witel extends Component
           ]);
 
         }catch (\Exception $ex) {
-          return $this->addError('picNik', 'PIC ada di Witel lain');
+          return $this->addError('picNik', 'Nik Sudah terdaftar');
         }
         
       } else {
@@ -99,8 +99,97 @@ class Witel extends Component
         } catch (\Exception $ex) {
           return $this->addError('picName', 'PIC Sudah ada di Witel lain');
         }
-        
+      }
 
+      // Panggil fungsi Reset data
+      $this->resetData();
+
+      // Tutup Modal
+      $this->isOpen = false;
+      $this->addNewPic = false;
+
+      // Panggil SweetAlert berhasil
+      $this->emit('success', 'Data Witel Berhasil Ditambahkan');
+
+    }
+
+    public function edit($id) 
+    {
+      $this->submitType = 'update';
+      $this->dbWitel = ModelsWitel::where('id', $id)->first();
+      $this->dbUser = ModelUser::where('id', $this->dbWitel['id_pic'])->first();
+
+      $this->idWitel = $this->dbWitel['id'];
+      // Value input
+      $this->nama = $this->dbWitel['nama_witel'];
+      $this->kode = $this->dbWitel['kode_witel'];
+      $this->regional = $this->dbWitel['regional'];
+      $this->alamat = $this->dbWitel['alamat_witel'];
+
+      $this->picNik = $this->dbUser['nik'];
+      $this->picName = $this->dbUser['name'];
+      $this->no_telp = $this->dbUser['no_telp'];
+    }
+
+    public function update() 
+    {
+      $this->validate(
+        // Rules
+        [
+          'regional' => 'nullable|numeric',
+          'picNik' => ['numeric', 'nullable', Rule::unique('users', 'nik')->ignore($this->picNik, 'nik')],
+          'picNik' => ['numeric', 'nullable', Rule::unique('users', 'nik')->ignore($this->picNik, 'nik')],
+          'kode' => [Rule::unique('witel', 'kode_witel')->ignore($this->kode, 'kode_witel')],
+          'no_telp' => 'numeric|nullable',
+        ],
+        // Message
+        [
+          'regional.numeric' => 'Regional harus Angka',
+          'picNik.unique' => 'Nik sudah ada',
+          'kode.unique' => 'Kode Witel sudah ada',
+          'picNik.numeric' => 'Harus berupa nomor',
+          'no_telp.numeric' => 'Harus berupa nomor',
+        ],
+      );
+
+      if ($this->addNewPic == true) {
+        // Tambah data user + witel
+
+        try {
+          ModelUser::create([
+            'name' => $this->picName,
+            'nik' => $this->picNik,
+            'no_telp' => $this->no_telp,
+          ]);
+
+          // Ambil id user terakhir
+          $getLastUser = ModelUser::get()->last();
+          $this->picId = $getLastUser['id'];
+  
+          ModelsWitel::where('id', $this->idWitel)->update([
+            'nama_witel' => $this->nama,
+            'kode_witel' => $this->kode,
+            'regional' => $this->regional,
+            'alamat_witel' => $this->alamat,
+            'id_pic' => $this->picId,
+          ]);
+
+        }catch (\Exception $ex) {
+          return $this->addError('picNik', 'Nik Sudah terdaftar');
+        }
+        
+      } else {
+        // try {
+          // Tambah data witel
+          ModelsWitel::where('id', $this->idWitel)->update([
+            'nama_witel' => $this->nama,
+            'kode_witel' => $this->kode,
+            'regional' => $this->regional,
+            'alamat_witel' => $this->alamat,
+          ]);
+        // } catch (\Exception $ex) {
+        //   return $this->addError('picName', 'PIC Sudah ada di Witel lain');
+        // }
       }
 
       // Panggil fungsi Reset data
@@ -132,7 +221,7 @@ class Witel extends Component
       $this->reset('picSearch');
     }
 
-    public function delete($id) 
+    public function delete($id)
     {
       ModelsWitel::find($id)->delete();
     }
@@ -143,13 +232,7 @@ class Witel extends Component
         $this->resetValidation();
         // Reset input field
         $this->reset('idWitel', 'dbWitel', 'submitType', 
-        'nama', 'kode', 'regional', 'alamat', 'picId', 'picName', 'picNik', 'no_telp');
+        'nama', 'kode', 'regional', 'alamat', 'picId', 
+        'picName', 'picNik', 'no_telp', 'dbUser', 'addNewPic');
     }
-
-    // Ambil data dari search pic
-    // Cari data di database berdasarkan nama pic
-    // ambil data dari database, lalu masukkan data tadi ke input field pic
-    // jika ada data maka, hanya ambil data id pic saja, lalu simpan ke tabel witel
-    // jika tidak ada data, maka ambil semua data dari input field, lalu simpan ke tabel user & witel
-    // untuk ambil data ID user terakhir dd(User::all()->last());
 }
