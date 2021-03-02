@@ -10,12 +10,19 @@ use Livewire\Component;
 class Witel extends Component
 {
     public  $idWitel, $dbWitel, $submitType, $nama, 
-            $kode, $regional, $alamat;
+            $kode, $regional, $alamat, $keyword;
     public $picNik, $picId, $no_telp, $picName, $picSearch, $dbUser;
     public $isOpen, $addNewPic = false;
 
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
     public function render()
     {
+      $keyword = '%'.$this->keyword.'%';
+
       $picQuery = '';
       $picSearch = '%'.$this->picSearch.'%';
       if (strlen($this->picSearch) > 0) {
@@ -25,7 +32,10 @@ class Witel extends Component
 
         $data = [
             // Joins using Relationship
-            'witel' => ModelsWitel::with('Users')->paginate(10),
+            'witel' => ModelsWitel::with('Users')
+                      ->where('nama_witel', 'like', $keyword)
+                      ->orWhere('kode_witel', 'like', $keyword)
+                      ->paginate(10),
             'pic' => $picQuery,
         ];
 
@@ -119,7 +129,7 @@ class Witel extends Component
       $this->dbWitel = ModelsWitel::where('id', $id)->first();
       $this->dbUser = ModelUser::where('id', $this->dbWitel['id_pic'])->first();
 
-      $this->idWitel = $this->dbWitel['id'];
+      $this->idWitel = $id;
       // Value input
       $this->nama = $this->dbWitel['nama_witel'];
       $this->kode = $this->dbWitel['kode_witel'];
@@ -179,17 +189,17 @@ class Witel extends Component
         }
         
       } else {
-        // try {
-          // Tambah data witel
+        try {
+          // Ubah data witel
           ModelsWitel::where('id', $this->idWitel)->update([
             'nama_witel' => $this->nama,
             'kode_witel' => $this->kode,
             'regional' => $this->regional,
             'alamat_witel' => $this->alamat,
           ]);
-        // } catch (\Exception $ex) {
-        //   return $this->addError('picName', 'PIC Sudah ada di Witel lain');
-        // }
+        } catch (\Exception $ex) {
+          return $this->addError('kode', 'Kode Witel Sudah ada');
+        }
       }
 
       // Panggil fungsi Reset data

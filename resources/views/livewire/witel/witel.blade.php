@@ -25,7 +25,7 @@
                                         <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
                                     </svg>
                                 </div>
-                                <input wire:model.debounce.200="keyword" class=" focus:ring-4 outline-none focus:outline-none ring-blue-300 rounded-full pl-7 py-1 duration-150" type="text" placeholder="Cari Witel">
+                                <input wire:model.debounce.200="keyword" class=" focus:ring-4 outline-none focus:outline-none ring-blue-300 rounded-full pl-7 py-1 duration-150" type="text" placeholder="Cari Kode & Nama Witel">
                             </div>
                         </div>
                 </div>
@@ -103,7 +103,7 @@
                                         </div>
                                         <div>
                                             <label for="regional" class="cursor-default">Regional</label>
-                                            <input id="regional" wire:model="regional" class="ring-2 ring-gray-300 rounded-md pl-2.5 pr-2.5 focus:outline-none outline-none duration-200 focus:ring-2 focus:ring-blue-400 focus:shadow-lg w-full" type="text">
+                                            <input id="regional" wire:model="regional" class="ring-2 ring-gray-300 rounded-md pl-2.5 pr-2.5 focus:outline-none outline-none duration-200 focus:ring-2 focus:ring-blue-400 focus:shadow-lg w-full" type="text" required>
                                             @error('regional')
                                                 <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                             @enderror
