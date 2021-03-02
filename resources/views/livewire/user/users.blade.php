@@ -44,7 +44,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($users as $user)
+                        @forelse ($users as $user)
                         <tr class="text-center items-center {{ ($loop->odd) ? "bg-indigo-100 bg-opacity-75" : "" }}">
                             <td>{{ ($users->firstItem()-1) + $loop->iteration }}</td>
                             <td>{{ ($user['nik']) ? $user['nik'] : '-' }}</td>
@@ -65,7 +65,13 @@
                                 </button>
                             </td>
                         </tr>
-                        @endforeach
+                        @empty
+                        <tr>
+                            <td class="text-center pt-5 text-red-500" colspan="5">
+                            Data Tidak ditemukan!
+                            </td>
+                        </tr>
+                        @endforelse
                     </tbody>
                 </table>
             {{-- End Table --}}

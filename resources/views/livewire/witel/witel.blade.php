@@ -43,7 +43,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($witel as $value)
+                        @forelse ($witel as $value)
                         <tr class="text-center items-center {{ ($loop->odd) ? "bg-indigo-100 bg-opacity-75" : "" }}">
                             <td>{{ ($witel->firstItem()-1) + $loop->iteration }}</td>
                             <td>{{ ($value['kode_witel']) ? $value['kode_witel'] : '-' }}</td>
@@ -64,7 +64,13 @@
                                 </button>
                             </td>
                         </tr>
-                        @endforeach
+                        @empty
+                        <tr>
+                            <td class="text-center pt-5 text-red-500" colspan="5">
+                            Data Tidak ditemukan!
+                            </td>
+                        </tr>
+                        @endforelse
                     </tbody>
                 </table>
             {{-- End Table --}}

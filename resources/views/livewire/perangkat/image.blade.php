@@ -42,7 +42,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($images as $value)
+                        @forelse ($images as $value)
                         <tr class="text-center items-center {{ ($loop->odd) ? "bg-indigo-100 bg-opacity-75" : "" }}">
                             <td>{{ ($images->firstItem()-1) + $loop->iteration }}</td>
                             <td>{{ ($value['kode_image']) ? $value['kode_image'] : '-' }}</td>
@@ -61,7 +61,13 @@
                                 </button>
                             </td>
                         </tr>
-                        @endforeach
+                        @empty
+                        <tr>
+                            <td class="text-center pt-5 text-red-500" colspan="3">
+                            Data Tidak ditemukan!
+                            </td>
+                        </tr>
+                        @endforelse
                     </tbody>
                 </table>
             {{-- End Table --}}

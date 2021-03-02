@@ -41,7 +41,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($tipe_perangkat as $value)
+                        @forelse ($tipe_perangkat as $value)
                         <tr class="text-center items-center {{ ($loop->odd) ? "bg-red-100 bg-opacity-75" : "" }}">
                             <td>{{ ($tipe_perangkat->firstItem()-1) + $loop->iteration }}</td>
                             <td>{{ ($value['kode_perangkat']) ? $value['kode_perangkat'] : '-' }}</td>
@@ -56,7 +56,13 @@
                                 </button>
                             </td>
                         </tr>
-                        @endforeach
+                        @empty
+                        <tr>
+                            <td class="text-center pt-5 text-red-500" colspan="6">
+                            Data Tidak ditemukan!
+                            </td>
+                        </tr>
+                        @endforelse
                     </tbody>
                 </table>
             {{-- End Table --}}
