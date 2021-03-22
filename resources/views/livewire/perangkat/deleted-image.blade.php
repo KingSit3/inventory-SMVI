@@ -34,15 +34,19 @@
                             <th class="w-1/12">No</th>
                             <th class="w-1/6">Kode Image</th>
                             <th class="w-1/5">Tanggal Dihapus</th>
-                            <th class="w-1/5">Aksi</th>
+                            @if (session('role') != 2)
+                                <th class="w-1/5">Aksi</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
                         @forelse ($image as $value)
                         <tr class="text-center items-center {{ ($loop->odd) ? "bg-red-100 bg-opacity-75" : "" }}">
-                            <td>{{ ($image->firstItem()-1) + $loop->iteration }}</td>
+                            <td class="py-2">{{ ($image->firstItem()-1) + $loop->iteration }}</td>
                             <td>{{ ($value['kode_image']) ? $value['kode_image'] : '-' }}</td>
                             <td>{{ $value['deleted_at'] }}</td>
+
+                            @if (session('role') != 2)
                             <td class="space-x-4 py-1 flex items-center justify-center">
                                 <button wire:click="$emit('restore', {{ $value['id'] }})" class="focus:outline-none">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 text-gray-500 hover:text-blue-500 py-1 duration-150" viewBox="0 0 20 20" fill="currentColor">
@@ -50,6 +54,8 @@
                                     </svg>
                                 </button>
                             </td>
+                            @endif
+                            
                         </tr>
                         @empty
                         <tr>

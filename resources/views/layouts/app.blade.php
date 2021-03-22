@@ -7,7 +7,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('vendor/sweetalert/sweetalert.all.js') }}"></script>
-    <title>Admin</title>
+    <title>Inventory</title>
     @livewireStyles
 </head>
 <body class="flex bg-gray-100">
@@ -195,17 +195,33 @@
                     </div>
                     </a>
                 </div>
+
+                @if (session('role') == 0)
+                {{-- Admin --}}
+                <div class="mt-1 mr-3 group">
+                    <a href="/admin">
+                    <div class="w-full pl-1 py-2 group-hover:bg-indigo-800 rounded duration-150">
+                        <div class="flex">
+                            <svg class="group-hover:text-white duration-150 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                            </svg>
+                            <span class="ml-3 group-hover:text-white flex items-center duration-150">Admin</span>
+                        </div>
+                    </div>
+                    </a>
+                </div>
+                {{-- End Admin --}}
+                @endif
+
             {{-- End SIdebar List --}}
             </div>
-            <div class="flex space-x-3 py-2 mb-2 border-t-2 border-indigo-600 border-opacity-80">
+            <div class="flex space-x-3 mb-2 border-t-2 border-indigo-600 border-opacity-80">
                 <div class="mx-4 flex items-center">
                     {{-- <img class="w-9 rounded-full" src="{{ asset('image/logo.jpg') }}" alt="Profile"> --}}
                 </div>
                 <div class="font-normal flex flex-col leading-8">
-                    <span class="text-white cursor-default">MyPonyAsia</span>
-                    <span class="text-xs font-semibold">
-                       <a class="hover:opacity-100 opacity-50" href="#">View Profile</a>
-                    </span>
+                    <span class="text-white cursor-default">{{ session('name') }}</span>
+                    <a class="hover:text-white font-semibold duration-200" href="/logout">Logout</a>
                 </div>
             </div>
         </div>

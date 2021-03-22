@@ -37,17 +37,21 @@
                             <th class="w-1/3">Nama</th>
                             <th class="w-1/5">No Telp</th>
                             <th class="w-1/5">Tanggal Dihapus</th>
-                            <th class="w-1/5">Aksi</th>
+                            @if (session('role') != 2)
+                                <th class="w-1/5">Aksi</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
                         @forelse ($users as $user)
                         <tr class="text-center items-center {{ ($loop->odd) ? "bg-red-100 bg-opacity-75" : "" }}">
-                            <td>{{ ($users->firstItem()-1) + $loop->iteration }}</td>
+                            <td class="py-2">{{ ($users->firstItem()-1) + $loop->iteration }}</td>
                             <td>{{ ($user['nik']) ? $user['nik'] : '-' }}</td>
                             <td class="truncate capitalize">{{ $user['name'] }}</td>
                             <td>{{ ($user['no_telp']) ? $user['no_telp'] : '-' }}</td>
                             <td>{{ $user['deleted_at'] }}</td>
+
+                            @if (session('role') != 2)
                             <td class="space-x-4 py-1 flex items-center justify-center">
                                 <button wire:click="$emit('restore', {{ $user['id'] }})" class="focus:outline-none">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 text-gray-500 hover:text-blue-500 py-1 duration-150" viewBox="0 0 20 20" fill="currentColor">
@@ -55,6 +59,8 @@
                                     </svg>
                                 </button>
                             </td>
+                            @endif
+                            
                         </tr>
                         @empty
                         <tr>

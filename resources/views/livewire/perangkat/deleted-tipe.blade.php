@@ -37,17 +37,21 @@
                             <th class="w-1/5">Nama Perangkat</th>
                             <th class="w-1/3">Tipe Perangkat</th>
                             <th class="w-1/5">Tanggal Dihapus</th>
-                            <th class="w-1/5">Aksi</th>
+                            @if (session('role') != 2)
+                                <th class="w-1/5">Aksi</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
                         @forelse ($tipe_perangkat as $value)
                         <tr class="text-center items-center {{ ($loop->odd) ? "bg-red-100 bg-opacity-75" : "" }}">
-                            <td>{{ ($tipe_perangkat->firstItem()-1) + $loop->iteration }}</td>
+                            <td class="py-2">{{ ($tipe_perangkat->firstItem()-1) + $loop->iteration }}</td>
                             <td>{{ ($value['kode_perangkat']) ? $value['kode_perangkat'] : '-' }}</td>
                             <td class="truncate capitalize">{{ $value['nama_perangkat'] }}</td>
                             <td>{{ ($value['tipe_perangkat']) ? $value['tipe_perangkat'] : '-' }}</td>
                             <td>{{ $value['deleted_at'] }}</td>
+
+                            @if (session('role') != 2)
                             <td class="space-x-4 py-1 flex items-center justify-center">
                                 <button wire:click="$emit('restore', {{ $value['id'] }})" class="focus:outline-none">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 text-gray-500 hover:text-blue-500 py-1 duration-150" viewBox="0 0 20 20" fill="currentColor">
@@ -55,6 +59,8 @@
                                     </svg>
                                 </button>
                             </td>
+                            @endif
+                            
                         </tr>
                         @empty
                         <tr>
