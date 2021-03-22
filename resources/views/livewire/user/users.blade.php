@@ -90,23 +90,24 @@
                 class="z-50 fixed inset-0 bg-black bg-opacity-50 flex justify-center items-start">
                 <div x-show.transition.duration.150ms="isOpen" @click.away="isOpen = false" x-on:click.away="$wire.resetData()" class="w-1/3 mt-10 bg-white opacity-100 rounded-xl shadow-xl">
                     <form wire:submit.prevent="{{ $submitType }}">
+                        
                         <div class="px-8 py-6">
                             <div class="text-center">
                                 <span class="text-xl font-semibold capitalize">{{ $submitType }} Data</span>
                             </div>
                             <div class="mt-4 space-y-1 mx-10 font-semibold">
                                 <p class="cursor-default">NIK</p>
-                                <input wire:model="nik" class="ring-2 ring-gray-300 rounded-md pl-2.5 pr-2.5 focus:outline-none outline-none duration-200 focus:ring-2 focus:ring-blue-400 focus:shadow-lg w-full"  type="text">
+                                <input wire:model="nik" class="inputBox" type="text">
                                 @error('nik')
                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                 @enderror
                                 <p class="cursor-default pt-3">Nama</p>
-                                <input wire:model="name" class="ring-2 ring-gray-300 rounded-md pl-2.5 pr-2.5 focus:outline-none outline-none duration-200 focus:ring-2 focus:ring-blue-400 focus:shadow-lg w-full"  type="text">
+                                <input wire:model="name" class="inputBox" type="text">
                                 @error('name')
                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                 @enderror
                                 <p class="cursor-default pt-3">Nomor Telepon</p>
-                                <input wire:model="no_telp" class="ring-2 ring-gray-300 rounded-md pl-2.5 pr-2.5 focus:outline-none outline-none duration-200 focus:ring-2 focus:ring-blue-400 focus:shadow-lg w-full"  type="text">
+                                <input wire:model="no_telp" class="inputBox" type="text">
                                 @error('no_telp')
                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                 @enderror

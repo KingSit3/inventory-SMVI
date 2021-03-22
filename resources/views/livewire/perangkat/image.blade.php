@@ -92,7 +92,7 @@
                             </div>
                             <div class="mt-4 space-y-1 mx-10 font-semibold">
                                 <p class="cursor-default">Kode Image</p>
-                                <input wire:model="kode" class="ring-2 ring-gray-300 rounded-md pl-2.5 pr-2.5 focus:outline-none outline-none duration-200 focus:ring-2 focus:ring-blue-400 focus:shadow-lg w-full"  type="text" required>
+                                <input wire:model="kode" class="inputBox"  type="text" required>
                                 @error('kode')
                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                 @enderror

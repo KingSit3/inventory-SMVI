@@ -97,19 +97,19 @@
                             {{-- Top section Modal --}}
                                 <div>
                                     <p class="cursor-default py-1">Nama Witel</p>
-                                    <input wire:model="nama" class="ring-2 ring-gray-300 rounded-md pl-2.5 pr-2.5 focus:outline-none outline-none duration-200 focus:ring-2 focus:ring-blue-400 focus:shadow-lg w-full" type="text" required>
+                                    <input wire:model="nama" class="inputBox" type="text" required>
 
                                     <div class="flex justify-between space-x-10">
                                         <div>
                                             <label for="kode" class="cursor-default">Kode Witel</label>
-                                            <input id="kode" wire:model="kode" class="ring-2 ring-gray-300 rounded-md pl-2.5 pr-2.5 focus:outline-none outline-none duration-200 focus:ring-2 focus:ring-blue-400 focus:shadow-lg w-full" type="text" required>
+                                            <input id="kode" wire:model="kode" class="inputBox" type="text" required>
                                             @error('kode')
                                                 <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                             @enderror
                                         </div>
                                         <div>
                                             <label for="regional" class="cursor-default">Regional</label>
-                                            <input id="regional" wire:model="regional" class="ring-2 ring-gray-300 rounded-md pl-2.5 pr-2.5 focus:outline-none outline-none duration-200 focus:ring-2 focus:ring-blue-400 focus:shadow-lg w-full" type="text" required>
+                                            <input id="regional" wire:model="regional" class="inputBox" type="text" required>
                                             @error('regional')
                                                 <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                             @enderror
@@ -117,7 +117,7 @@
                                     </div>
                                     
                                     <label for="alamat" class="cursor-default py-1">Alamat</label>
-                                    <textarea id="alamat" wire:model="alamat" class="ring-2 ring-gray-300 rounded-md pl-2.5 pr-2.5 focus:outline-none outline-none duration-200 focus:ring-2 focus:ring-blue-400 focus:shadow-lg w-full" required> </textarea>
+                                    <textarea id="alamat" wire:model="alamat" class="inputBox" required> </textarea>
                                 </div>
                             {{-- End Top section Modal --}}
                             </div>
@@ -137,7 +137,7 @@
                                                     </div>
                                                 </div>
                                                 {{-- End Load state Livewire --}}
-                                                <input wire:model="picSearch" @focus="picSearch = true" @click.away="picSearch = false" class="ring-2 ring-gray-300 rounded-md pl-2.5 pr-2.5 focus:outline-none outline-none duration-200 focus:ring-2 focus:ring-blue-400 focus:shadow-lg w-full"  type="text" placeholder="Cari Nama Pic...">
+                                                <input wire:model="picSearch" @focus="picSearch = true" @click.away="picSearch = false" class="inputBox"  type="text" placeholder="Cari Nama Pic...">
                                                 @if (strlen($picSearch) > 0)
                                                 <div x-show="picSearch">
                                                     <ul class="absolute mt-2 bg-white border-gray-500 border-opacity-25 border-2 shadow-lg rounded-md w-52 px-2 py-2 space-y-1">
@@ -161,7 +161,7 @@
                                     
                                         <div>
                                             <label for="picName" class="cursor-default">Nama PIC</label>
-                                            <input id="picName" wire:model="picName" class="ring-2 ring-gray-300 rounded-md pl-2.5 pr-2.5 focus:outline-none outline-none duration-200 focus:ring-2 focus:ring-blue-400 focus:shadow-lg w-full" type="text" required {{ ($addNewPic == false) ? 'disabled' : '' }}>
+                                            <input id="picName" wire:model="picName" class="inputBox" type="text" required {{ ($addNewPic == false) ? 'disabled' : '' }}>
                                             @error('picName')
                                                 <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                             @enderror
@@ -169,14 +169,14 @@
                                         <div class="flex justify-between space-x-10">
                                             <div>
                                                 <label for="picNik" class="cursor-default">NIK PIC</label>
-                                                <input id="picNik" wire:model="picNik" class="ring-2 ring-gray-300 rounded-md pl-2.5 pr-2.5 focus:outline-none outline-none duration-200 focus:ring-2 focus:ring-blue-400 focus:shadow-lg w-full" type="text" {{ ($addNewPic == false) ? 'disabled' : '' }}>
+                                                <input id="picNik" wire:model="picNik" class="inputBox" type="text" {{ ($addNewPic == false) ? 'disabled' : '' }}>
                                                 @error('picNik')
                                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                                 @enderror
                                             </div>
                                             <div>
                                                 <label for="no_telp" class="cursor-default">Nomor Telepon PIC</label>
-                                                <input id="no_telp" wire:model="no_telp" class="ring-2 ring-gray-300 rounded-md pl-2.5 pr-2.5 focus:outline-none outline-none duration-200 focus:ring-2 focus:ring-blue-400 focus:shadow-lg w-full"  type="text" {{ ($addNewPic == false) ? 'disabled' : '' }}>
+                                                <input id="no_telp" wire:model="no_telp" class="inputBox"  type="text" {{ ($addNewPic == false) ? 'disabled' : '' }}>
                                                 @error('no_telp')
                                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                                 @enderror
