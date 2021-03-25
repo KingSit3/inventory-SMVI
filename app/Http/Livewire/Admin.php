@@ -9,7 +9,7 @@ use Livewire\Component;
 
 class Admin extends Component
 {
-    public $nama, $password, $email;
+    public $nama, $password, $email, $status, $role, $adminId;
     public $submitType= '';
     public $isOpen = false;
 
@@ -64,11 +64,60 @@ class Admin extends Component
         $this->emit('success', 'Data Admin Berhasil Ditambahkan');
     }
 
+    public function edit($id) 
+    {
+      $adminDb = ModelsAdmin::where('id', $id)->first();
+
+      $this->submitType = 'update';
+      $this->adminId = $id;
+      $this->nama = $adminDb['name'];
+      $this->email = $adminDb['email'];
+      $this->role = $adminDb['role'];
+      $this->status = $adminDb['status'];
+    }
+
+    public function update() 
+    {
+        $this->validate(
+            // Rules
+            [
+                'nama' => 'required',
+            ],
+            // Message
+            [
+                'nama.required' => 'Nama Harus diisi',
+            ]
+        );
+        
+        //Kalau password kosong
+        if ($this->password == null) {
+            ModelsAdmin::where('id', $this->adminId)->update([
+                'role' => $this->role,
+                'status' => $this->status,
+            ]);
+        } else {
+            ModelsAdmin::where('id', $this->adminId)->update([
+                'password' => Hash::make($this->password),
+                'role' => $this->role,
+                'status' => $this->status,
+            ]);
+        }
+
+        $this->resetData();
+
+        // Tutup Modal
+        $this->isOpen = false;
+
+        // Panggil SweetAlert berhasil
+        $this->emit('success', 'Data Admin Berhasil Diubah');
+
+    }
+
     public function resetData() 
     {
         // Reset Validasi
         $this->resetValidation();
         // Reset input field
-        $this->reset('nama', 'password', 'email', 'submitType');
+        $this->reset('nama', 'password', 'email', 'submitType', 'status', 'adminId', 'role');
     }
 }

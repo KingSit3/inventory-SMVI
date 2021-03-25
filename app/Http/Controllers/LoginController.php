@@ -32,7 +32,6 @@ class LoginController extends Controller
               'login' => 1,
               'name' => $admin['name'],
               'role' => $admin['role'],
-              'last_update' => $admin['last_update'],
             ]);
 
             // Update Last Login
@@ -42,8 +41,9 @@ class LoginController extends Controller
 
             return redirect('/');
           } 
+        } else {
+          return redirect()->back()->with('gagal', 'Akun anda tidak aktif!')->withInput();
         }
-        return redirect()->back()->with('gagal', 'Akun anda tidak aktif!')->withInput();
       }
       return redirect()->back()->with('gagal', 'Password Atau Email Salah!')->withInput();
     }

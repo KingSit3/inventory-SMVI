@@ -2,7 +2,6 @@
 
 namespace App\Http;
 
-use App\Http\Middleware\IsLogin;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -67,7 +66,6 @@ class Kernel extends HttpKernel
         // Login Middleware
         'login' => \App\Http\Middleware\Login::class,
         'isLogin' => \App\Http\Middleware\IsLogin::class,
-        'admin' => \App\Http\Middleware\Admin::class,
-        'staff' => \App\Http\Middleware\Staff::class,
+        'selainSuperAdmin' => \App\Http\Middleware\SelainSuperAdmin::class,
     ];
 }

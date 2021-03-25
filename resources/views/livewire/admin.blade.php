@@ -27,7 +27,11 @@
                     </thead>
                     <tbody>
                         @forelse ($admin as $value)
-                        <tr class="text-center items-center {{ ($loop->odd) ? "bg-indigo-100 bg-opacity-75" : "" }}">
+                        @if ($value['status'] == 0)
+                            <tr class="text-center items-center text-gray-400 bg-red-100 bg-opacity-75">
+                        @else
+                            <tr class="text-center items-center">
+                        @endif
                             <td class="py-2">{{ ($admin->firstItem()-1) + $loop->iteration }}</td>
                             <td class="truncate capitalize">{{ ($value['name']) }}</td>
                             <td>{{ $value['email'] }}</td>
@@ -40,6 +44,7 @@
                                 </button>
                             </td>
                         </tr>
+                        
                         @empty
                         <tr>
                             <td class="text-center pt-5 text-red-500" colspan="5">
@@ -76,15 +81,29 @@
                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                 @enderror
                                 <p class="cursor-default pt-3">Email</p>
-                                <input wire:model="email" class="inputBox"  type="email" required>
+                                <input wire:model="email" class="inputBox"  type="email" disabled>
                                 @error('email')
                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                 @enderror
                                 <p class="cursor-default pt-3">Password</p>
-                                <input wire:model="password" class="inputBox"  type="password" required>
+                                <input wire:model="password" class="inputBox"  type="password">
                                 @error('password')
                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                 @enderror
+                                <p class="cursor-default pt-3">Role user</p>
+                                {{-- Wire:key sebagai pengganti opsi selected --}}
+                                <select class="inputBox py-1" wire:model="role">
+                                    <option wire:key="2" value="2">Staff</option>
+                                    <option wire:key="1" value="1">Admin</option>
+                                    <option wire:key="0" value="0">Super Admin</option>
+                                </select>
+
+                                <p class="cursor-default pt-3">Status User</p>
+                                <select class="inputBox py-1" wire:model="status">
+                                    {{-- Wire:key sebagai pengganti opsi selected --}}
+                                    <option wire:key="1" value="1">Aktif</option>
+                                    <option wire:key="0" value="0">Tidak aktif</option>
+                                </select>
                             </div>
                         </div>
                         <div class="border-t-2 border-gray-200 mt-5">

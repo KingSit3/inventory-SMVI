@@ -45,15 +45,11 @@ Route::middleware('login')->group(function(){
     Route::get('/admin', Admin::class);
 });
 
-// Kalau admin tidak boleh kesini
-Route::middleware('admin')->group(function(){
+// Kalau Selain super admin tidak boleh kesini
+Route::middleware('selainSuperAdmin')->group(function(){
     Route::get('/admin', Admin::class);
 });
 
-// Kalau Staff tidak boleh kesini
-Route::middleware('admin')->group(function(){
-    Route::get('/admin', Admin::class);
-});
 
 
 
