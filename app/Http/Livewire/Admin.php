@@ -49,8 +49,8 @@ class Admin extends Component
             'name' => $this->nama,
             'email' => $this->email,
             'password' => Hash::make($this->password),
-            'role' => 1,
-            'status' => 1,
+            'role' => $this->role,
+            'status' => $this->status,
             'last_login' => Carbon::now(),
         ]);
         

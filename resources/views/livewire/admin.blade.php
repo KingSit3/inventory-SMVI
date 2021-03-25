@@ -81,7 +81,7 @@
                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                 @enderror
                                 <label for="email" class="cursor-default pt-3">Email</label>
-                                <input  wire:model="email" id="email" class="inputBox"  type="email" disabled>
+                                <input  wire:model="email" id="email" class="inputBox"  type="email" {{ ($submitType == 'update') ? 'disabled' : ''}}>
                                 @error('email')
                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                 @enderror
@@ -91,16 +91,18 @@
                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                 @enderror
                                 <p class="cursor-default pt-3">Role user</p>
-                                {{-- Wire:key sebagai pengganti opsi selected --}}
-                                <select class="inputBox py-1" wire:model="role">
+                                <select class="inputBox py-1" wire:model="role" required>
+                                    {{-- Wire:key sebagai pengganti opsi selected --}}
+                                    <option value="">-- Pilih Role --</option>
                                     <option wire:key="2" value="2">Staff</option>
                                     <option wire:key="1" value="1">Admin</option>
                                     <option wire:key="0" value="0">Super Admin</option>
                                 </select>
 
                                 <p class="cursor-default pt-3">Status User</p>
-                                <select class="inputBox py-1" wire:model="status">
+                                <select class="inputBox py-1" wire:model="status" required>
                                     {{-- Wire:key sebagai pengganti opsi selected --}}
+                                    <option value="">-- Pilih Status --</option>
                                     <option wire:key="1" value="1">Aktif</option>
                                     <option wire:key="0" value="0">Tidak aktif</option>
                                 </select>
