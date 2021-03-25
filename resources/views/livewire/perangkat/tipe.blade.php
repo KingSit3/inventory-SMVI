@@ -99,18 +99,18 @@
                                 <span class="text-xl font-semibold capitalize">{{ $submitType }} Data</span>
                             </div>
                             <div class="mt-4 space-y-1 mx-10 font-semibold">
-                                <p class="cursor-default">Kode Perangkat</p>
-                                <input wire:model="kode" class="inputBox"  type="text" required>
+                                <label for="kode" class="cursor-default">Kode Perangkat</label>
+                                <input wire:model="kode" id="kode" class="inputBox"  type="text" required>
                                 @error('kode')
                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                 @enderror
-                                <p class="cursor-default pt-3">Nama Perangkat</p>
-                                <input wire:model="nama" class="inputBox"  type="text" required>
+                                <label for="nama" class="cursor-default pt-3">Nama Perangkat</label>
+                                <input wire:model="nama" id="nama" class="inputBox"  type="text" required>
                                 @error('nama')
                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                 @enderror
-                                <p class="cursor-default pt-3">Tipe Perangkat</p>
-                                <input wire:model="tipe" class="inputBox"  type="text" required>
+                                <label for="tipe" class="cursor-default pt-3">Tipe Perangkat</label>
+                                <input wire:model="tipe" id="tipe" class="inputBox" type="text" required>
                                 @error('tipe')
                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                 @enderror

@@ -103,18 +103,18 @@
                                 <span class="text-xl font-semibold capitalize">{{ $submitType }} Data</span>
                             </div>
                             <div class="mt-4 space-y-1 mx-10 font-semibold">
-                                <p class="cursor-default">NIK</p>
-                                <input wire:model="nik" class="inputBox" type="text">
+                                <label for="nik" class="cursor-default">NIK</label>
+                                <input wire:model="nik" class="inputBox" id="nik" type="text">
                                 @error('nik')
                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                 @enderror
-                                <p class="cursor-default pt-3">Nama</p>
-                                <input wire:model="name" class="inputBox" type="text">
+                                <label for="nama" class="cursor-default pt-3">Nama</label>
+                                <input wire:model="name" class="inputBox" id="nama" type="text">
                                 @error('name')
                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                 @enderror
-                                <p class="cursor-default pt-3">Nomor Telepon</p>
-                                <input wire:model="no_telp" class="inputBox" type="text">
+                                <label for="no_telp" class="cursor-default pt-3">Nomor Telepon</label>
+                                <input wire:model="no_telp" id="no_telp" class="inputBox" type="text">
                                 @error('no_telp')
                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                 @enderror

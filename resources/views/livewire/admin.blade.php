@@ -75,18 +75,18 @@
                                 <span class="text-xl font-semibold capitalize">{{ $submitType }} Data</span>
                             </div>
                             <div class="mt-4 space-y-1 mx-10 font-semibold">
-                                <p class="cursor-default">Nama</p>
-                                <input wire:model="nama" class="inputBox"  type="text" required>
+                                <label for="nama" class="cursor-default">Nama</label>
+                                <input wire:model="nama" id="nama" class="inputBox"  type="text" required>
                                 @error('nama')
                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                 @enderror
-                                <p class="cursor-default pt-3">Email</p>
-                                <input wire:model="email" class="inputBox"  type="email" disabled>
+                                <label for="email" class="cursor-default pt-3">Email</label>
+                                <input  wire:model="email" id="email" class="inputBox"  type="email" disabled>
                                 @error('email')
                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                 @enderror
-                                <p class="cursor-default pt-3">Password</p>
-                                <input wire:model="password" class="inputBox"  type="password">
+                                <label for="password" class="cursor-default pt-3">Password</label>
+                                <input wire:model="password" id="password" class="inputBox"  type="password">
                                 @error('password')
                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                 @enderror

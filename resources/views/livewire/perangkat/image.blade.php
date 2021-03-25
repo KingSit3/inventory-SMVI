@@ -100,8 +100,8 @@
                                 <span class="text-xl font-semibold capitalize">{{ $submitType }} Data</span>
                             </div>
                             <div class="mt-4 space-y-1 mx-10 font-semibold">
-                                <p class="cursor-default">Kode Image</p>
-                                <input wire:model="kode" class="inputBox"  type="text" required>
+                                <label for="kode" class="cursor-default">Kode Image</label>
+                                <input wire:model="kode" id="kode" class="inputBox"  type="text" required>
                                 @error('kode')
                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                 @enderror

@@ -103,8 +103,8 @@
                             <div class="mt-4 space-y-1 mx-10 font-semibold">
                             {{-- Top section Modal --}}
                                 <div>
-                                    <p class="cursor-default py-1">Nama Witel</p>
-                                    <input wire:model="nama" class="inputBox" type="text" required>
+                                    <label for="nama" class="cursor-default py-1">Nama Witel</label>
+                                    <input wire:model="nama" id="nama" class="inputBox" type="text" required>
 
                                     <div class="flex justify-between space-x-10">
                                         <div>
