@@ -25,6 +25,9 @@ class PerangkatSeeder extends Seeder
                 'kode_witel' => 'R02',
                 'no_do' => 'DO-501564',
                 'keterangan' => null,
+                'cek_status' => 'OBC',
+                'perolehan' => 'NCD',
+                'sp' => '4',
             ],
             [
                 'sn_lama' => null,
@@ -36,6 +39,9 @@ class PerangkatSeeder extends Seeder
                 'kode_witel' => 'R02',
                 'no_do' => 'DO-501564',
                 'keterangan' => 'Tambahan',
+                'cek_status' => 'OBC',
+                'perolehan' => 'NCD',
+                'sp' => '4',
             ],
             [
                 'sn_lama' => null,
@@ -47,6 +53,9 @@ class PerangkatSeeder extends Seeder
                 'kode_witel' => 'R02',
                 'no_do' => null,
                 'keterangan' => 'Tambahan',
+                'cek_status' => 'NCS',
+                'perolehan' => 'NCD',
+                'sp' => '5',
             ],
             [
                 'sn_lama' => null,
@@ -58,6 +67,9 @@ class PerangkatSeeder extends Seeder
                 'kode_witel' => 'R02',
                 'no_do' => 'DO-501562',
                 'keterangan' => 'Tambahan',
+                'cek_status' => 'OBC',
+                'perolehan' => 'NCD',
+                'sp' => '4',
             ],
             [
                 'sn_lama' => 'SGH516TYSV',
@@ -69,6 +81,9 @@ class PerangkatSeeder extends Seeder
                 'kode_witel' => 'P55',
                 'no_do' => 'DO-501562',
                 'keterangan' => null,
+                'cek_status' => 'OBC',
+                'perolehan' => 'NCD',
+                'sp' => '5',
             ],
             [
                 'sn_lama' => null,
@@ -80,6 +95,9 @@ class PerangkatSeeder extends Seeder
                 'kode_witel' => 'P55',
                 'no_do' => null,
                 'keterangan' => 'tambahan',
+                'cek_status' => 'NPS',
+                'perolehan' => 'NCD',
+                'sp' => '5',
             ],
         ]);
     }

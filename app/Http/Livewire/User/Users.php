@@ -6,7 +6,6 @@ use App\Models\User;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Illuminate\Support\Str;
 
 class Users extends Component
 {

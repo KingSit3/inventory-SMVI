@@ -74,8 +74,8 @@
                             x-transition:leave-start="opacity-100 transform scale-100"
                             x-transition:leave-end="opacity-0 transform scale-90"
                             class="bg-gray-100 space-y-2 mr-4 py-2 rounded-xl">
-                            <a href="users" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Users</a>
-                            <a href="deletedusers" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Deleted Users</a>
+                            <a href="/users" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Users</a>
+                            <a href="/deletedusers" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Deleted Users</a>
                         </div>
                     </div>  
                 {{-- End Users --}}
@@ -147,8 +147,8 @@
                             x-transition:leave-start="opacity-100 transform scale-100"
                             x-transition:leave-end="opacity-0 transform scale-90"
                             class="bg-gray-100 space-y-2 mr-4 py-2 rounded-xl">
-                            <a href="witel" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Witel</a>
-                            <a href="deletedwitel" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Deleted Witel</a>
+                            <a href="/witel" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Witel</a>
+                            <a href="/deletedwitel" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Deleted Witel</a>
                         </div>
                     </div>  
                 {{-- End Witel --}}

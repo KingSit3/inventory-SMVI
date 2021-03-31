@@ -6,9 +6,11 @@ use App\Models\User as ModelUser;
 use App\Models\Witel as ModelsWitel;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Witel extends Component
 {
+    use WithPagination;
     public  $idWitel, $dbWitel, $submitType, $nama, 
             $kode, $regional, $alamat, $keyword;
     public $picNik, $picId, $no_telp, $picName, $picSearch, $dbUser;
@@ -57,7 +59,7 @@ class Witel extends Component
           'regional' => 'nullable|numeric',
           'picNik' => ['numeric', 'nullable', Rule::unique('users', 'nik')->ignore($this->picNik, 'nik')],
           'kode' => 'unique:App\Models\Witel,kode_witel',
-          'no_telp' => 'numeric|nullable',
+          'no_telp' => 'nullable',
         ],
         // Message
         [

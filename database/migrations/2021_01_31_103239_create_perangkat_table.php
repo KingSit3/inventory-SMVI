@@ -19,9 +19,9 @@ class CreatePerangkatTable extends Migration
             $table->string('tipe_perangkat');
             $table->string('sn_pengganti')->unique();
             $table->string('sn_monitor')->unique()->nullable();
-            $table->bigInteger('id_user');
+            $table->bigInteger('id_user')->nullable();
             $table->string('kode_image');
-            $table->string('kode_witel');
+            $table->string('kode_witel')->nullable();
             $table->string('no_do')->nullable();
             $table->text('keterangan')->nullable();
             $table->softDeletes();
