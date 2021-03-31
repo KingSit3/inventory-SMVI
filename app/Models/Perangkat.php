@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -27,6 +29,11 @@ class Perangkat extends Model
     public function setSnLamaAttribute($value) 
     {
       return $this->attributes['sn_lama'] = strtoupper($value);
+    }
+
+    public function getDeletedAtAttribute($value) 
+    {
+      return $this->attributes['deleted_at'] = Carbon::parse($value)->format('d-M-Y');
     }
 
     public function Users() 

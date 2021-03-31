@@ -5,6 +5,7 @@ use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\LoginController;
 use App\Http\Livewire\Admin;
 use App\Http\Livewire\Perangkat\DeletedImage;
+use App\Http\Livewire\Perangkat\DeletedPerangkat;
 use App\Http\Livewire\Perangkat\Tipe;
 use App\Http\Livewire\Perangkat\DeletedTipe;
 use App\Http\Livewire\User\Users;
@@ -38,6 +39,7 @@ Route::middleware('login')->group(function(){
     Route::get('/logout', [LoginController::class, 'logout']);
 
     Route::get('/perangkat', Perangkat::class);
+    Route::get('/deletedperangkat', DeletedPerangkat::class);
 
     Route::get('/users', Users::class);
     Route::get('/user/{id}', Info::class);
