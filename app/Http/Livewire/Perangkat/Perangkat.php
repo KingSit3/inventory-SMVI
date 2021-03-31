@@ -32,6 +32,7 @@ class Perangkat extends Component
 
     public function render()
     {
+        $keyword = '%'.$this->keyword.'%';
 
         $hasilUser = '';
         if (strlen($this->userSearch) > 0) {
@@ -59,7 +60,9 @@ class Perangkat extends Component
             'sp' => SP::all()->sortDesc(),
             'image' => Image::all(),
             'tipe' => tipePerangkat::all(),
-            'perangkatData' => ModelsPerangkat::with(['Users', 'Witel'])->paginate(10),
+            'perangkatData' => ModelsPerangkat::with(['Users', 'Witel'])
+                            ->where('sn_pengganti', 'like', $keyword)
+                            ->paginate(10),
         ];
 
         return view('livewire.perangkat.perangkat', $data)
