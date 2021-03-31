@@ -156,7 +156,7 @@
                                         <p class="cursor-default pt-2">Tipe Perangkat</p>
                                         <select class="inputBox py-1" wire:model="tipePerangkat" required>
                                             {{-- Wire:key sebagai pengganti opsi selected --}}
-                                            <option>-- Pilih Tipe Perangkat --</option>
+                                            <option wire:key="" value="">-- Pilih Tipe Perangkat --</option>
                                             @foreach ($tipe as $item)
                                                 <option wire:key="{{ $item['kode_perangkat'] }}" value="{{ $item['kode_perangkat'] }}">{{ $item['nama_perangkat'] }}</option>
                                             @endforeach
@@ -302,7 +302,8 @@
                                 <div class="w-1/2">
                                     <p class="cursor-default pt-2">SP</p>
                                     <select class="inputBox py-1" wire:model="spPerangkat" required>
-                                        <option value="">--Pilih Sp--</option>
+                                        {{-- Sengaja di kosongkan --}}
+                                        <option wire:key="" value="">--Pilih Sp--</option>
                                         {{-- Wire:key sebagai pengganti opsi selected --}}
                                         @foreach ($sp as $item)
                                             <option wire:key="{{ $item['nama_sp'] }}" value="{{ $item['nama_sp'] }}">{{ $item['nama_sp'] }}</option>
@@ -316,16 +317,16 @@
                                         <p class="cursor-default pt-2">Cek Status</p>
                                         <select class="inputBox py-1" wire:model="cekStatus">
                                             <option value="">Tidak ada</option>
-                                            <option value="NPS">NPS</option>
-                                            <option value="OBC">OBC</option>
+                                            <option wire:key="NPS" value="NPS">NPS</option>
+                                            <option wire:key="OBC" value="OBC">OBC</option>
                                         </select>
                                     </div>
                                     <div class="w-1/2">
                                         <p class="cursor-default pt-2">Perolehan</p>
                                         <select class="inputBox py-1" wire:model="perolehan" required>
                                             <option value="">-- Pilih Perolehan --</option>
-                                            <option value="NCD">NCD</option>
-                                            <option value="COD">COD</option>
+                                            <option wire:key="NCD" value="NCD">NCD</option>
+                                            <option wire:key="COD" value="COD">COD</option>
                                         </select>
                                     </div>
                                 </div>

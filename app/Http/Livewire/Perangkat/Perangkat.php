@@ -17,6 +17,7 @@ class Perangkat extends Component
 { 
     use WithPagination;
     public $tipePerangkat, $sn_lama, $sn_pengganti, $sn_monitor, $imagePerangkat, $cekStatus, $perolehan, $spPerangkat, $ket;
+    public $dbPerangkat, $perangkatId, $dbWitel, $dbUser;
     public $namaUser, $nikUser, $telpUser, $userSearch, $userId;
     public $witel, $witelSearch, $witelKode;
     public $kodeDo, $doId, $doSearch;
@@ -31,6 +32,7 @@ class Perangkat extends Component
 
     public function render()
     {
+
         $hasilUser = '';
         if (strlen($this->userSearch) > 0) {
             $this->addUser = false;
@@ -58,14 +60,7 @@ class Perangkat extends Component
             'image' => Image::all(),
             'tipe' => tipePerangkat::all(),
             'perangkatData' => ModelsPerangkat::with(['Users', 'Witel'])->paginate(10),
-            // 'perangkatData' => ModelsPerangkat::paginate(10),
-            // 'perangkatData' => DB::table('perangkat')
-            //                     ->join('users', 'id_user', '=', 'users.id')
-            //                     ->join('witel', 'perangkat.kode_witel', '=', 'witel.kode_witel')
-            //                     ->paginate(3),
         ];
-
-        // dd($data['perangkatData']);
 
         return view('livewire.perangkat.perangkat', $data)
         ->extends('layouts.app');
@@ -78,7 +73,6 @@ class Perangkat extends Component
 
     public function tambah() 
     {
-
         if ($this->addUser == true) {
             $nikValidate = ['nullable', 'numeric', Rule::unique('users', 'nik')->ignore($this->nikUser, 'nik')];
         } else {
@@ -143,7 +137,7 @@ class Perangkat extends Component
                     'perolehan' => $this->perolehan,
                 ]);
             }catch (\Exception $ex) {
-                throw $ex;
+                return $this->addError('sn_lama', 'Sn Sudah ada');
             }
         }
 
@@ -155,6 +149,125 @@ class Perangkat extends Component
 
         // Panggil SweetAlert berhasil
         $this->emit('success', 'Data Witel Berhasil Ditambahkan');
+    }
+
+    public function delete($id)
+    {
+      ModelsPerangkat::where(['id' => $id])->delete();
+    }
+
+    public function edit($id) 
+    {
+        $this->submitType = 'update';
+        $this->dbPerangkat = ModelsPerangkat::where('id', $id)->first();
+        if ($this->dbPerangkat['id_user'] != null) {
+            $this->dbUser = User::where('id', $this->dbPerangkat['id_user'])->first();
+            $this->namaUser = $this->dbUser['name'];
+            $this->nikUser = $this->dbUser['nik'];
+            $this->telpUser = $this->dbUser['no_telp'];
+            $this->userId = $this->dbPerangkat['id_user'];
+        }
+        if ($this->dbPerangkat['kode_witel'] != null) {
+            $this->dbWitel = Witel::where('kode_witel', $this->dbPerangkat['kode_witel'])->first();
+            $this->witel = $this->dbWitel['nama_witel'];
+            $this->witelKode = $this->dbWitel['kode_witel'];
+        }
+
+        $this->dbTipePerangkat = tipePerangkat::where('kode_perangkat', $this->dbPerangkat['tipe_perangkat'])->first();
+        // Masukkan value ID
+        $this->perangkatId = $id;
+
+        $this->sn_lama = $this->dbPerangkat['sn_lama'];
+        $this->tipePerangkat = $this->dbTipePerangkat['kode_perangkat'];
+        $this->sn_pengganti = $this->dbPerangkat['sn_pengganti'];
+        $this->sn_monitor = $this->dbPerangkat['sn_monitor'];
+        $this->imagePerangkat = $this->dbPerangkat['kode_image'];
+        $this->kodeDo = $this->dbPerangkat['no_do'];
+        $this->ket = $this->dbPerangkat['keterangan'];
+        $this->cekStatus = $this->dbPerangkat['cek_status'];
+        $this->spPerangkat = $this->dbPerangkat['sp'];
+        $this->perolehan = $this->dbPerangkat['perolehan'];
+    }
+
+    public function update() 
+    {
+        if ($this->addUser == true) {
+            $nikValidate = ['nullable', 'numeric', Rule::unique('users', 'nik')->ignore($this->nikUser, 'nik')];
+        } else {
+            $nikValidate = '';
+        }
+
+        $this->validate([
+            'sn_lama' => [Rule::unique('perangkat', 'sn_lama')->ignore($this->sn_lama, 'sn_lama'), 'nullable'],
+            // 'sn_lama' => ['unique:App\Models\Perangkat,sn_lama,'.$this->sn_lama, 'nullable'],
+            'tipePerangkat' => 'required',
+            'sn_pengganti' => [Rule::unique('perangkat', 'sn_pengganti')->ignore($this->sn_pengganti, 'sn_pengganti')],
+            'sn_monitor' => [Rule::unique('perangkat', 'sn_monitor')->ignore($this->sn_monitor, 'sn_monitor'), 'nullable'],
+            'nikUser' => $nikValidate,
+            'imagePerangkat' => 'required',
+        ]);
+
+        if ($this->addUser == true) {
+            // Jika tambah user
+            try {
+                User::create([
+                'name' => $this->namaUser,
+                'nik' => $this->nikUser,
+                'no_telp' => $this->telpUser,
+                ]);
+
+            // Ambil id user terakhir
+            $getLastUser = User::get()->last();
+            $this->userId = $getLastUser['id'];
+
+                ModelsPerangkat::where('id', $this->perangkatId)->update([
+                    'sn_lama' => $this->sn_lama,
+                    'tipe_perangkat' => $this->tipePerangkat,
+                    'sn_pengganti' => $this->sn_pengganti,
+                    'sn_monitor' => $this->sn_monitor,
+                    'id_user' => $this->userId,
+                    'kode_image' => $this->imagePerangkat,
+                    'kode_witel' => $this->witelKode,
+                    'no_do' => $this->kodeDo,
+                    'keterangan' => $this->ket,
+                    'cek_status' => $this->cekStatus,
+                    'sp' => $this->spPerangkat,
+                    'perolehan' => $this->perolehan,
+                ]);
+
+            } catch (\Throwable $th) {
+                return $this->addError('nikUser', 'Nik Sudah terdaftar');
+            }
+            
+        } else {
+            try {
+                ModelsPerangkat::where('id', $this->perangkatId)->update([
+                    'sn_lama' => $this->sn_lama,
+                    'tipe_perangkat' => $this->tipePerangkat,
+                    'sn_pengganti' => $this->sn_pengganti,
+                    'sn_monitor' => $this->sn_monitor,
+                    'id_user' => $this->userId,
+                    'kode_image' => $this->imagePerangkat,
+                    'kode_witel' => $this->witelKode,
+                    'no_do' => $this->kodeDo,
+                    'keterangan' => $this->ket,
+                    'cek_status' => $this->cekStatus,
+                    'sp' => $this->spPerangkat,
+                    'perolehan' => $this->perolehan,
+                ]);
+            }catch (\Throwable $th) {
+                return $this->addError('sn_lama', 'Sn Sudah ada');
+            }
+        }
+
+        // Panggil fungsi Reset data
+        $this->resetData();
+
+        // Tutup Modal
+        $this->isOpen = false;
+
+        // Panggil SweetAlert berhasil
+        $this->emit('success', 'Data Witel Berhasil Diubah');
     }
 
     public function chooseUser($id) 
@@ -197,4 +310,5 @@ class Perangkat extends Component
         // Reset input field
         $this->reset('submitType', 'tipePerangkat', 'userSearch', 'witelSearch', 'doSearch', 'sn_lama', 'sn_pengganti', 'sn_monitor', 'imagePerangkat', 'witel', 'kodeDo', 'spPerangkat', 'cekStatus', 'perolehan', 'ket');
     }
+
 }
