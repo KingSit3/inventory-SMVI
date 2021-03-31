@@ -31,11 +31,11 @@ class Perangkat extends Model
 
     public function Users() 
     {
-      return $this->hasOne(User::class, 'id', 'id_user');
+      return $this->hasOne(User::class, 'id', 'id_user')->withTrashed();
     }
 
     public function Witel() 
     {
-      return $this->hasOne(Witel::class, 'kode_witel', 'kode_witel');
+      return $this->hasOne(Witel::class, 'kode_witel', 'kode_witel')->withTrashed();
     }
 }

@@ -15,7 +15,7 @@ class Witel extends Model
     // Joins to user table
     public function Users() 
     {
-      return $this->hasOne(User::class, 'id', 'id_pic');
+      return $this->hasOne(User::class, 'id', 'id_pic')->withTrashed();
     }
 
     public function getDeletedAtAttribute($value) 
