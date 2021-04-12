@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\LoginController;
 use App\Http\Livewire\Admin;
+use App\Http\Livewire\DeliveryOrder\DeletedDeliveryOrder;
+use App\Http\Livewire\DeliveryOrder\DeliveryOrder;
+use App\Http\Livewire\DeliveryOrder\DeliveryOrderInfo;
 use App\Http\Livewire\Perangkat\DeletedImage;
 use App\Http\Livewire\Perangkat\DeletedPerangkat;
 use App\Http\Livewire\Perangkat\Tipe;
@@ -40,6 +43,10 @@ Route::middleware('login')->group(function(){
 
     Route::get('/perangkat', Perangkat::class);
     Route::get('/deletedperangkat', DeletedPerangkat::class);
+
+    Route::get('/deliveryorder', DeliveryOrder::class);
+    Route::get('/deleteddeliveryorder', DeletedDeliveryOrder::class);
+    Route::get('/do/{id}', DeliveryOrderInfo::class);
 
     Route::get('/users', Users::class);
     Route::get('/user/{id}', Info::class);

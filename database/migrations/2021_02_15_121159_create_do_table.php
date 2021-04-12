@@ -13,9 +13,11 @@ class CreateDoTable extends Migration
      */
     public function up()
     {
-        Schema::create('do', function (Blueprint $table) {
+        Schema::create('tbl_do', function (Blueprint $table) {
             $table->id();
             $table->string('no_do')->unique();
+            $table->string('id_witel');
+            $table->timestamp('tanggal_do');
             $table->softDeletes();
             $table->timestamps();
         });
