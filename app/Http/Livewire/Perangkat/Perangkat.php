@@ -161,10 +161,12 @@ class Perangkat extends Component
 
     public function edit($id) 
     {
+        // dd($id);
         $this->submitType = 'update';
         $this->dbPerangkat = ModelsPerangkat::where('id', $id)->first();
         if ($this->dbPerangkat['id_user'] != null) {
             $this->dbUser = User::where('id', $this->dbPerangkat['id_user'])->first();
+            dd($this->dbUser);
             $this->namaUser = $this->dbUser['name'];
             $this->nikUser = $this->dbUser['nik'];
             $this->telpUser = $this->dbUser['no_telp'];
@@ -311,7 +313,7 @@ class Perangkat extends Component
         // Reset Validasi
         $this->resetValidation();
         // Reset input field
-        $this->reset('submitType', 'tipePerangkat', 'userSearch', 'witelSearch', 'doSearch', 'sn_lama', 'sn_pengganti', 'sn_monitor', 'imagePerangkat', 'witel', 'kodeDo', 'spPerangkat', 'cekStatus', 'perolehan', 'ket');
+        $this->reset('submitType', 'tipePerangkat', 'userSearch', 'witelSearch', 'doSearch', 'sn_lama', 'sn_pengganti', 'sn_monitor', 'imagePerangkat', 'witel', 'kodeDo', 'spPerangkat', 'cekStatus', 'perolehan', 'ket', 'namaUser', 'nikUser', 'telpUser');
     }
 
 }
