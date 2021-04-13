@@ -22,7 +22,7 @@ class DoSeeder extends Seeder
             ],
             [
                 'no_do' => 'DO-501563',
-                'id_witel' => '4',
+                'id_witel' => '3',
                 'tanggal_do' => '2021-04-04 22:08:50',
             ],
             [

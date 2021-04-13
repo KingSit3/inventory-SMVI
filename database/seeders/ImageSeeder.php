@@ -15,18 +15,18 @@ class ImageSeeder extends Seeder
      */
     public function run()
     {
-        Image::factory(50)->create();
+        // Image::factory(50)->create();
 
-        // DB::table('image')->insert([
-        //     [
-        //         'kode_image' => 'GEN',
-        //     ],
-        //     [
-        //         'kode_image' => 'FIN3',
-        //     ],
-        //     [
-        //         'kode_image' => 'FIN4',
-        //     ],
-        // ]);
+        DB::table('image')->insert([
+            [
+                'kode_image' => 'GEN',
+            ],
+            [
+                'kode_image' => 'FIN3',
+            ],
+            [
+                'kode_image' => 'FIN4',
+            ],
+        ]);
     }
 }
