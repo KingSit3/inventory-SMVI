@@ -16,13 +16,13 @@ class CreatePerangkatTable extends Migration
         Schema::create('perangkat', function (Blueprint $table) {
             $table->id();
             $table->string('sn_lama')->unique()->nullable();
-            $table->string('id_tipe');
+            $table->bigInteger('id_tipe');
             $table->string('sn_pengganti')->unique();
             $table->string('sn_monitor')->unique()->nullable();
             $table->bigInteger('id_user')->nullable();
-            $table->string('id_image');
-            $table->string('id_witel')->nullable();
-            $table->string('id_do')->nullable();
+            $table->bigInteger('id_image');
+            $table->bigInteger('id_witel')->nullable();
+            $table->bigInteger('id_do')->nullable();
             $table->text('keterangan')->nullable();
             $table->softDeletes();
             $table->timestamps();

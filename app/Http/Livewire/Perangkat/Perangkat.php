@@ -16,10 +16,10 @@ use Livewire\WithPagination;
 class Perangkat extends Component
 { 
     use WithPagination;
-    public $tipePerangkat, $sn_lama, $sn_pengganti, $sn_monitor, $imagePerangkat, $cekStatus, $perolehan, $spPerangkat, $ket;
+    public $tipePerangkat, $sn_lama, $sn_pengganti, $sn_monitor, $imagePerangkat, $cekStatus, $perolehan, $spPerangkat, $ket, $oldSnLama, $oldSnPengganti, $oldSnMonitor;
     public $dbPerangkat, $perangkatId, $dbWitel, $dbUser;
     public $namaUser, $nikUser, $telpUser, $userSearch, $userId;
-    public $witel, $witelSearch, $witelKode;
+    public $witel, $witelSearch, $witelId;
     public $kodeDo, $doId, $doSearch;
 
     public $submitType, $keyword = '';
@@ -60,7 +60,7 @@ class Perangkat extends Component
             'sp' => SP::all()->sortDesc(),
             'image' => Image::all(),
             'tipe' => tipePerangkat::all(),
-            'perangkatData' => ModelsPerangkat::with(['Users', 'Witel'])
+            'perangkatData' => ModelsPerangkat::with(['Users', 'Witel', 'DeliveryOrder', 'TipePerangkat'])
                             ->where('sn_pengganti', 'like', $keyword)
                             ->paginate(10),
         ];
@@ -90,6 +90,7 @@ class Perangkat extends Component
             'nikUser' => $nikValidate,
             'imagePerangkat' => 'required',
         ]);
+        // dd("berhasil validasi");
 
         if ($this->addUser == true) {
             // Jika tambah user
@@ -106,13 +107,13 @@ class Perangkat extends Component
 
                 ModelsPerangkat::create([
                     'sn_lama' => $this->sn_lama,
-                    'tipe_perangkat' => $this->tipePerangkat,
+                    'id_tipe' => $this->tipePerangkat,
                     'sn_pengganti' => $this->sn_pengganti,
                     'sn_monitor' => $this->sn_monitor,
                     'id_user' => $this->userId,
-                    'kode_image' => $this->imagePerangkat,
-                    'kode_witel' => $this->witelKode,
-                    'no_do' => $this->kodeDo,
+                    'id_image' => $this->imagePerangkat,
+                    'id_witel' => $this->witelId,
+                    'id_do' => $this->doId,
                     'keterangan' => $this->ket,
                     'cek_status' => $this->cekStatus,
                     'sp' => $this->spPerangkat,
@@ -127,13 +128,13 @@ class Perangkat extends Component
             try {
                 ModelsPerangkat::create([
                     'sn_lama' => $this->sn_lama,
-                    'tipe_perangkat' => $this->tipePerangkat,
+                    'id_tipe' => $this->tipePerangkat,
                     'sn_pengganti' => $this->sn_pengganti,
                     'sn_monitor' => $this->sn_monitor,
                     'id_user' => $this->userId,
-                    'kode_image' => $this->imagePerangkat,
-                    'kode_witel' => $this->witelKode,
-                    'no_do' => $this->kodeDo,
+                    'id_image' => $this->imagePerangkat,
+                    'id_witel' => $this->witelId,
+                    'id_do' => $this->doId,
                     'keterangan' => $this->ket,
                     'cek_status' => $this->cekStatus,
                     'sp' => $this->spPerangkat,
@@ -149,6 +150,7 @@ class Perangkat extends Component
 
         // Tutup Modal
         $this->isOpen = false;
+        $this->addUser = false;
 
         // Panggil SweetAlert berhasil
         $this->emit('success', 'Data Witel Berhasil Ditambahkan');
@@ -161,33 +163,46 @@ class Perangkat extends Component
 
     public function edit($id) 
     {
-        // dd($id);
         $this->submitType = 'update';
         $this->dbPerangkat = ModelsPerangkat::where('id', $id)->first();
+        $this->perangkatId = $id;
+
         if ($this->dbPerangkat['id_user'] != null) {
-            $this->dbUser = User::where('id', $this->dbPerangkat['id_user'])->first();
-            dd($this->dbUser);
+            // dd("masuk");
+            $this->dbUser = User::where('id', $this->dbPerangkat['id_user'])->withTrashed()->first();
             $this->namaUser = $this->dbUser['name'];
             $this->nikUser = $this->dbUser['nik'];
             $this->telpUser = $this->dbUser['no_telp'];
             $this->userId = $this->dbPerangkat['id_user'];
         }
-        if ($this->dbPerangkat['kode_witel'] != null) {
-            $this->dbWitel = Witel::where('kode_witel', $this->dbPerangkat['kode_witel'])->first();
+
+        if ($this->dbPerangkat['id_witel'] != null) {
+            
+            $this->dbWitel = Witel::where('id', $this->dbPerangkat['id_witel'])->withTrashed()->first();
             $this->witel = $this->dbWitel['nama_witel'];
-            $this->witelKode = $this->dbWitel['kode_witel'];
+            $this->witelId = $this->dbWitel['id_witel'];
         }
 
-        $this->dbTipePerangkat = tipePerangkat::where('kode_perangkat', $this->dbPerangkat['tipe_perangkat'])->first();
-        // Masukkan value ID
-        $this->perangkatId = $id;
+        if ($this->dbPerangkat['id_do'] != null) {
+            
+
+            $dbDo = DoModel::where('id', $this->dbPerangkat['id_do'])->withTrashed()->first();
+            $this->doId = $this->dbPerangkat['id_do'];
+            $this->kodeDo = $dbDo['no_do'];
+        }
+
+        // $this->dbTipePerangkat = tipePerangkat::where('id', $this->dbPerangkat['id_tipe'])->withTrashed()->first();
+        $this->oldSnLama = $this->dbPerangkat['sn_lama'];
+        $this->oldSnPengganti = $this->dbPerangkat['sn_pengganti'];
+        $this->oldSnMonitor = $this->dbPerangkat['sn_monitor'];
+        
 
         $this->sn_lama = $this->dbPerangkat['sn_lama'];
-        $this->tipePerangkat = $this->dbTipePerangkat['kode_perangkat'];
+        $this->tipePerangkat = $this->dbPerangkat['id_tipe'];
         $this->sn_pengganti = $this->dbPerangkat['sn_pengganti'];
         $this->sn_monitor = $this->dbPerangkat['sn_monitor'];
-        $this->imagePerangkat = $this->dbPerangkat['kode_image'];
-        $this->kodeDo = $this->dbPerangkat['no_do'];
+        $this->imagePerangkat = $this->dbPerangkat['id_image'];
+        
         $this->ket = $this->dbPerangkat['keterangan'];
         $this->cekStatus = $this->dbPerangkat['cek_status'];
         $this->spPerangkat = $this->dbPerangkat['sp'];
@@ -203,11 +218,11 @@ class Perangkat extends Component
         }
 
         $this->validate([
-            'sn_lama' => [Rule::unique('perangkat', 'sn_lama')->ignore($this->sn_lama, 'sn_lama'), 'nullable'],
+            'sn_lama' => [Rule::unique('perangkat', 'sn_lama')->ignore($this->oldSnLama, 'sn_lama'), 'nullable'],
             // 'sn_lama' => ['unique:App\Models\Perangkat,sn_lama,'.$this->sn_lama, 'nullable'],
             'tipePerangkat' => 'required',
-            'sn_pengganti' => [Rule::unique('perangkat', 'sn_pengganti')->ignore($this->sn_pengganti, 'sn_pengganti')],
-            'sn_monitor' => [Rule::unique('perangkat', 'sn_monitor')->ignore($this->sn_monitor, 'sn_monitor'), 'nullable'],
+            'sn_pengganti' => [Rule::unique('perangkat', 'sn_pengganti')->ignore($this->oldSnPengganti, 'sn_pengganti')],
+            'sn_monitor' => [Rule::unique('perangkat', 'sn_monitor')->ignore($this->oldSnMonitor, 'sn_monitor'), 'nullable'],
             'nikUser' => $nikValidate,
             'imagePerangkat' => 'required',
         ]);
@@ -227,13 +242,13 @@ class Perangkat extends Component
 
                 ModelsPerangkat::where('id', $this->perangkatId)->update([
                     'sn_lama' => $this->sn_lama,
-                    'tipe_perangkat' => $this->tipePerangkat,
+                    'id_tipe' => $this->tipePerangkat,
                     'sn_pengganti' => $this->sn_pengganti,
                     'sn_monitor' => $this->sn_monitor,
                     'id_user' => $this->userId,
-                    'kode_image' => $this->imagePerangkat,
-                    'kode_witel' => $this->witelKode,
-                    'no_do' => $this->kodeDo,
+                    'id_image' => $this->imagePerangkat,
+                    'id_witel' => $this->witelId,
+                    'no_do' => $this->doId,
                     'keterangan' => $this->ket,
                     'cek_status' => $this->cekStatus,
                     'sp' => $this->spPerangkat,
@@ -248,20 +263,21 @@ class Perangkat extends Component
             try {
                 ModelsPerangkat::where('id', $this->perangkatId)->update([
                     'sn_lama' => $this->sn_lama,
-                    'tipe_perangkat' => $this->tipePerangkat,
+                    'id_tipe' => $this->tipePerangkat,
                     'sn_pengganti' => $this->sn_pengganti,
                     'sn_monitor' => $this->sn_monitor,
                     'id_user' => $this->userId,
-                    'kode_image' => $this->imagePerangkat,
-                    'kode_witel' => $this->witelKode,
-                    'no_do' => $this->kodeDo,
+                    'id_image' => $this->imagePerangkat,
+                    'id_witel' => $this->witelId,
+                    'id_do' => $this->doId,
                     'keterangan' => $this->ket,
                     'cek_status' => $this->cekStatus,
                     'sp' => $this->spPerangkat,
                     'perolehan' => $this->perolehan,
                 ]);
-            }catch (\Throwable $th) {
-                return $this->addError('sn_lama', 'Sn Sudah ada');
+            }catch (\Exception $ex) {
+                throw $ex;
+                // return $this->addError('sn_lama', 'Sn Sudah ada');
             }
         }
 
@@ -275,6 +291,12 @@ class Perangkat extends Component
         $this->emit('success', 'Data Witel Berhasil Diubah');
     }
 
+    public function addUser() 
+    {
+      $this->addUser = true;
+      $this->reset('userSearch', 'namaUser', 'nikUser', 'telpUser'); 
+    }
+
     public function chooseUser($id) 
     {
       $userData = User::where('id', $id)->first();
@@ -285,16 +307,10 @@ class Perangkat extends Component
       $this->reset('userSearch');
     }
 
-    public function addUser() 
-    {
-      $this->addUser = true;
-      $this->reset('userSearch', 'namaUser', 'nikUser', 'telpUser'); 
-    }
-
     public function chooseWitel($id) 
     {
         $witelData = Witel::where('id', $id)->first();
-        $this->witelKode = $witelData['kode_witel'];
+        $this->witelId = $id;
         $this->witel = $witelData['kode_witel'].' | '.$witelData['nama_witel'];
         $this->reset('witelSearch');
     }
@@ -313,7 +329,7 @@ class Perangkat extends Component
         // Reset Validasi
         $this->resetValidation();
         // Reset input field
-        $this->reset('submitType', 'tipePerangkat', 'userSearch', 'witelSearch', 'doSearch', 'sn_lama', 'sn_pengganti', 'sn_monitor', 'imagePerangkat', 'witel', 'kodeDo', 'spPerangkat', 'cekStatus', 'perolehan', 'ket', 'namaUser', 'nikUser', 'telpUser');
+        $this->reset('submitType', 'tipePerangkat', 'userSearch', 'witelSearch', 'doSearch', 'sn_lama', 'sn_pengganti', 'sn_monitor', 'imagePerangkat', 'witel', 'witelId', 'kodeDo', 'spPerangkat', 'cekStatus', 'perolehan', 'ket', 'namaUser', 'nikUser', 'telpUser');
     }
 
 }

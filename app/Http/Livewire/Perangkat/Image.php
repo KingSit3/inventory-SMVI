@@ -44,10 +44,6 @@ class Image extends Component
             // Rules
             [
                 'kode' => 'unique:App\Models\Image,kode_image',
-            ],
-            // Message
-            [
-                'kode.unique' => 'Kode Image sudah ada',
             ]
         );
 

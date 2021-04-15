@@ -46,10 +46,6 @@ class Tipe extends Component
             [
                 'kode' => 'unique:App\Models\tipePerangkat,kode_perangkat',
             ],
-            // Message
-            [
-                'kode.unique' => 'Kode Perangkat sudah ada',
-            ]
         );
 
         // $newNik = ;

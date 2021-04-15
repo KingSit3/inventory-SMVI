@@ -43,6 +43,16 @@ class Perangkat extends Model
 
     public function Witel() 
     {
-      return $this->hasOne(Witel::class, 'kode_witel', 'kode_witel')->withTrashed();
+      return $this->hasOne(Witel::class, 'id', 'id_witel')->withTrashed();
+    }
+
+    public function DeliveryOrder() 
+    {
+      return $this->hasOne(DoModel::class, 'id', 'id_do')->withTrashed();
+    }
+
+    public function TipePerangkat() 
+    {
+      return $this->hasOne(tipePerangkat::class, 'id', 'id_tipe')->withTrashed();
     }
 }

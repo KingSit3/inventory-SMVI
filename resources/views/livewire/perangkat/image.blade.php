@@ -93,7 +93,7 @@
             <div 
                 x-show="isOpen"
                 class="z-50 fixed inset-0 bg-black bg-opacity-50 flex justify-center items-start">
-                <div x-show.transition.duration.150ms="isOpen" @click.away="isOpen = false" x-on:click.away="$wire.resetData()" class="w-1/3 mt-10 bg-white opacity-100 rounded-xl shadow-xl">
+                <div x-show.transition.duration.150ms="isOpen" class="w-1/3 mt-10 bg-white opacity-100 rounded-xl shadow-xl">
                     <form wire:submit.prevent="{{ $submitType }}">
                         <div class="px-8 py-6">
                             <div class="text-center">
@@ -101,7 +101,7 @@
                             </div>
                             <div class="mt-4 space-y-1 mx-10 font-semibold">
                                 <label for="kode" class="cursor-default">Kode Image</label>
-                                <input wire:model="kode" id="kode" class="inputBox"  type="text" required>
+                                <input wire:model.defer="kode" id="kode" class="inputBox"  type="text" required>
                                 @error('kode')
                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                 @enderror

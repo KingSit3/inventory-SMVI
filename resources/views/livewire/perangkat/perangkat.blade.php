@@ -30,7 +30,7 @@
                                         <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
                                     </svg>
                                 </div>
-                                <input wire:model.debounce.200="keyword" class=" focus:ring-4 outline-none focus:outline-none ring-blue-300 rounded-full pl-7 py-1 duration-150" type="text" placeholder="Cari User & NIK...">
+                                <input wire:model.debounce.200="keyword" class=" focus:ring-4 outline-none focus:outline-none ring-blue-300 rounded-full pl-7 py-1 duration-150" type="text" placeholder="Cari Sn...">
                             </div>
                         </div>
                 </div>
@@ -55,37 +55,41 @@
                         @forelse ($perangkatData as $value)
                         <tr class="text-center items-center {{ ($loop->odd) ? "bg-indigo-100 bg-opacity-75" : "" }}">
                             <td class="py-2">{{ ($perangkatData->firstItem()-1) + $loop->iteration }}</td>
-                            <td>{{ ($value['tipe_perangkat']) ? $value['tipe_perangkat'] : '-' }}</td>
+                            <td>{{ $value['TipePerangkat']['kode_perangkat'] }}</td>
                             <td>{{ $value['sn_pengganti'] }}</td>
                             <td>{{ ($value['sn_monitor']) ? $value['sn_monitor'] : '-' }}</td>
-                            @if ($value['kode_witel'] != null)
+                            @if ($value['id_witel'] != null)
                                 <td class="truncate">{{ $value['witel']['nama_witel'] }}</td>
                             @else
                                 <td>-</td>
                             @endif
-                            @if ($value->id_user != null)
+                            @if ($value['id_user'] != null)
                                 <td class="truncate">{{ $value['users']['name'] }}</td>
                             @else
                                 <td>-</td>
                             @endif
-                            <td>{{ ($value['no_do']) ? $value['no_do'] : '-' }}</td>
+                            @if ($value['id_do'] != null)
+                                <td>{{ $value['deliveryOrder']['no_do'] }}</td>
+                            @else
+                                <td>-</td>
+                            @endif
                             <td>{{ ($value['sp']) ? $value['sp'] : '-' }}</td>
                             <td class="space-x-4 py-1 flex items-center justify-center">
 
-                                <a href="/user/{{ $value['id'] }}" class="focus:outline-none">
+                                <a href="/user/{{ $value['id'] }}" class="focus:outline-none" title="Info">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="w-6 text-gray-500 hover:text-blue-500 py-1 duration-150 font-bold" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>
                                 </a>
 
                                 @if (session('role') != 2)
-                                <button @click="isOpen = true" wire:click="edit({{ $value['id'] }})" class="focus:outline-none">
+                                <button @click="isOpen = true" wire:click="edit({{ $value['id'] }})" class="focus:outline-none" title="Edit">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="w-6 text-gray-500 hover:text-yellow-500 py-1 duration-150" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                     </svg>
                                 </button>
                                 
-                                <button wire:click="$emit('delete', {{ $value['id'] }})" class="focus:outline-none">
+                                <button wire:click="$emit('delete', {{ $value['id'] }})" class="focus:outline-none" title="Delete">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="w-6 text-gray-500 hover:text-red-500 py-1 duration-150" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                     </svg>
@@ -117,7 +121,7 @@
             <div 
                 x-show="isOpen"
                 class="z-50 fixed inset-0 bg-black bg-opacity-50 flex justify-center items-start overflow-y-auto">
-                <div x-show.transition.duration.150ms="isOpen" class="w-3/6 mt-5 bg-white opacity-100 rounded-xl shadow-xl">
+                <div x-show.transition.duration.150ms="isOpen" class="w-3/6 my-5 bg-white opacity-100 rounded-xl shadow-xl">
                     <form wire:submit.prevent="{{ $submitType }}">
                         <div class="px-8 py-6">
                             <div class="text-center">
@@ -127,7 +131,7 @@
                                 <div class="flex justify-between space-x-5">
                                     <div class="w-1/2">
                                         <label for="sn_lama" class="cursor-default">Serial Number lama</label>
-                                        <input wire:model="sn_lama" class="inputBox" id="sn_lama" type="text">
+                                        <input wire:model.defer="sn_lama" class="inputBox" id="sn_lama" type="text" autocomplete="off">
                                         <p class="text-xs text-gray-500">*Kosongkan jika tidak ada</p>
                                         @error('sn_lama')
                                             <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
@@ -138,14 +142,14 @@
                                 <div class="flex justify-between space-x-6">
                                     <div class="w-1/2">
                                         <label for="sn_pengganti" class="cursor-default">Serial Number Pengganti</label>
-                                        <input wire:model="sn_pengganti" class="inputBox" id="sn_pengganti" type="text" required>
+                                        <input wire:model.defer="sn_pengganti" class="inputBox" id="sn_pengganti" type="text" required autocomplete="off">
                                         @error('sn_pengganti')
                                             <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                         @enderror
                                     </div>
                                     <div class="w-1/2">
                                         <label for="sn_monitor" class="cursor-default">Serial Number Monitor</label>
-                                        <input wire:model="sn_monitor" class="inputBox" id="sn_monitor" type="text">
+                                        <input wire:model.defer="sn_monitor" class="inputBox" id="sn_monitor" type="text" autocomplete="off">
                                         @error('sn_monitor')
                                             <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                         @enderror
@@ -154,11 +158,11 @@
                                 <div class="flex justify-between space-x-6">
                                     <div class="w-1/2">
                                         <p class="cursor-default pt-2">Tipe Perangkat</p>
-                                        <select class="inputBox py-1" wire:model="tipePerangkat" required>
+                                        <select class="inputBox py-1" wire:model.defer="tipePerangkat" required>
                                             {{-- Wire:key sebagai pengganti opsi selected --}}
                                             <option wire:key="" value="">-- Pilih Tipe Perangkat --</option>
                                             @foreach ($tipe as $item)
-                                                <option wire:key="{{ $item['kode_perangkat'] }}" value="{{ $item['kode_perangkat'] }}">{{ $item['nama_perangkat'] }}</option>
+                                                <option wire:key="{{ $item['kode_perangkat'] }}" value="{{ $item['id'] }}">{{ $item['nama_perangkat'] }}</option>
                                             @endforeach
                                         </select>
                                         @error('tipePerangkat')
@@ -167,11 +171,11 @@
                                     </div>
                                     <div class="w-1/2">
                                         <p class="cursor-default pt-2">Image</p>
-                                        <select class="inputBox py-1" wire:model="imagePerangkat" required>
+                                        <select class="inputBox py-1" wire:model.defer="imagePerangkat" required>
                                             {{-- Wire:key sebagai pengganti opsi selected --}}
-                                            <option>-- Pilih Image --</option>
+                                            <option wire:key="" value="">-- Pilih Image --</option>
                                             @foreach ($image as $item)
-                                                <option wire:key="{{ $item['kode_image'] }}" value="{{ $item['kode_image'] }}">{{ $item['kode_image'] }}</option>
+                                                <option wire:key="{{ $item['kode_image'] }}" value="{{ $item['id'] }}">{{ $item['kode_image'] }}</option>
                                             @endforeach
                                         </select>
                                         @error('imagePerangkat')
@@ -186,7 +190,7 @@
                                         <label for="user" class="cursor-default">User</label>
                                         <div class="flex space-x-3">
                                             <div class="flex">
-                                                <input wire:model="userSearch" @focus="userSearch = true" @click.away="userSearch = false" class="inputBox" id="user" type="text" placeholder="Cari User">
+                                                <input wire:model="userSearch" @focus="userSearch = true" @click.away="userSearch = false" class="inputBox" id="user" type="text" placeholder="Cari User" autocomplete="off">
                                                 <div wire:loading wire:target="userSearch" class="absolute animate-spin opacity-50 ml-44 mt-1">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class=" w-5 " fill="currentColor" class="bi bi-circle-half" viewBox="0 0 16 16">
                                                         <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
@@ -214,21 +218,21 @@
                                             </div>
                                         @endif
                                         <label class="cursor-default" for="namaUser">Nama User</label>
-                                        <input id="namaUser" wire:model="namaUser" class="inputBox" type="text" {{ ($addUser == true) ? "required" : "disabled" }}>
+                                        <input id="namaUser" wire:model.defer="namaUser" class="inputBox" type="text" {{ ($addUser == true) ? "required" : "disabled" }} autocomplete="off">
                                         @error('namaUser')
                                             <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                         @enderror
                                         <div class="flex justify-between space-x-5">
                                             <div>
                                                 <label class="cursor-default" for="nikUser">Nik</label>
-                                                <input wire:model="nikUser" id="nikUser" class="inputBox" type="text" {{ ($addUser == true) ? "" : "disabled" }}>
+                                                <input wire:model.defer="nikUser" id="nikUser" class="inputBox" type="text" {{ ($addUser == true) ? "" : "disabled" }} autocomplete="off">
                                                 @error('nikUser')
                                                 <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                                 @enderror
                                             </div>
                                             <div>
                                                 <label class="cursor-default" for="telpUser">No Telp</label>
-                                                <input wire:model="telpUser" id="telpUser" class="inputBox" type="text" {{ ($addUser == true) ? "" : "disabled" }}>
+                                                <input wire:model.defer="telpUser" id="telpUser" class="inputBox" type="text" {{ ($addUser == true) ? "" : "disabled" }} autocomplete="off">
                                                 @error('telpUser')
                                                 <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                                 @enderror
@@ -244,7 +248,7 @@
                                     <div class="w-1/2 pt-3">
                                         <label for="witel" class="cursor-default pt-2">Witel</label>
                                         <div class="flex">
-                                            <input wire:model="witelSearch" @focus="witelSearch = true" @click.away="witelSearch = false" class="inputBox" id="witel" type="text" placeholder="Cari witel">
+                                            <input wire:model="witelSearch" @focus="witelSearch = true" @click.away="witelSearch = false" class="inputBox" id="witel" type="text" placeholder="Cari witel" autocomplete="off">
                                             <div wire:loading wire:target="witelSearch" class="absolute animate-spin opacity-50 ml-60 mt-1">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class=" w-4 " fill="currentColor" class="bi bi-circle-half" viewBox="0 0 16 16">
                                                     <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
@@ -264,36 +268,34 @@
                                                 </ul>
                                             </div>
                                         @endif
-                                        <input wire:model="witel" class="inputBox mt-3" type="text" disabled>
+                                        <input wire:model.defer="witel" class="inputBox mt-3" type="text" disabled>
                                     </div>
                                     {{-- End Witel --}}
                                     {{-- DO --}}
                                     <div class="w-1/2 pt-3">
-                                        {{-- @if ($submitType == 'update') --}}
-                                            <label for="doSearch" class="cursor-default pt-2">Delivery Order</label>
-                                            <div class="flex">
-                                                <input wire:model="doSearch" @focus="doSearch = true" @click.away="doSearch = false" class="inputBox" id="doSearch" type="text" placeholder="Cari do">
-                                                <div wire:loading wire:target="doSearch" class="absolute animate-spin opacity-50 ml-60 mt-1">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class=" w-4 " fill="currentColor" class="bi bi-circle-half" viewBox="0 0 16 16">
-                                                        <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
-                                                    </svg>
-                                                </div>
+                                        <label for="doSearch" class="cursor-default pt-2">Delivery Order</label>
+                                        <div class="flex">
+                                            <input wire:model="doSearch" @focus="doSearch = true" @click.away="doSearch = false" class="inputBox" id="doSearch" type="text" placeholder="Cari do" autocomplete="off">
+                                            <div wire:loading wire:target="doSearch" class="absolute animate-spin opacity-50 ml-60 mt-1">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class=" w-4 " fill="currentColor" class="bi bi-circle-half" viewBox="0 0 16 16">
+                                                    <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
+                                                </svg>
                                             </div>
-                                            @if (strlen($doSearch) > 0)
-                                                <div x-show="doSearch">
-                                                    <ul class="absolute mt-2 bg-white border-gray-500 border-opacity-25 border-2 shadow-lg rounded-md w-52 px-2 py-2 space-y-1">
-                                                        @if ($doResult)
-                                                            @forelse ($doResult as $value)
-                                                                <button @click="doSearch = false" wire:click="chooseDo({{ $value['id'] }})" class="w-full text-left p-1 hover:bg-black hover:bg-opacity-10 truncate" type="button"><li>{{  $value['no_do'] }}</li></button>
-                                                            @empty
-                                                                <span class="text-sm font-normal"> Data do tidak ditemukan!</span>
-                                                            @endforelse
-                                                        @endif
-                                                    </ul>
-                                                </div>
-                                            @endif
-                                            <input wire:model="kodeDo" class="inputBox mt-3" type="text" disabled>
-                                        {{-- @endif --}}
+                                        </div>
+                                        @if (strlen($doSearch) > 0)
+                                            <div x-show="doSearch">
+                                                <ul class="absolute mt-2 bg-white border-gray-500 border-opacity-25 border-2 shadow-lg rounded-md w-52 px-2 py-2 space-y-1">
+                                                    @if ($doResult)
+                                                        @forelse ($doResult as $value)
+                                                            <button @click="doSearch = false" wire:click="chooseDo({{ $value['id'] }})" class="w-full text-left p-1 hover:bg-black hover:bg-opacity-10 truncate" type="button"><li>{{  $value['no_do'] }}</li></button>
+                                                        @empty
+                                                            <span class="text-sm font-normal"> Data do tidak ditemukan!</span>
+                                                        @endforelse
+                                                    @endif
+                                                </ul>
+                                            </div>
+                                        @endif
+                                        <input wire:model.defer="kodeDo" class="inputBox mt-3" type="text" disabled>
                                     </div>
                                     {{-- End Do --}}
                                 </div>
@@ -301,7 +303,7 @@
                                 {{-- SP --}}
                                 <div class="w-1/2">
                                     <p class="cursor-default pt-2">SP</p>
-                                    <select class="inputBox py-1" wire:model="spPerangkat" required>
+                                    <select class="inputBox py-1" wire:model.defer="spPerangkat" required>
                                         {{-- Sengaja di kosongkan --}}
                                         <option wire:key="" value="">--Pilih Sp--</option>
                                         {{-- Wire:key sebagai pengganti opsi selected --}}
@@ -315,7 +317,7 @@
                                 <div class="flex justify-between space-x-5">
                                     <div class="w-1/2">
                                         <p class="cursor-default pt-2">Cek Status</p>
-                                        <select class="inputBox py-1" wire:model="cekStatus">
+                                        <select class="inputBox py-1" wire:model.defer="cekStatus">
                                             <option value="">Tidak ada</option>
                                             <option wire:key="NPS" value="NPS">NPS</option>
                                             <option wire:key="OBC" value="OBC">OBC</option>
@@ -323,7 +325,7 @@
                                     </div>
                                     <div class="w-1/2">
                                         <p class="cursor-default pt-2">Perolehan</p>
-                                        <select class="inputBox py-1" wire:model="perolehan" required>
+                                        <select class="inputBox py-1" wire:model.defer="perolehan" required>
                                             <option value="">-- Pilih Perolehan --</option>
                                             <option wire:key="NCD" value="NCD">NCD</option>
                                             <option wire:key="COD" value="COD">COD</option>
@@ -332,7 +334,7 @@
                                 </div>
                                 <div class="mt-3">
                                     <label for="ket" class="cursor-default py-1">Keterangan</label>
-                                    <textarea id="ket" wire:model="ket" class="inputBox"> </textarea>
+                                    <textarea id="ket" wire:model.defer="ket" class="inputBox" autocomplete="off"> </textarea>
                                 </div>
 
                             </div>

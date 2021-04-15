@@ -25,9 +25,6 @@ class DeliveryOrder extends Component
     public function render()
     {
         $keyword = '%'.$this->keyword.'%';
-        // $test = ['a', 'b', 'c'];
-        // $hasiltest = collect($test)->push('d');
-        // dd($hasiltest);
 
         $hasilWitel = '';
         if (strlen($this->witelSearch) > 0) {
@@ -37,7 +34,7 @@ class DeliveryOrder extends Component
 
         $data = [
             'witelResult' => $hasilWitel,
-            'deliveryOrder' => DoModel::with('witel')
+            'deliveryOrder' => DoModel::with('Witel')
                                 ->where('no_do', 'like', $keyword)
                                 ->orderBy('no_do', 'desc')
                                 ->paginate(10),
@@ -147,6 +144,6 @@ class DeliveryOrder extends Component
 
     public function resetData() 
     {
-      $this->reset('submitType', 'no_do', 'tanggal', 'witelId', 'witel', 'tanggal');
+      $this->reset('submitType', 'no_do', 'tanggal', 'witelId', 'witel', 'tanggal', 'witelSearch');
     }
 }

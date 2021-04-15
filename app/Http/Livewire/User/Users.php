@@ -48,14 +48,7 @@ class Users extends Component
             [
                 'nik' => 'unique:App\Models\User,nik|numeric|nullable',
                 'name' => 'required',
-                'no_telp' => 'numeric|nullable',
-            ],
-            // Message
-            [
-                'nik.unique' => 'Nik sudah ada',
-                'nik.numeric' => 'Harus berupa nomor',
-                'name.required' => 'Nama harus diisi',
-                'no_telp.numeric' => 'Harus berupa nomor',
+                'no_telp' => 'nullable',
             ]
         );
 
@@ -97,21 +90,14 @@ class Users extends Component
 
     public function update()
     {
-        $message = [
-            'nik.unique' => 'Nik sudah ada',
-            'nik.numeric' => 'Harus berupa nomor',
-            'name.required' => 'Nama harus diisi',
-            'no_telp.numeric' => 'Harus berupa nomor',
-        ];
             $this->validate(
                 // Rules
                 [
                     // Gagal validasi unique
                     'nik' => ['numeric', 'nullable', Rule::unique('users', 'nik')->ignore($this->nik, 'nik')],
                     'name' => 'required',
-                    'no_telp' => 'numeric|nullable',
-                ],
-                $message
+                    'no_telp' => 'nullable',
+                ]
             );
 
         // Pakai fitur Try Catch Untuk mengatasi eror unique

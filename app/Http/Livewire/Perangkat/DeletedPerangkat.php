@@ -21,7 +21,7 @@ class DeletedPerangkat extends Component
         $keyword = '%'.$this->keyword.'%';
 
         $data = [
-            'perangkat' => Perangkat::with(['Users', 'Witel'])
+            'perangkat' => Perangkat::with(['Users', 'Witel', 'DeliveryOrder', 'TipePerangkat'])
                         ->where('sn_pengganti', 'like', $keyword)
                         ->orderBy('deleted_at', 'DESC')
                         ->onlyTrashed()

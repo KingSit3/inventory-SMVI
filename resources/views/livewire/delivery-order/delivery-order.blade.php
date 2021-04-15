@@ -102,7 +102,7 @@
             <div 
                 x-show="isOpen"
                 class="z-50 fixed inset-0 bg-black bg-opacity-50 flex justify-center items-start">
-                <div x-show.transition.duration.150ms="isOpen" @click.away="isOpen = false" x-on:click.away="$wire.resetData()" class="w-1/3 mt-10 bg-white opacity-100 rounded-xl shadow-xl">
+                <div x-show.transition.duration.150ms="isOpen" class="w-1/3 mt-10 bg-white opacity-100 rounded-xl shadow-xl">
                     <form wire:submit.prevent="{{ $submitType }}">
                         <div class="px-8 py-6">
                             <div class="text-center">
@@ -110,7 +110,7 @@
                             </div>
                             <div class="mt-4 space-y-1 mx-10 font-semibold">
                                 <label for="no_do" class="cursor-default">Nomor Delivery Order</label>
-                                <input wire:model="no_do" id="no_do" class="inputBox"  type="text" required>
+                                <input wire:model.defer="no_do" id="no_do" class="inputBox"  type="text" required>
                                 <p class="text-xs opacity-50 capitalize">*Berdasarkan DO terakhir + 1</p>
                                 @error('no_do')
                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
@@ -118,7 +118,7 @@
                             </div>
                             <div class="mt-4 space-y-1 mx-10 font-semibold">
                                 <label for="tanggal" class="cursor-default">Tanggal Delivery Order</label>
-                                <input wire:model="tanggal" id="tanggal" class="inputBox" type="date">
+                                <input wire:model.defer="tanggal" id="tanggal" class="inputBox" type="date">
                                 <p class="text-xs opacity-50 capitalize">*Kosongkan Jika hari ini</p>
                                 @error('tanggal')
                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
@@ -126,7 +126,7 @@
                             </div>
 
                             {{-- Witel --}}
-                            <div class="mt-4 space-y-1 mx-10 font-semibold">
+                            <div  x-data="{witelSearch: false}"  class="mt-4 space-y-1 mx-10 font-semibold">
                                     <label for="witel" class="cursor-default pt-2">Witel</label>
                                     <div class="flex">
                                         <input wire:model="witelSearch" @focus="witelSearch = true" @click.away="witelSearch = false" class="inputBox" id="witel" type="text" placeholder="Cari witel">
@@ -153,7 +153,7 @@
                                         </div>
                                     @endif
                                     <div class="">
-                                    <input wire:model="witel" class="inputBox mt-3" type="text" disabled>
+                                    <input wire:model.defer="witel" class="inputBox mt-3" type="text" disabled>
                                     </div>
                             </div>
                             {{-- End Witel --}}
@@ -162,8 +162,8 @@
                         <div class="border-t-2 border-gray-200 mt-5">
                             <div class="flex justify-end space-x-8 p-3">
                             {{-- Type button agar tidak dianggap submit ama livewire --}}
-                            <button type="button" @click="isOpen = false" x-on:click="$wire.resetData()" class="text-red-500 font-semibold focus:outline-none">Close</button>
-                            <button type="submit" class="bg-blue-500 font-semibold text-white px-4 py-2 rounded-xl hover:bg-blue-700 duration-200 focus:outline-none">Simpan</button>
+                            <button type="button" @click="isOpen = false" x-on:click="$wire.resetData()" class="text-red-500 font-semibold focus:outline-none" title="Tutup">Close</button>
+                            <button type="submit" class="bg-blue-500 font-semibold text-white px-4 py-2 rounded-xl hover:bg-blue-700 duration-200 focus:outline-none" title="Simpan">Simpan</button>
                             </div>
                         </div>
                     </form>

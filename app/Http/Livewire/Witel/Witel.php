@@ -13,7 +13,7 @@ class Witel extends Component
     use WithPagination;
     public  $idWitel, $dbWitel, $submitType, $nama, 
             $kode, $regional, $alamat, $keyword;
-    public $picNik, $picId, $no_telp, $picName, $picSearch, $dbUser;
+    public $picNik, $picId, $no_telp, $picName, $picSearch, $dbUser, $oldNik;
     public $isOpen, $addNewPic = false;
 
     public function updatingSearch()
@@ -57,17 +57,10 @@ class Witel extends Component
         // Rules
         [
           'regional' => 'nullable|numeric',
+          'picName' => 'required',
           'picNik' => ['numeric', 'nullable', Rule::unique('users', 'nik')->ignore($this->picNik, 'nik')],
           'kode' => 'unique:App\Models\Witel,kode_witel',
           'no_telp' => 'nullable',
-        ],
-        // Message
-        [
-          'regional.numeric' => 'Regional harus Angka',
-          'picNik.unique' => 'Nik sudah ada',
-          'kode.unique' => 'Kode Witel sudah ada',
-          'picNik.numeric' => 'Harus berupa nomor',
-          'no_telp.numeric' => 'Harus berupa nomor',
         ],
       );
 
@@ -129,7 +122,7 @@ class Witel extends Component
     {
       $this->submitType = 'update';
       $this->dbWitel = ModelsWitel::where('id', $id)->first();
-      $this->dbUser = ModelUser::where('id', $this->dbWitel['id_pic'])->first();
+      $this->dbUser = ModelUser::where('id', $this->dbWitel['id_pic'])->withTrashed()->first();
 
       $this->idWitel = $id;
       // Value input
@@ -138,6 +131,7 @@ class Witel extends Component
       $this->regional = $this->dbWitel['regional'];
       $this->alamat = $this->dbWitel['alamat_witel'];
 
+      $this->oldNik = $this->dbUser['nik'];
       $this->picNik = $this->dbUser['nik'];
       $this->picName = $this->dbUser['name'];
       $this->no_telp = $this->dbUser['no_telp'];
@@ -149,19 +143,11 @@ class Witel extends Component
         // Rules
         [
           'regional' => 'nullable|numeric',
-          'picNik' => ['numeric', 'nullable', Rule::unique('users', 'nik')->ignore($this->picNik, 'nik')],
-          'picNik' => ['numeric', 'nullable', Rule::unique('users', 'nik')->ignore($this->picNik, 'nik')],
+          'picName' => 'required',
+          'picNik' => ['numeric', 'nullable', Rule::unique('users', 'nik')->ignore($this->oldNik, 'nik')],
           'kode' => [Rule::unique('witel', 'kode_witel')->ignore($this->kode, 'kode_witel')],
-          'no_telp' => 'numeric|nullable',
-        ],
-        // Message
-        [
-          'regional.numeric' => 'Regional harus Angka',
-          'picNik.unique' => 'Nik sudah ada',
-          'kode.unique' => 'Kode Witel sudah ada',
-          'picNik.numeric' => 'Harus berupa nomor',
-          'no_telp.numeric' => 'Harus berupa nomor',
-        ],
+          'no_telp' => 'nullable',
+        ]
       );
 
       if ($this->addNewPic == true) {

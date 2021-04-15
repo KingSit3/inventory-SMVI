@@ -94,7 +94,7 @@
             <div
                 x-show="isOpen"
                 class="z-50 fixed inset-0 bg-black bg-opacity-50 flex justify-center items-start">
-                <div x-show.transition.duration.150ms="isOpen" @click.away="isOpen = false" x-on:click.away="$wire.resetData()" class="w-2/5 mt-10 bg-white opacity-100 rounded-xl shadow-xl">
+                <div x-show.transition.duration.150ms="isOpen" class="w-2/5 mt-10 bg-white opacity-100 rounded-xl shadow-xl">
                     <form wire:submit.prevent="{{ $submitType }}">
                         <div class="px-8 py-6">
                             <div class="text-center">
@@ -104,19 +104,19 @@
                             {{-- Top section Modal --}}
                                 <div>
                                     <label for="nama" class="cursor-default py-1">Nama Witel</label>
-                                    <input wire:model="nama" id="nama" class="inputBox" type="text" required>
+                                    <input wire:model.defer="nama" id="nama" class="inputBox" type="text" required>
 
                                     <div class="flex justify-between space-x-10">
                                         <div>
                                             <label for="kode" class="cursor-default">Kode Witel</label>
-                                            <input id="kode" wire:model="kode" class="inputBox" type="text" required>
+                                            <input id="kode" wire:model.defer="kode" class="inputBox" type="text" required>
                                             @error('kode')
                                                 <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                             @enderror
                                         </div>
                                         <div>
                                             <label for="regional" class="cursor-default">Regional</label>
-                                            <input id="regional" wire:model="regional" class="inputBox" type="text" required>
+                                            <input id="regional" wire:model.defer="regional" class="inputBox" type="text" required>
                                             @error('regional')
                                                 <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                             @enderror
@@ -124,16 +124,16 @@
                                     </div>
                                     
                                     <label for="alamat" class="cursor-default py-1">Alamat</label>
-                                    <textarea id="alamat" wire:model="alamat" class="inputBox" required> </textarea>
+                                    <textarea id="alamat" wire:model.defer="alamat" class="inputBox" required> </textarea>
                                 </div>
                             {{-- End Top section Modal --}}
                             </div>
 
                             {{-- PIC Section Modal --}}
-                                <div class="border-t-2 -px-8 border-gray-200 mt-5">
+                                <div class="border-t-2 -px-8 border-gray-200 mt-5" x-data="{picSearch: false}">
                                     <div class="space-y-1 mx-10 font-semibold ">
                                         <div class="flex justify-between items-center">
-                                            <div x-data="{picSearch: false}">
+                                            <div>
                                                 <p class="cursor-default py-1 text-center">PIC</p>
                                                     {{-- Load state Livewire --}}
                                                     <div class="relative">
@@ -168,7 +168,7 @@
                                     
                                         <div>
                                             <label for="picName" class="cursor-default">Nama PIC</label>
-                                            <input id="picName" wire:model="picName" class="inputBox" type="text" required {{ ($addNewPic == false) ? 'disabled' : '' }}>
+                                            <input id="picName" wire:model.defer="picName" class="inputBox" type="text" required {{ ($addNewPic == false) ? 'disabled' : '' }}>
                                             @error('picName')
                                                 <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                             @enderror
@@ -176,14 +176,14 @@
                                         <div class="flex justify-between space-x-10">
                                             <div>
                                                 <label for="picNik" class="cursor-default">NIK PIC</label>
-                                                <input id="picNik" wire:model="picNik" class="inputBox" type="text" {{ ($addNewPic == false) ? 'disabled' : '' }}>
+                                                <input id="picNik" wire:model.defer="picNik" class="inputBox" type="text" {{ ($addNewPic == false) ? 'disabled' : '' }}>
                                                 @error('picNik')
                                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                                 @enderror
                                             </div>
                                             <div>
                                                 <label for="no_telp" class="cursor-default">Nomor Telepon PIC</label>
-                                                <input id="no_telp" wire:model="no_telp" class="inputBox"  type="text" {{ ($addNewPic == false) ? 'disabled' : '' }}>
+                                                <input id="no_telp" wire:model.defer="no_telp" class="inputBox"  type="text" {{ ($addNewPic == false) ? 'disabled' : '' }}>
                                                 @error('no_telp')
                                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                                 @enderror
@@ -197,7 +197,7 @@
                             <div class="flex justify-end space-x-8 p-3">
                             {{-- Type button agar tidak dianggap submit ama livewire --}}
                             <button type="button" @click="isOpen = false" x-on:click="$wire.resetData()" class="text-red-500 font-semibold focus:outline-none">Close</button>
-                            <button type="submit" {{ (strlen($picName) == 0) ? 'disabled' : '' }} class="{{ (strlen($picName) == 0) ? 'bg-gray-200' : 'bg-blue-500' }} font-semibold text-white px-4 py-2 rounded-xl hover:bg-blue-700 duration-200 focus:outline-none">Simpan</button>
+                            <button type="submit" class="bg-blue-500 font-semibold text-white px-4 py-2 rounded-xl hover:bg-blue-700 duration-200 focus:outline-none">Simpan</button>
                             </div>
                         </div>
                     </form>

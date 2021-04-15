@@ -19,16 +19,19 @@ class DoSeeder extends Seeder
                 'no_do' => 'DO-501562',
                 'id_witel' => '1',
                 'tanggal_do' => '2021-04-03 22:08:50',
+                'created_at' => '2021-04-11 15:32:49',
             ],
             [
                 'no_do' => 'DO-501563',
-                'id_witel' => '3',
+                'id_witel' => '2',
                 'tanggal_do' => '2021-04-04 22:08:50',
+                'created_at' => '2021-04-12 15:32:49',
             ],
             [
                 'no_do' => 'DO-501564',
                 'id_witel' => '2',
                 'tanggal_do' => '2021-04-05 22:08:50',
+                'created_at' => '2021-04-13 15:32:49',
             ],
         ]);
     }
