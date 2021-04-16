@@ -101,7 +101,7 @@
                             </div>
                             <div class="mt-4 space-y-1 mx-10 font-semibold">
                                 <label for="kode" class="cursor-default">Kode Image</label>
-                                <input wire:model.defer="kode" id="kode" class="inputBox"  type="text" required>
+                                <input wire:model.defer="kode" id="kode" class="inputBox"  type="text" required autocomplete="off">
                                 @error('kode')
                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                 @enderror

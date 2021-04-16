@@ -144,6 +144,7 @@ class DeliveryOrder extends Component
 
     public function resetData() 
     {
-      $this->reset('submitType', 'no_do', 'tanggal', 'witelId', 'witel', 'tanggal', 'witelSearch');
+        $this->resetValidation();
+        $this->reset('submitType', 'no_do', 'tanggal', 'witelId', 'witel', 'tanggal', 'witelSearch');
     }
 }

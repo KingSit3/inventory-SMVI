@@ -36,7 +36,7 @@
                                         <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
                                     </svg>
                                 </div>
-                                <input wire:model.debounce.200="keyword" class=" focus:ring-4 outline-none focus:outline-none ring-blue-300 rounded-full pl-7 py-1 duration-150" type="text" placeholder="Cari Perangkat...">
+                                <input wire:model.debounce.200="keyword" class=" focus:ring-4 outline-none focus:outline-none ring-blue-300 rounded-full pl-7 py-1 duration-150" type="text" placeholder="Cari Perangkat..." autocomplete="off">
                             </div>
                         </div>
                 </div>
@@ -46,6 +46,8 @@
             @if (session('role') != 2)
                 <button @click="isOpen = true" class="bg-blue-500 hover:shadow-md hover:bg-blue-700 px-3 py-2 rounded-xl text-white font-semibold duration-150 mb-2">Tambah Perangkat</button>
             @endif
+            <button class="bg-yellow-500 hover:shadow-md hover:bg-yellow-600 px-3 py-2 rounded-xl text-white font-semibold duration-150 mb-2">Cetak DO</button>
+            
             
             {{-- Table --}}
                 <table class="table-fixed w-full">
@@ -135,7 +137,7 @@
                                         </svg>
                                     </div>
                                 </div>
-                                <input wire:model="cariSn" @focus="cariSn = true" @click.away="cariSn = false" class="inputBox" id="cariSn" type="text">
+                                <input wire:model="cariSn" @focus="cariSn = true" @click.away="cariSn = false" class="inputBox" id="cariSn" type="text" autocomplete="off">
                                 @error('cariSn')
                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                 @enderror

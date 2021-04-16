@@ -248,7 +248,7 @@ class Perangkat extends Component
                     'id_user' => $this->userId,
                     'id_image' => $this->imagePerangkat,
                     'id_witel' => $this->witelId,
-                    'no_do' => $this->doId,
+                    'id_do' => $this->doId,
                     'keterangan' => $this->ket,
                     'cek_status' => $this->cekStatus,
                     'sp' => $this->spPerangkat,
@@ -329,7 +329,7 @@ class Perangkat extends Component
         // Reset Validasi
         $this->resetValidation();
         // Reset input field
-        $this->reset('submitType', 'tipePerangkat', 'userSearch', 'witelSearch', 'doSearch', 'sn_lama', 'sn_pengganti', 'sn_monitor', 'imagePerangkat', 'witel', 'witelId', 'kodeDo', 'spPerangkat', 'cekStatus', 'perolehan', 'ket', 'namaUser', 'nikUser', 'telpUser');
+        $this->reset('submitType', 'tipePerangkat', 'userSearch', 'witelSearch', 'doSearch', 'sn_lama', 'sn_pengganti', 'sn_monitor', 'imagePerangkat', 'witel', 'witelId', 'kodeDo', 'spPerangkat', 'cekStatus', 'perolehan', 'ket', 'namaUser', 'nikUser', 'telpUser', 'doId');
     }
 
 }

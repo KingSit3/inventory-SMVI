@@ -25,4 +25,9 @@ class DoModel extends Model
         return $this->attributes['deleted_at'] = Carbon::parse($value)->format('d-M-Y');
     }
 
+    public function getTanggalDoAttribute($value) 
+    {
+      return $this->attributes['tanggal_do'] = Carbon::parse($value)->format('d-M-Y');
+    }
+
 }

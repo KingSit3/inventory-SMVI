@@ -184,8 +184,8 @@
                                     </div>
                                 </div>
 
-                                <div class="flex justify-between space-x-10 pt-2">
-                                    {{-- User  --}}
+                                {{-- User  --}}
+                                <div x-data="{userSearch: false}" class="flex justify-between space-x-10 pt-2">
                                     <div class="w-3/4">
                                         <label for="user" class="cursor-default">User</label>
                                         <div class="flex space-x-3">
@@ -240,12 +240,12 @@
                                         </div>
                                     </div>
                                     <div class="w-1/2"></div>
-                                    {{-- End User --}}
                                 </div>
+                                {{-- End User --}}
 
-                                {{-- Witel --}}
                                 <div class="flex space-x-5">
-                                    <div class="w-1/2 pt-3">
+                                    {{-- Witel --}}
+                                    <div x-data="{witelSearch: false}" class="w-1/2 pt-3">
                                         <label for="witel" class="cursor-default pt-2">Witel</label>
                                         <div class="flex">
                                             <input wire:model="witelSearch" @focus="witelSearch = true" @click.away="witelSearch = false" class="inputBox" id="witel" type="text" placeholder="Cari witel" autocomplete="off">
@@ -268,11 +268,11 @@
                                                 </ul>
                                             </div>
                                         @endif
-                                        <input wire:model.defer="witel" class="inputBox mt-3" type="text" disabled>
+                                        <input wire:model.defer="witel" class="inputBox mt-3" type="text" disabled autocomplete="off">
                                     </div>
                                     {{-- End Witel --}}
                                     {{-- DO --}}
-                                    <div class="w-1/2 pt-3">
+                                    <div x-data="{doSearch: false}" class="w-1/2 pt-3">
                                         <label for="doSearch" class="cursor-default pt-2">Delivery Order</label>
                                         <div class="flex">
                                             <input wire:model="doSearch" @focus="doSearch = true" @click.away="doSearch = false" class="inputBox" id="doSearch" type="text" placeholder="Cari do" autocomplete="off">
@@ -295,7 +295,7 @@
                                                 </ul>
                                             </div>
                                         @endif
-                                        <input wire:model.defer="kodeDo" class="inputBox mt-3" type="text" disabled>
+                                        <input wire:model.defer="kodeDo" class="inputBox mt-3" type="text" disabled autocomplete="off">
                                     </div>
                                     {{-- End Do --}}
                                 </div>

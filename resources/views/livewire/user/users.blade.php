@@ -110,17 +110,17 @@
                             </div>
                             <div class="mt-4 space-y-1 mx-10 font-semibold">
                                 <label for="nik" class="cursor-default">NIK</label>
-                                <input wire:model.defer="nik" class="inputBox" id="nik" type="text">
+                                <input wire:model.defer="nik" class="inputBox" id="nik" type="text" autocomplete="off">
                                 @error('nik')
                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                 @enderror
                                 <label for="nama" class="cursor-default pt-3">Nama</label>
-                                <input wire:model.defer="name" class="inputBox" id="nama" type="text">
+                                <input wire:model.defer="name" class="inputBox" id="nama" type="text" autocomplete="off">
                                 @error('name')
                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                 @enderror
                                 <label for="no_telp" class="cursor-default pt-3">Nomor Telepon</label>
-                                <input wire:model.defer="no_telp" id="no_telp" class="inputBox" type="text">
+                                <input wire:model.defer="no_telp" id="no_telp" class="inputBox" type="text" autocomplete="off">
                                 @error('no_telp')
                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                 @enderror

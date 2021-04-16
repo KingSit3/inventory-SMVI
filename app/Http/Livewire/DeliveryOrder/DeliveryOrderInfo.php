@@ -34,7 +34,7 @@ class DeliveryOrderInfo extends Component
         }
 
         $perangkatQuery = Perangkat::with(['users', 'witel'])
-                            ->where('no_do', $this->doData['id'])
+                            ->where('id_do', $this->doData['id'])
                             ->where('sn_pengganti', 'like', $keyword)
                             ->orderBy('updated_at', 'DESC')
                             ->paginate(10);
@@ -42,7 +42,7 @@ class DeliveryOrderInfo extends Component
             'snResult' => $hasilSn,
             'perangkat' => $perangkatQuery,
             'tanggalDO' => Carbon::parse($this->doData['tanggal_do'])->format('d-M-Y'),
-            'totalPerangkat' => count(Perangkat::where('no_do', $this->doData['id'])->get()),
+            'totalPerangkat' => count(Perangkat::where('id_do', $this->doData['id'])->get()),
         ];
         return view('livewire.delivery-order.delivery-order-info', $data)
         ->extends('layouts.app');
@@ -50,14 +50,14 @@ class DeliveryOrderInfo extends Component
 
     public function delete($id) 
     {
-      Perangkat::where('id', $id)->update(['no_do' => null]);
+      Perangkat::where('id', $id)->update(['id_do' => null]);
     }
 
     public function chooseSn($id) 
     {
       $this->dataPerangkat = Perangkat::where('id', $id)->first();
-      if ($this->dataPerangkat['kode_witel'] != null) {
-        $dataWitel = Witel::where('kode_witel', $this->dataPerangkat['kode_witel'])->first();
+      if ($this->dataPerangkat['id_witel'] != null) {
+        $dataWitel = Witel::where('id', $this->dataPerangkat['id_witel'])->first();
       } else {
         $dataWitel = ['nama_witel' => null];
       }
@@ -65,17 +65,17 @@ class DeliveryOrderInfo extends Component
       $this->sn = $this->dataPerangkat['sn_pengganti'];
       $this->tipe = $this->dataPerangkat['tipe_perangkat'];
       $this->witel = $dataWitel['nama_witel'];
-      $this->image = $this->dataPerangkat['kode_image'];
+      $this->image = $this->dataPerangkat['id_image'];
     }
 
     public function tambah() 
     {
-      if ($this->dataPerangkat['no_do'] != null) {
+      if ($this->dataPerangkat['id_do'] != null) {
         $this->resetData();
         return $this->addError('cariSn', 'perangkat ada di DO lain');
       }
 
-      Perangkat::where('id', $this->dataPerangkat['id'])->update(['no_do' => $this->doData['id']]);
+      Perangkat::where('id', $this->dataPerangkat['id'])->update(['id_do' => $this->doData['id']]);
       
       // Panggil fungsi Reset data
       $this->resetData();
@@ -89,6 +89,7 @@ class DeliveryOrderInfo extends Component
 
     public function resetData() 
     {
+      $this->resetValidation();
       $this->reset('cariSn', 'sn', 'tipe', 'witel', 'image');
     }
 }

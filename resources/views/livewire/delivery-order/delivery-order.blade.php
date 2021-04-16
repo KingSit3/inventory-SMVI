@@ -43,6 +43,7 @@
                             <th class="w-1/12">No</th>
                             <th class="w-1/6">Delivery Order</th>
                             <th class="w-1/6">Witel</th>
+                            <th class="w-1/6">Tanggal Do</th>
                             @if (session('role') != 2)
                             <th class="w-1/5">Aksi</th>
                             @endif
@@ -54,6 +55,7 @@
                             <td class="py-2">{{ ($deliveryOrder->firstItem()-1) + $loop->iteration }}</td>
                             <td>{{ $value['no_do'] }}</td>
                             <td>{{ ($value['witel']['nama_witel']) ? $value['witel']['nama_witel'] : '-' }}</td>
+                            <td>{{ ($value['tanggal_do']) ? $value['tanggal_do'] : '-' }}</td>
 
                             <td class="space-x-4 py-1 flex items-center justify-center">
                             <a href="/do/{{ $value['id'] }}" class="focus:outline-none" title="Info Delivery Order">
@@ -110,7 +112,7 @@
                             </div>
                             <div class="mt-4 space-y-1 mx-10 font-semibold">
                                 <label for="no_do" class="cursor-default">Nomor Delivery Order</label>
-                                <input wire:model.defer="no_do" id="no_do" class="inputBox"  type="text" required>
+                                <input wire:model.defer="no_do" id="no_do" class="inputBox"  type="text" required autocomplete="off">
                                 <p class="text-xs opacity-50 capitalize">*Berdasarkan DO terakhir + 1</p>
                                 @error('no_do')
                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
@@ -118,7 +120,7 @@
                             </div>
                             <div class="mt-4 space-y-1 mx-10 font-semibold">
                                 <label for="tanggal" class="cursor-default">Tanggal Delivery Order</label>
-                                <input wire:model.defer="tanggal" id="tanggal" class="inputBox" type="date">
+                                <input wire:model.defer="tanggal" id="tanggal" class="inputBox" type="date" autocomplete="off">
                                 <p class="text-xs opacity-50 capitalize">*Kosongkan Jika hari ini</p>
                                 @error('tanggal')
                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
@@ -129,7 +131,7 @@
                             <div  x-data="{witelSearch: false}"  class="mt-4 space-y-1 mx-10 font-semibold">
                                     <label for="witel" class="cursor-default pt-2">Witel</label>
                                     <div class="flex">
-                                        <input wire:model="witelSearch" @focus="witelSearch = true" @click.away="witelSearch = false" class="inputBox" id="witel" type="text" placeholder="Cari witel">
+                                        <input wire:model="witelSearch" @focus="witelSearch = true" @click.away="witelSearch = false" class="inputBox" id="witel" type="text" placeholder="Cari witel" autocomplete="off">
                                         <div wire:loading wire:target="witelSearch" class="absolute animate-spin opacity-50 ml-72 mt-1">
                                             <svg xmlns="http://www.w3.org/2000/svg" class=" w-4 " fill="currentColor" class="bi bi-circle-half" viewBox="0 0 16 16">
                                                 <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
@@ -153,7 +155,7 @@
                                         </div>
                                     @endif
                                     <div class="">
-                                    <input wire:model.defer="witel" class="inputBox mt-3" type="text" disabled>
+                                    <input wire:model.defer="witel" class="inputBox mt-3" type="text" disabled autocomplete="off">
                                     </div>
                             </div>
                             {{-- End Witel --}}

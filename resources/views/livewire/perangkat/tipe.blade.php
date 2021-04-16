@@ -100,17 +100,17 @@
                             </div>
                             <div class="mt-4 space-y-1 mx-10 font-semibold">
                                 <label for="kode" class="cursor-default">Kode Perangkat</label>
-                                <input wire:model.defer="kode" id="kode" class="inputBox"  type="text" required>
+                                <input wire:model.defer="kode" id="kode" class="inputBox"  type="text" required autocomplete="off">
                                 @error('kode')
                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                 @enderror
                                 <label for="nama" class="cursor-default pt-3">Nama Perangkat</label>
-                                <input wire:model.defer="nama" id="nama" class="inputBox"  type="text" required>
+                                <input wire:model.defer="nama" id="nama" class="inputBox"  type="text" required autocomplete="off">
                                 @error('nama')
                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                 @enderror
                                 <label for="tipe" class="cursor-default pt-3">Tipe Perangkat</label>
-                                <input wire:model.defer="tipe" id="tipe" class="inputBox" type="text" required>
+                                <input wire:model.defer="tipe" id="tipe" class="inputBox" type="text" required autocomplete="off">
                                 @error('tipe')
                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                 @enderror
