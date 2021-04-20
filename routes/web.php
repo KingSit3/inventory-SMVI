@@ -38,6 +38,10 @@ Route::middleware('isLogin')->group(function(){
 
 // Kalau Belum login, tidak boleh kesini
 Route::middleware('login')->group(function(){
+    Route::get('/print',function(){
+        $pdf = PDF::loadView('printDo');
+        return $pdf->download('printDo.pdf');
+    });
     Route::get('/', [Dashboard::class, 'index'])->name('dashboard');
     Route::get('/logout', [LoginController::class, 'logout']);
 
