@@ -67,10 +67,10 @@
                         @forelse ($perangkat as $value)
                         <tr class="text-center items-center {{ ($loop->odd) ? "bg-indigo-100 bg-opacity-75" : "" }}">
                             <td class="py-2">{{ ($perangkat->firstItem()-1) + $loop->iteration }}</td>
-                            <td>{{ ($value['tipe_perangkat']) ? $value['tipe_perangkat'] : '-' }}</td>
+                            <td>{{ ($value['id_tipe']) ? $value['TipePerangkat']['kode_perangkat'] : '-' }}</td>
                             <td>{{ $value['sn_pengganti'] }}</td>
                             <td>{{ ($value['sn_monitor']) ? $value['sn_monitor'] : '-' }}</td>
-                            @if ($value['kode_witel'] != null)
+                            @if ($value['id_witel'] != null)
                                 <td class="truncate">{{ $value['witel']['nama_witel'] }}</td>
                             @else
                                 <td>-</td>

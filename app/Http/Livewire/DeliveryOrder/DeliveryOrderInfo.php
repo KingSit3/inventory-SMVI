@@ -33,7 +33,7 @@ class DeliveryOrderInfo extends Component
             $hasilSn = Perangkat::where('sn_pengganti', 'like', $cariSnQuery)->limit(5)->get();
         }
 
-        $perangkatQuery = Perangkat::with(['users', 'witel'])
+        $perangkatQuery = Perangkat::with(['users', 'witel', 'TipePerangkat'])
                             ->where('id_do', $this->doData['id'])
                             ->where('sn_pengganti', 'like', $keyword)
                             ->orderBy('updated_at', 'DESC')
