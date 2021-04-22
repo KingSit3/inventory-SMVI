@@ -47,7 +47,7 @@
                 <button @click="isOpen = true" class="bg-blue-500 hover:shadow-md hover:bg-blue-700 px-3 py-2 rounded-xl text-white font-semibold duration-150 mb-2">Tambah Perangkat</button>
             @endif
             @if ($totalPerangkat > 0)
-                <button class="bg-yellow-500 hover:shadow-md hover:bg-yellow-600 px-3 py-2 rounded-xl text-white font-semibold duration-150 mb-2">Cetak DO</button>
+                <a href="/printdo/{{ $doData['id'] }}" class="bg-yellow-500 hover:shadow-md hover:bg-yellow-600 px-3 py-2 rounded-xl text-white font-semibold duration-150 mb-2">Cetak DO</a>
             @endif
             
             {{-- Table --}}

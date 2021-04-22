@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PrintDo;
 use App\Http\Livewire\Admin;
 use App\Http\Livewire\DeliveryOrder\DeletedDeliveryOrder;
 use App\Http\Livewire\DeliveryOrder\DeliveryOrder;
@@ -38,11 +39,8 @@ Route::middleware('isLogin')->group(function(){
 
 // Kalau Belum login, tidak boleh kesini
 Route::middleware('login')->group(function(){
-    Route::get('/print',function(){
-        $pdf = PDF::loadView('printDo');
-        return $pdf->download('printDo.pdf');
-    });
     Route::get('/', [Dashboard::class, 'index'])->name('dashboard');
+    Route::get('/printdo/{id}', [PrintDo::class, 'index']);
     Route::get('/logout', [LoginController::class, 'logout']);
 
     Route::get('/perangkat', Perangkat::class);
