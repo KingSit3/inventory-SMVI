@@ -2,12 +2,19 @@
 
 namespace App\Models;
 
-// use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class SP extends Model
 {
-    // use HasFactory;
     protected $table = 'sp';
     protected $guarded = [];
+
+    use SoftDeletes;
+
+    public function getDeletedAtAttribute($value) 
+    {
+      return $this->attributes['deleted_at'] = Carbon::parse($value)->format('d-M-Y');
+    }
 }

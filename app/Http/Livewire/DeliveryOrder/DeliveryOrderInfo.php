@@ -42,7 +42,7 @@ class DeliveryOrderInfo extends Component
             'snResult' => $hasilSn,
             'perangkat' => $perangkatQuery,
             'tanggalDO' => Carbon::parse($this->doData['tanggal_do'])->format('d-M-Y'),
-            'totalPerangkat' => count(Perangkat::where('id_do', $this->doData['id'])->get()),
+            'totalPerangkat' => Perangkat::where('id_do', $this->doData['id'])->count(),
         ];
         return view('livewire.delivery-order.delivery-order-info', $data)
         ->extends('layouts.app');
