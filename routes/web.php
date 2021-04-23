@@ -15,8 +15,10 @@ use App\Http\Livewire\Perangkat\DeletedTipe;
 use App\Http\Livewire\User\Users;
 use App\Http\Livewire\User\DeletedUsers;
 use App\Http\Livewire\Perangkat\Image;
+use App\Http\Livewire\Perangkat\InfoSp;
 use App\Http\Livewire\Perangkat\Perangkat;
-use App\Http\Livewire\User\Info;
+use App\Http\Livewire\Perangkat\SP;
+use App\Http\Livewire\User\InfoUser;
 use App\Http\Livewire\Witel\Witel;
 use App\Http\Livewire\Witel\DeletedWitel;
 
@@ -40,7 +42,6 @@ Route::middleware('isLogin')->group(function(){
 // Kalau Belum login, tidak boleh kesini
 Route::middleware('login')->group(function(){
     Route::get('/', [Dashboard::class, 'index'])->name('dashboard');
-    Route::get('/printdo/{id}', [PrintDo::class, 'index']);
     Route::get('/logout', [LoginController::class, 'logout']);
 
     Route::get('/perangkat', Perangkat::class);
@@ -49,9 +50,10 @@ Route::middleware('login')->group(function(){
     Route::get('/deliveryorder', DeliveryOrder::class);
     Route::get('/deleteddeliveryorder', DeletedDeliveryOrder::class);
     Route::get('/do/{id}', DeliveryOrderInfo::class);
+    Route::get('/printdo/{id}', [PrintDo::class, 'index']);
 
     Route::get('/users', Users::class);
-    Route::get('/user/{id}', Info::class);
+    Route::get('/user/{id}', InfoUser::class);
     Route::get('/deletedusers', DeletedUsers::class);
 
     Route::get('/tipe', Tipe::class);
@@ -59,6 +61,9 @@ Route::middleware('login')->group(function(){
 
     Route::get('/image', Image::class);
     Route::get('/deletedimage', DeletedImage::class);
+
+    Route::get('/sp', SP::class);
+    Route::get('/sp/{id}', InfoSp::class);
 
     Route::get('/witel', Witel::class);
     Route::get('/deletedwitel', DeletedWitel::class);

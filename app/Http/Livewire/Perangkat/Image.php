@@ -47,8 +47,6 @@ class Image extends Component
             ]
         );
 
-        // $newNik = ;
-
         // Save data
         ModelsImage::create([
             'kode_image' => $this->kode,
