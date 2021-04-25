@@ -53,14 +53,20 @@
                             <td>{{ ($value['kode_perangkat']) ? $value['kode_perangkat'] : '-' }}</td>
                             <td class="truncate capitalize">{{ $value['nama_perangkat'] }}</td>
                             <td>{{ ($value['tipe_perangkat']) ? $value['tipe_perangkat'] : '-' }}</td>
+
                             <td class="space-x-4 py-1 flex items-center justify-center">
+                                <a href="/tipe/{{ $value['id'] }}" class="focus:outline-none" title="Info">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="w-6 text-gray-500 hover:text-blue-500 py-1 duration-150 font-bold" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </a>
+
                                 @if (session('role') != 2)
                                 <button @click="isOpen = true" wire:click="edit({{ $value['id'] }})" class="focus:outline-none">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="w-6 text-gray-500 hover:text-yellow-500 py-1 duration-150" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                         </svg>
                                 </button>
-
                                 <button wire:click="$emit('delete', {{ $value['id'] }})" class="focus:outline-none">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="w-6 text-gray-500 hover:text-red-500 py-1 duration-150" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />

@@ -23,7 +23,7 @@ class tipePerangkat extends Model
       $this->attributes['tipe_perangkat'] = strtoupper($value);
     }
 
-    public function getDeletedAtAttribute($value) 
+    public function getTanggalDihapusAttribute($value) 
     {
       return $this->attributes['deleted_at'] = Carbon::parse($value)->format('d-M-Y');
     }
