@@ -3,7 +3,7 @@
     <div x-data="{isOpen: @entangle('isOpen').defer, infoPerangkat: false}" class="px-7 py-3 flex flex-col justify-between h-screen">
         <div>
             {{-- Top Bar --}}
-            <div class="text-2xl text-center font-bold text-indigo-600 cursor-default">
+            <div class="text-2xl text-center font-bold {{ ($userData['deleted_at'] != null) ? 'text-red-500' : 'text-indigo-600' }} cursor-default">
                 <p>Info User {{ $userData['name'] }}</p>
             </div>
             {{-- End Top Bar --}}
@@ -26,6 +26,11 @@
                                 <td class="pr-3">Total perangkat</td>
                                 <td>:</td>
                                 <td>{{ $totalPerangkat }}</td>
+                            </tr>
+                            <tr class="{{ ($userData['deleted_at'] != null) ? 'text-red-500' : 'text-indigo-600' }}">
+                                <td class="pr-3">Status User</td>
+                                <td>:</td>
+                                <td>{{ ($userData['deleted_at'] != null ) ? 'Terhapus' : 'Aktif' }}</td>
                             </tr>
                             @if (session('role') == 0)
                             <tr>
@@ -74,7 +79,7 @@
                     </thead>
                     <tbody>
                         @forelse ($perangkat as $value)
-                        <tr class="text-center items-center {{ ($loop->odd) ? "bg-indigo-100 bg-opacity-75" : "" }}">
+                        <tr class="text-center items-center {{ ($loop->odd) ? "bg-gray-300 bg-opacity-75" : "" }}">
                             <td class="py-2">{{ ($perangkat->firstItem()-1) + $loop->iteration }}</td>
                             <td>{{ ($value['id_tipe']) ? $value['TipePerangkat']['kode_perangkat'] : '-' }}</td>
                             <td>{{ $value['sn_pengganti'] }}</td>

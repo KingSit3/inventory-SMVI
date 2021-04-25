@@ -18,7 +18,8 @@ class User extends Model
     }
 
     // Ubah format deleted_at dengan Accessor
-    public function getDeletedAtAttribute($value)
+    // Nama bebas, get...(Namabebas)..Attribute
+    public function getTanggalDihapusAttribute($value)
     {
         return $this->attributes['deleted_at'] = Carbon::parse($value)->format('d-M-Y');
     }

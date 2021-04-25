@@ -10,13 +10,13 @@ use Livewire\WithPagination;
 class InfoUser extends Component
 {
     use WithPagination;
-    public $userData;
+    public $userData, $deletedAt;
     public $keyword = '';
     public $isOpen = false;
 
     public function mount($id) 
     {
-        $this->userData = User::where('id', $id)->first();
+        $this->userData = User::where('id', $id)->withTrashed()->first();
     }
 
     public function render()
@@ -37,7 +37,7 @@ class InfoUser extends Component
         ->extends('layouts.app');
     }
 
-    public function delete($id) 
+    public function delete($id)
     {
         Perangkat::where('id', $id)->update(['id_user' => null]);
     }

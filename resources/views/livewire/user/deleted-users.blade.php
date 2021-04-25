@@ -37,9 +37,7 @@
                             <th class="w-1/3">Nama</th>
                             <th class="w-1/5">No Telp</th>
                             <th class="w-1/5">Tanggal Dihapus</th>
-                            @if (session('role') != 2)
-                                <th class="w-1/5">Aksi</th>
-                            @endif
+                            <th class="w-1/5">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -49,17 +47,23 @@
                             <td>{{ ($user['nik']) ? $user['nik'] : '-' }}</td>
                             <td class="truncate capitalize">{{ $user['name'] }}</td>
                             <td>{{ ($user['no_telp']) ? $user['no_telp'] : '-' }}</td>
-                            <td>{{ $user['deleted_at'] }}</td>
+                            <td>{{ $user['tanggalDihapus'] }}</td>
+
+                            <td class="space-x-4 py-1 flex items-center justify-center">
+                                <a href="/user/{{ $user['id'] }}" class="focus:outline-none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="w-6 text-gray-500 hover:text-blue-500 py-1 duration-150 font-bold" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </a>
 
                             @if (session('role') != 2)
-                            <td class="space-x-4 py-1 flex items-center justify-center">
                                 <button wire:click="$emit('restore', {{ $user['id'] }})" class="focus:outline-none">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 text-gray-500 hover:text-blue-500 py-1 duration-150" viewBox="0 0 20 20" fill="currentColor">
                                         <path fill-rule="evenodd" d="M7.707 3.293a1 1 0 010 1.414L5.414 7H11a7 7 0 017 7v2a1 1 0 11-2 0v-2a5 5 0 00-5-5H5.414l2.293 2.293a1 1 0 11-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
                                     </svg>
                                 </button>
-                            </td>
                             @endif
+                            </td>
                             
                         </tr>
                         @empty
