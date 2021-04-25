@@ -44,6 +44,11 @@
                     <td width="50%">{{ ($dataPerangkat['id_image']) ? $dataPerangkat['Image']['kode_image'] : '-' }}</td>
                 </tr>
                 <tr>
+                    <td width="45%">SP</td>
+                    <td width="5%">:</td>
+                    <td width="50%">{{ ($dataPerangkat['sp']) ? $dataPerangkat['sp'] : '-' }}</td>
+                </tr>
+                <tr>
                     <td width="45%">Perolehan</td>
                     <td width="5%">:</td>
                     <td width="50%">{{ ($dataPerangkat['perolehan']) ? $dataPerangkat['perolehan'] : '-' }}</td>
