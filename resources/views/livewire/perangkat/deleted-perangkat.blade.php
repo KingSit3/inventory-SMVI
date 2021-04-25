@@ -1,6 +1,6 @@
 <div>
     {{-- entangle agar interaksi dari controller: setelah data di save, modal tertutup --}}
-    <div x-data="{isOpen: @entangle('isOpen').defer}" class="px-7 py-3 flex flex-col justify-between h-screen">
+    <div x-data="{infoPerangkat: false}" class="px-7 py-3 flex flex-col justify-between h-screen">
         <div>
             {{-- Top Bar --}}
             <div class="text-2xl text-center font-bold text-red-600 cursor-default">
@@ -42,9 +42,7 @@
                             <th class="w-1/5">No Do</th>
                             <th class="w-1/12">SP</th>
                             <th class="w-1/5">Tanggal Dihapus</th>
-                            @if (session('role') != 2)
-                                <th class="w-1/5">Aksi</th>
-                            @endif
+                            <th class="w-1/5">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -66,17 +64,23 @@
                             @endif
                             <td>{{ ($value['id_do']) ? $value['DeliveryOrder']['no_do'] : '-' }}</td>
                             <td>{{ ($value['sp']) ? $value['sp'] : '-' }}</td>
-                            <td>{{ $value['deleted_at'] }}</td>
+                            <td>{{ $value['tanggalDihapus'] }}</td>
 
-                            @if (session('role') != 2)
                             <td class="space-x-4 py-1 flex items-center justify-center">
-                                <button wire:click="$emit('restore', {{ $value['id'] }})" class="focus:outline-none">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 text-gray-500 hover:text-blue-500 py-1 duration-150" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M7.707 3.293a1 1 0 010 1.414L5.414 7H11a7 7 0 017 7v2a1 1 0 11-2 0v-2a5 5 0 00-5-5H5.414l2.293 2.293a1 1 0 11-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                <button @click="infoPerangkat = true" wire:click="$emit('infoPerangkat', {{ $value['id'] }})" class="focus:outline-none" title="Info">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="w-6 text-gray-500 hover:text-blue-500 py-1 duration-150 font-bold" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>
                                 </button>
+
+                                @if (session('role') != 2)
+                                    <button wire:click="$emit('restore', {{ $value['id'] }})" class="focus:outline-none">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 text-gray-500 hover:text-blue-500 py-1 duration-150" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M7.707 3.293a1 1 0 010 1.414L5.414 7H11a7 7 0 017 7v2a1 1 0 11-2 0v-2a5 5 0 00-5-5H5.414l2.293 2.293a1 1 0 11-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                        </svg>
+                                    </button>
+                                @endif
                             </td>
-                            @endif
 
                         </tr>
                         @empty
@@ -89,6 +93,11 @@
                     </tbody>
                 </table>
             {{-- End Table --}}
+            <div 
+            x-show="infoPerangkat"
+            class="z-50 fixed inset-0 bg-black bg-opacity-50 flex justify-center items-start overflow-y-auto">
+                <livewire:perangkat.info-perangkat />
+            </div>
         </div>
         <div>
             {{-- Pagination --}}

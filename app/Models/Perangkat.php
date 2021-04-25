@@ -31,7 +31,7 @@ class Perangkat extends Model
       return $this->attributes['sn_lama'] = strtoupper($value);
     }
 
-    public function getDeletedAtAttribute($value) 
+    public function getTanggalDihapusAttribute($value) 
     {
       return $this->attributes['deleted_at'] = Carbon::parse($value)->format('d-M-Y');
     }

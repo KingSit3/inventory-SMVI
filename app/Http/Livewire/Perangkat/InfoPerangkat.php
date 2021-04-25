@@ -21,8 +21,8 @@ class InfoPerangkat extends Component
     public function detailPerangkat($id) 
     {
         $this->dataPerangkat = Perangkat::with(['users', 'Witel', 'TipePerangkat', 'DeliveryOrder'])
-                        ->where('id', $id)->first();
-        // dd($this->dataPerangkat);
+                                ->where('id', $id)->withTrashed()->first();
+        // dd($this->dataPerangkat['deleted_at']);
     }
 
     public function resetData() 
