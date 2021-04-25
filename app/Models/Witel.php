@@ -18,7 +18,7 @@ class Witel extends Model
       return $this->hasOne(User::class, 'id', 'id_pic')->withTrashed();
     }
 
-    public function getDeletedAtAttribute($value) 
+    public function getTanggalDihapusAttribute($value) 
     {
       return $this->attributes['deleted_at'] = Carbon::parse($value)->format('d-M-Y');
     }

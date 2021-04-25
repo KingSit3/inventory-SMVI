@@ -24,6 +24,7 @@ use App\Http\Livewire\Perangkat\SP;
 use App\Http\Livewire\User\InfoUser;
 use App\Http\Livewire\Witel\Witel;
 use App\Http\Livewire\Witel\DeletedWitel;
+use App\Http\Livewire\Witel\InfoWitel;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,6 +73,7 @@ Route::middleware('login')->group(function(){
     Route::get('/sp/{id}', InfoSp::class);
 
     Route::get('/witel', Witel::class);
+    Route::get('/witel/{id}', InfoWitel::class);
     Route::get('/deletedwitel', DeletedWitel::class);
     
     Route::get('/admin', Admin::class);

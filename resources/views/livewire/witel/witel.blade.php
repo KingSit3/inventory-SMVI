@@ -53,8 +53,13 @@
                             <td>{{ ($value['kode_witel']) ? $value['kode_witel'] : '-' }}</td>
                             <td class="truncate capitalize">{{ $value['nama_witel'] }}</td>
                             <td>{{ ($value['users']['name']) ? $value['users']['name'] : '-' }}</td>
-                            <td class="space-x-4 py-1 flex items-center justify-center">
 
+                            <td class="space-x-4 py-1 flex items-center justify-center">
+                                <a href="/witel/{{ $value['id'] }}" class="focus:outline-none" title="Info">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="w-6 text-gray-500 hover:text-blue-500 py-1 duration-150 font-bold" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </a>
                                 @if (session('role') != 2)
                                 <button @click="isOpen = true" wire:click="edit({{ $value['id'] }})" class="focus:outline-none">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="w-6 text-gray-500 hover:text-yellow-500 py-1 duration-150" viewBox="0 0 24 24" stroke="currentColor">
@@ -68,8 +73,8 @@
                                     </svg>
                                 </button>
                                 @endif
-                                
                             </td>
+
                         </tr>
                         @empty
                         <tr>
