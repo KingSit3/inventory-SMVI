@@ -55,4 +55,9 @@ class Perangkat extends Model
     {
       return $this->hasOne(tipePerangkat::class, 'id', 'id_tipe')->withTrashed();
     }
+
+    public function Image() 
+    {
+      return $this->hasOne(Image::class, 'id', 'id_image')->withTrashed();
+    }
 }

@@ -1,7 +1,7 @@
 <div>
     {{-- entangle agar interaksi dari controller: setelah data di save, modal tertutup --}}
-    <div x-data="{isOpen: @entangle('isOpen').defer}" class="px-7 py-3 flex flex-col justify-between h-screen">
-        <div>
+    <div class="px-7 py-3 flex flex-col justify-between h-screen">
+        <div x-data="{infoPerangkat: false}">
             {{-- Top Bar --}}
             <div class="text-2xl text-center font-bold text-indigo-600 cursor-default">
                 <p>Info SP {{ $spData['nama_sp'] }}</p>
@@ -71,11 +71,12 @@
                             <td>{{ ($value['deliveryOrder']['no_do']) ? $value['deliveryOrder']['no_do'] : '-' }}</td>
                             <td class="space-x-4 py-1 flex items-center justify-center">
 
-                                <a href="/perangkatinfo/{{ $value['id'] }}" class="focus:outline-none" title="Info">
+                                {{-- Lempar event infoPerangkat ke livewire infoPerangkat --}}
+                                <button @click="infoPerangkat = true" wire:click="$emit('infoPerangkat', {{ $value['id'] }})" class="focus:outline-none" title="Info">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="w-6 text-gray-500 hover:text-blue-500 py-1 duration-150 font-bold" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>
-                                </a>
+                                </button>
 
                                 @if (session('role') != 2)
                                 <button wire:click="$emit('delete', {{ $value['id'] }})" class="focus:outline-none" title="Hapus Data">
@@ -97,6 +98,11 @@
                     </tbody>
                 </table>
             {{-- End Table --}}
+            <div 
+            x-show="infoPerangkat"
+            class="z-50 fixed inset-0 bg-black bg-opacity-50 flex justify-center items-start overflow-y-auto">
+                <livewire:perangkat.info-perangkat />
+            </div>
         </div>
         <div>
             {{-- Pagination --}}
@@ -104,12 +110,17 @@
                     {{ $perangkat->links() }}
                 </div>
             {{-- End Pagination --}}
+            
         </div>
     </div>
 
     {{-- Push Script To Template --}}
     @push('script')
         <script>
+            function openNewWindow(id){
+                window.open("/infoperangkat/"+id)
+            }
+
             document.addEventListener('livewire:load', function () {
             @this.on('delete', id => {
                 // Jalankan sweet alert

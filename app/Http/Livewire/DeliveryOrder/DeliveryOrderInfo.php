@@ -62,6 +62,11 @@ class DeliveryOrderInfo extends Component
         $dataWitel = ['nama_witel' => null];
       }
 
+      if ($this->dataPerangkat['id_do'] != null) {
+        $this->resetData();
+        return $this->addError('cariSn', 'perangkat ada di DO lain');
+      }
+
       $this->sn = $this->dataPerangkat['sn_pengganti'];
       $this->tipe = $this->dataPerangkat['tipe_perangkat'];
       $this->witel = $dataWitel['nama_witel'];
@@ -70,11 +75,6 @@ class DeliveryOrderInfo extends Component
 
     public function tambah() 
     {
-      if ($this->dataPerangkat['id_do'] != null) {
-        $this->resetData();
-        return $this->addError('cariSn', 'perangkat ada di DO lain');
-      }
-
       Perangkat::where('id', $this->dataPerangkat['id'])->update(['id_do' => $this->doData['id']]);
       
       // Panggil fungsi Reset data
