@@ -9,7 +9,7 @@ use Livewire\WithPagination;
 class SP extends Component
 {
     use WithPagination;
-    
+
     public function render()
     {
         $data = [

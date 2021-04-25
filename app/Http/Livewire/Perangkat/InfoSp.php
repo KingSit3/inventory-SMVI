@@ -14,6 +14,11 @@ class InfoSp extends Component
     public $keyword = '';
     public $isOpen = false;
 
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
     public function mount($id) 
     {
         $this->spData = SP::where('id', $id)->first();

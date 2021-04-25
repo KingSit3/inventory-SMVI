@@ -14,6 +14,11 @@ class InfoUser extends Component
     public $keyword = '';
     public $isOpen = false;
 
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
     public function mount($id) 
     {
         $this->userData = User::where('id', $id)->withTrashed()->first();
