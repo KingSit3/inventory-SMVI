@@ -19,7 +19,7 @@ class Image extends Model
         $this->attributes['kode_image'] = strtoupper($value);
     }
 
-    public function getDeletedAtAttribute($value)
+    public function getTanggalDihapusAttribute($value)
     {
         return $this->attributes['deleted_at'] = Carbon::parse($value)->format('d-M-Y');
     }

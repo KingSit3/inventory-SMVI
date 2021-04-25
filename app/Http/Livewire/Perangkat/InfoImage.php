@@ -20,7 +20,7 @@ class InfoImage extends Component
 
     public function mount($id) 
     {
-        $this->imageData = Image::where('id', $id)->first();
+        $this->imageData = Image::where('id', $id)->withTrashed()->first();
     }
 
     public function render()
@@ -39,5 +39,10 @@ class InfoImage extends Component
 
         return view('livewire.perangkat.info-image', $data)
         ->extends('layouts.app');
+    }
+
+    public function delete() 
+    {
+      
     }
 }

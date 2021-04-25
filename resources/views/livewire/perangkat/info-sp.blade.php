@@ -117,10 +117,6 @@
     {{-- Push Script To Template --}}
     @push('script')
         <script>
-            function openNewWindow(id){
-                window.open("/infoperangkat/"+id)
-            }
-
             document.addEventListener('livewire:load', function () {
             @this.on('delete', id => {
                 // Jalankan sweet alert

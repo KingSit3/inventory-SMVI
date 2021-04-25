@@ -3,9 +3,11 @@
     <div class="px-7 py-3 flex flex-col justify-between h-screen">
         <div x-data="{infoPerangkat: false}">
             {{-- Top Bar --}}
-            <div class="text-2xl text-center font-bold text-indigo-600 cursor-default">
-                <p>Info Image {{ $imageData['kode_image'] }}</p>
+            <div class="text-2xl text-center font-bold  cursor-default">
+                <p class="{{ ($imageData['deleted_at']) ? 'text-red-500' : 'text-blue-600' }}">Info Image {{ $imageData['kode_image'] }}</p>
+                
             </div>
+           
             {{-- End Top Bar --}}
 
             {{-- Top Section --}}
@@ -16,6 +18,11 @@
                                 <td class="pr-3">Total perangkat</td>
                                 <td>:</td>
                                 <td>{{ $totalPerangkat }}</td>
+                            </tr>
+                            <tr>
+                                <td class="pr-3">Status Image</td>
+                                <td>:</td>
+                                <td class="font-semibold capitalize rounded-lg {{ ($imageData['deleted_at']) ? 'text-red-500' : 'text-blue-500' }}">{{ ($imageData['deleted_at']) ? 'Terhapus' : 'Aktif' }}</td>
                             </tr>
                         </table>
                     </div>
@@ -53,7 +60,7 @@
                     </thead>
                     <tbody>
                         @forelse ($perangkat as $value)
-                        <tr class="text-center items-center {{ ($loop->odd) ? "bg-indigo-100 bg-opacity-75" : "" }}">
+                        <tr class="text-center items-center {{ ($loop->odd) ? "bg-gray-300 bg-opacity-75" : "" }}">
                             <td class="py-2">{{ ($perangkat->firstItem()-1) + $loop->iteration }}</td>
                             <td>{{ ($value['id_tipe']) ? $value['TipePerangkat']['kode_perangkat'] : '-' }}</td>
                             <td>{{ $value['sn_pengganti'] }}</td>
@@ -77,15 +84,6 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>
                                 </button>
-
-                                @if (session('role') != 2)
-                                <button wire:click="$emit('delete', {{ $value['id'] }})" class="focus:outline-none" title="Hapus Data">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="w-6 text-gray-500 hover:text-red-500 py-1 duration-150" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                    </svg>
-                                </button>
-                                @endif
-
                             </td>
                         </tr>
                         @empty
@@ -110,7 +108,6 @@
                     {{ $perangkat->links() }}
                 </div>
             {{-- End Pagination --}}
-            
         </div>
     </div>
 </div>
