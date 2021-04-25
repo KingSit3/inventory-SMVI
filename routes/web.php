@@ -15,6 +15,7 @@ use App\Http\Livewire\Perangkat\DeletedTipe;
 use App\Http\Livewire\User\Users;
 use App\Http\Livewire\User\DeletedUsers;
 use App\Http\Livewire\Perangkat\Image;
+use App\Http\Livewire\Perangkat\InfoImage;
 use App\Http\Livewire\Perangkat\InfoPerangkat;
 use App\Http\Livewire\Perangkat\InfoSp;
 use App\Http\Livewire\Perangkat\Perangkat;
@@ -62,6 +63,7 @@ Route::middleware('login')->group(function(){
     Route::get('/deletedtipe', DeletedTipe::class);
 
     Route::get('/image', Image::class);
+    Route::get('/image/{id}', InfoImage::class);
     Route::get('/deletedimage', DeletedImage::class);
 
     Route::get('/sp', SP::class);

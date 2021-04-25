@@ -4,13 +4,20 @@ namespace App\Http\Livewire\Perangkat;
 
 use App\Models\Perangkat;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class InfoPerangkat extends Component
 {
+    use WithPagination;
     public $dataPerangkat;
 
     // Dengarkan event $emit(infoPerangkat)
     protected $listeners = ['infoPerangkat' => 'detailPerangkat'];
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
 
     public function render()
     {
