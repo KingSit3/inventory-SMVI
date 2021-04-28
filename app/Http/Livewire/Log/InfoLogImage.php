@@ -12,11 +12,6 @@ class InfoLogImage extends Component
     use WithPagination;
     public $logData;
 
-    public function updatingSearch()
-    {
-        $this->resetPage();
-    }
-
     public function mount($id) 
     {
         $this->logData = Image::where('id', $id)->withTrashed()->first();

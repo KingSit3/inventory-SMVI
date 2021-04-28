@@ -57,7 +57,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td class="text-center pt-5 text-red-500" colspan="3">
+                            <td class="text-center pt-5 text-red-500" colspan="6">
                             Data Tidak ditemukan!
                             </td>
                         </tr>
@@ -79,8 +79,6 @@
             {{-- End Pagination --}}
         </div>
     </div>
-
-    {{-- Push Script To Template --}}
 </div>
 
     
