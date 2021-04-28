@@ -4,7 +4,6 @@ namespace App\Models;
 
 // use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -20,14 +19,14 @@ class DoModel extends Model
       return $this->hasOne(Witel::class, 'id', 'id_witel')->withTrashed();
     }
 
-    public function getDeletedAtAttribute($value)
+    public function getDeletedAtAttribute()
     {
-        return $this->attributes['deleted_at'] = Carbon::parse($value)->format('d-M-Y');
+      return date('d-M-Y', strtotime($this->attributes['deleted_at']));
     }
 
-    public function getTanggalDoAttribute($value) 
+    public function getTanggalDoAttribute() 
     {
-      return $this->attributes['tanggal_do'] = Carbon::parse($value)->format('d-M-Y');
+      return date('d-M-Y', strtotime($this->attributes['tanggal_do']));
     }
 
 }

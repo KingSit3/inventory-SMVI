@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Carbon;
 
 class tipePerangkat extends Model
 {
@@ -23,8 +22,8 @@ class tipePerangkat extends Model
       $this->attributes['tipe_perangkat'] = strtoupper($value);
     }
 
-    public function getTanggalDihapusAttribute($value) 
+    public function getTanggalDihapusAttribute() 
     {
-      return $this->attributes['deleted_at'] = Carbon::parse($value)->format('d-M-Y');
+      return date('d-M-Y', strtotime($this->attributes['deleted_at']));
     }
 }
