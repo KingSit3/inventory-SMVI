@@ -4,9 +4,11 @@ namespace App\Http\Livewire\Log;
 
 use App\Models\LogImage as ModelsLogImage;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class LogImage extends Component
 {
+    use WithPagination;
 
     public function render()
     {
