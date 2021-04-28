@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Perangkat;
 
 use App\Models\Image as ModelsImage;
+use App\Models\LogImage;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -11,7 +12,7 @@ class Image extends Component
 {
     use WithPagination;
     
-    public $submitType, $keyword, $kode, $imageId, $imageData;
+    public $submitType, $keyword, $kode, $imageId, $imageData, $oldImageData;
     public $isOpen = false;
 
     public function updatingSearch()
@@ -51,6 +52,20 @@ class Image extends Component
         ModelsImage::create([
             'kode_image' => $this->kode,
         ]);
+
+        $idImage = ModelsImage::latest()->first();
+        LogImage::create([
+            'id_image' => $idImage['id'],
+            'data_log' =>   [
+                                'aksi' => 'Tambah',
+                                'browser' => $_SERVER['HTTP_USER_AGENT'],
+                                'edited_by' => session('name'),
+                                'data_lama' => [],
+                                'data_baru' => [
+                                    'kode_image' => $this->kode,
+                                    ],
+                            ],
+        ]);
         
         // Panggil fungsi Reset data
         $this->resetData();
@@ -64,13 +79,29 @@ class Image extends Component
 
     public function delete($id)
     {
-      ModelsImage::where(['id' => $id])->delete();
+        ModelsImage::where(['id' => $id])->delete();
+
+        // Cari kode image yang dihapus
+        $kodeImage = ModelsImage::where(['id' => $id])->onlyTrashed()->first();
+        LogImage::create([
+            'id_image' => $id,
+            'data_log' =>   [
+                                'aksi' => 'Hapus',
+                                'browser' => $_SERVER['HTTP_USER_AGENT'],
+                                'edited_by' => session('name'),
+                                'data_lama' =>  [
+                                                    'kode_image' => $kodeImage['kode_image'],
+                                                ],
+                                'data_baru' =>  [],
+                            ],
+        ]);
     }
 
     public function edit($id) 
     {
         $this->submitType = 'update';
         $this->imageData = ModelsImage::where('id', $id)->first();
+        $this->oldImageData = ModelsImage::where('id', $id)->first();
 
         // Masukkan value
         $this->imageId = $id;
@@ -91,6 +122,22 @@ class Image extends Component
             ModelsImage::where('id', $this->imageId)->update([
                 'kode_image' => $this->kode,
             ]);
+
+            LogImage::create([
+                'id_image' => $this->imageId,
+                'data_log' =>   [
+                                    'aksi' => 'Edit',
+                                    'browser' => $_SERVER['HTTP_USER_AGENT'],
+                                    'edited_by' => session('name'),
+                                    'data_lama' =>  [
+                                                        'kode_image' => $this->imageData['kode_image'],
+                                                    ],
+                                    'data_baru' =>  [
+                                                        'kode_image' => $this->kode,
+                                                    ],
+                                ],
+            ]);
+
         } catch (\Exception $ex) {
             return $this->addError('kode', 'Kode Image Sudah Ada');
         }
@@ -108,6 +155,6 @@ class Image extends Component
         // Reset Validasi
         $this->resetValidation();
         // Reset input field
-        $this->reset('kode', 'submitType', 'imageId', 'imageData');
+        $this->reset('kode', 'submitType', 'imageId', 'imageData', 'oldImageData');
     }
 }

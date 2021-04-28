@@ -49,7 +49,7 @@
                             <td>{{ ($value['kode_perangkat']) ? $value['kode_perangkat'] : '-' }}</td>
                             <td class="truncate capitalize">{{ $value['nama_perangkat'] }}</td>
                             <td>{{ ($value['tipe_perangkat']) ? $value['tipe_perangkat'] : '-' }}</td>
-                            <td>{{ $value['deleted_at'] }}</td>
+                            <td>{{ $value['tanggal_dihapus'] }}</td>
 
                             <td class="space-x-4 py-1 flex items-center justify-center">
                                 <a href="/tipe/{{ $value['id'] }}" class="focus:outline-none" title="Info">

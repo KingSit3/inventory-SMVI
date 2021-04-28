@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Perangkat;
 
 use App\Models\Image;
+use App\Models\LogImage;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -34,5 +35,19 @@ class DeletedImage extends Component
     public function restore($id) 
     {
         Image::where('id', $id)->restore();
+
+        $kodeImage = Image::where(['id' => $id])->first();
+        LogImage::create([
+            'id_image' => $id,
+            'data_log' =>   [
+                                'aksi' => 'Restore',
+                                'browser' => $_SERVER['HTTP_USER_AGENT'],
+                                'edited_by' => session('name'),
+                                'data_lama' =>  [
+                                                    'kode_image' => $kodeImage['kode_image'],
+                                                ],
+                                'data_baru' =>  [],
+                            ],
+        ]);
     }
 }

@@ -245,6 +245,36 @@
                     </div>  
                 {{-- End Delivery Order --}}
 
+                {{-- Log --}}
+                    <div x-data="{open: false}">
+                        <div class="mt-1 mr-3 group">
+                            <a class="cursor-pointer" @click="open = true">
+                            <div class="w-full pl-1 py-2 group-hover:bg-indigo-800 rounded duration-150">
+                                <div class="flex">
+                                    <svg class="group-hover:text-white duration-150 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                    </svg>
+                                    <span class="ml-3 group-hover:text-white flex items-center duration-150">Log</span>
+                                </div>
+                                
+                            </div>
+                            </a>
+                        </div>
+                        <div x-show="open"
+                            @click.away="open = false" 
+                            x-transition:enter="transition ease-out duration-200"
+                            x-transition:enter-start="opacity-0 transform scale-90"
+                            x-transition:enter-end="opacity-100 transform scale-100"
+                            x-transition:leave="transition ease-in duration-200"
+                            x-transition:leave-start="opacity-100 transform scale-100"
+                            x-transition:leave-end="opacity-0 transform scale-90"
+                            class="bg-gray-100 space-y-2 mr-4 py-2 rounded-xl">
+                            <a href="/logimage" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Log Image</a>
+                            {{-- <a href="/deleteddeliveryorder" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Deleted DO</a> --}}
+                        </div>
+                    </div>  
+                {{-- End Log --}}
+
                 @if (session('role') == 0)
                 {{-- Admin --}}
                 <div class="mt-1 mr-3 group">
