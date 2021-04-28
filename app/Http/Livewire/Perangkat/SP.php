@@ -27,8 +27,5 @@ class SP extends Component
         ModelsSP::create([
             'nama_sp' => $SP['nama_sp'] + 1,
         ]);
-
-        // Panggil SweetAlert berhasil
-        $this->emit('success', 'SP Berhasil Ditambahkan');
     }
 }

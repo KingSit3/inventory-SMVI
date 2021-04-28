@@ -13,7 +13,7 @@
                     {{-- Tambah Button --}}
                         <div>
                         @if (session('role') != 2)
-                            <button wire:click="tambah" class="bg-blue-500 hover:shadow-md hover:bg-blue-700 px-3 py-2 rounded-xl text-white font-semibold duration-150">Tambah SP</button>
+                            <button wire:click="$emit('tambah')" class="bg-blue-500 hover:shadow-md hover:bg-blue-700 px-3 py-2 rounded-xl text-white font-semibold duration-150">Tambah SP</button>
                         @endif
                         </div>
                 </div>
@@ -67,42 +67,30 @@
     @push('script')
         <script>
             document.addEventListener('livewire:load', function () {
-                @this.on('delete', id => {
+                @this.on('tambah', id => {
                     // Jalankan sweet alert
                     Swal.fire({
-                    title: 'Yakin ingin menghapusnya?',
+                    title: 'Yakin Mau nambah SP?',
                     // text: "User ".name." akan dihapus",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
                     cancelButtonText: 'Batal',
-                    confirmButtonText: 'Hapus!'
+                    confirmButtonText: 'Tambah!'
                     }).then((result) => {
                     if (result.isConfirmed) {
                         // Panggil method livewire
-                        @this.call('delete', id)
+                        @this.call('tambah')
                         // Pesan berhasil
                         Swal.fire(
-                        'Deleted!',
-                        'Data berhasil dihapus',
+                        'Berhasil!',
+                        'Data SP berhasil ditambah',
                         'success'
                         )
                     }
                     })
                 })
-            })
-
-            document.addEventListener('livewire:load', function () {
-                @this.on('success', message => {
-                    Swal.fire({
-                    icon: 'success',
-                    title: "Berhasil",
-                    text: message,
-                    showConfirmButton: false,
-                    timer: 1500
-                        })
-                    })
             })
         </script>
     @endpush
