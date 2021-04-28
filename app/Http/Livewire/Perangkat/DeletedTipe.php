@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Perangkat;
 
+use App\Models\LogTipePerangkat;
 use App\Models\tipePerangkat;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -34,6 +35,22 @@ class DeletedTipe extends Component
 
     public function restore($id) 
     {
-        tipePerangkat::where('id', $id)->restore(); 
+        $tipeQuery = tipePerangkat::where('id', $id)->onlyTrashed()->first();
+        $tipeQuery->restore();
+
+        LogTipePerangkat::create([
+            'id_tipe' => $id,
+            'data_log' =>   [
+                                'aksi' => 'Restore',
+                                'browser' => $_SERVER['HTTP_USER_AGENT'],
+                                'edited_by' => session('name'),
+                                'data_lama' =>  [
+                                                    'nama_tipe' => $tipeQuery['nama_perangkat'],
+                                                    'tipe_perangkat' => $tipeQuery['tipe_perangkat'],
+                                                    'kode_tipe' => $tipeQuery['kode_perangkat'],
+                                                ],
+                                'data_baru' =>  [],
+                            ],
+        ]);
     }
 }

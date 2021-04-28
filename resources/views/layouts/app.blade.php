@@ -270,7 +270,7 @@
                             x-transition:leave-end="opacity-0 transform scale-90"
                             class="bg-gray-100 space-y-2 mr-4 py-2 rounded-xl">
                             <a href="/logimage" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Log Image</a>
-                            {{-- <a href="/deleteddeliveryorder" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Deleted DO</a> --}}
+                            <a href="/logtipeperangkat" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Log Tipe Perangkat</a>
                         </div>
                     </div>  
                 {{-- End Log --}}

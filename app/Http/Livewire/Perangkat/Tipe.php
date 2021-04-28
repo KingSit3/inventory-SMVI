@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Perangkat;
 
+use App\Models\LogTipePerangkat;
 use App\Models\tipePerangkat;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
@@ -10,7 +11,7 @@ use Livewire\WithPagination;
 class Tipe extends Component
 {
     use WithPagination;
-    public $idPerangkat, $dbPerangkat, $kode, $nama, $tipe, $submitType, $keyword;
+    public $idPerangkat, $dbPerangkat, $oldDataTipe, $kode, $nama, $tipe, $submitType, $keyword;
     public $isOpen = false;
 
      // Method dari Livewire untuk reset filter saat pagination
@@ -56,6 +57,22 @@ class Tipe extends Component
             'tipe_perangkat' => $this->tipe,
             'kode_perangkat' => $this->kode,
         ]);
+
+        $idTipe = tipePerangkat::latest()->first();
+        LogTipePerangkat::create([
+            'id_tipe' => $idTipe['id'],
+            'data_log' =>   [
+                                'aksi' => 'Tambah',
+                                'browser' => $_SERVER['HTTP_USER_AGENT'],
+                                'edited_by' => session('name'),
+                                'data_lama' =>  [],
+                                'data_baru' =>  [
+                                                'nama_tipe' => $this->nama,
+                                                'tipe_perangkat' => $this->tipe,
+                                                'kode_tipe' => $this->kode,
+                                                ],
+                            ],
+        ]);
         
         // Panggil fungsi Reset data
         $this->resetData();
@@ -69,13 +86,30 @@ class Tipe extends Component
 
     public function delete($id) 
     {
-      tipePerangkat::find($id)->delete();
+        $tipeQuery = tipePerangkat::where('id', $id)->first();
+        $tipeQuery->delete();
+
+        LogTipePerangkat::create([
+            'id_tipe' => $id,
+            'data_log' =>   [
+                                'aksi' => 'Hapus',
+                                'browser' => $_SERVER['HTTP_USER_AGENT'],
+                                'edited_by' => session('name'),
+                                'data_lama' =>  [
+                                                    'nama_tipe' => $tipeQuery['nama_perangkat'],
+                                                    'tipe_perangkat' => $tipeQuery['tipe_perangkat'],
+                                                    'kode_tipe' => $tipeQuery['kode_perangkat'],
+                                                ],
+                                'data_baru' =>  [],
+                            ],
+        ]);
     }
 
     public function edit($id) 
     {
       $this->submitType = 'update';
       $this->dbPerangkat = tipePerangkat::where('id', $id)->first();
+      $this->oldDataTipe = tipePerangkat::where('id', $id)->first();
 
       $this->idPerangkat = $id;
       $this->nama = $this->dbPerangkat['nama_perangkat'];
@@ -99,6 +133,25 @@ class Tipe extends Component
                 'tipe_perangkat' => $this->tipe,
                 'kode_perangkat' => $this->kode,
                 ]);
+
+            LogTipePerangkat::create([
+                'id_tipe' => $this->idPerangkat,
+                'data_log' =>   [
+                                    'aksi' => 'Edit',
+                                    'browser' => $_SERVER['HTTP_USER_AGENT'],
+                                    'edited_by' => session('name'),
+                                    'data_lama' =>  [
+                                                        'nama_tipe' => $this->oldDataTipe['nama_perangkat'],
+                                                        'tipe_perangkat' => $this->oldDataTipe['tipe_perangkat'],
+                                                        'kode_tipe' => $this->oldDataTipe['kode_perangkat'],
+                                                    ],
+                                    'data_baru' =>  [
+                                                        'nama_tipe' => $this->nama,
+                                                        'tipe_perangkat' => $this->tipe,
+                                                        'kode_tipe' => $this->kode,
+                                                    ],
+                                ],
+            ]);
         } catch (\Exception $ex) {
             return $this->addError('kode', 'Kode Perangkat Sudah Ada');
         }
@@ -119,6 +172,6 @@ class Tipe extends Component
         // Reset Validasi
         $this->resetValidation();
         // Reset input field
-        $this->reset('nama', 'tipe', 'kode', 'submitType', 'idPerangkat');
+        $this->reset('nama', 'tipe', 'kode', 'submitType', 'idPerangkat', 'oldDataTipe', 'dbPerangkat');
     }
 }
