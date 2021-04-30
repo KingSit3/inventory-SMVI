@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Witel;
 
+use App\Models\LogUser;
 use App\Models\LogWitel;
 use App\Models\User as ModelUser;
 use App\Models\Witel as ModelsWitel;
@@ -89,7 +90,6 @@ class Witel extends Component
           ]);
 
           $getIdWitel = ModelsWitel::latest()->first();
-
           LogWitel::create([
             'id_witel' => $getIdWitel['id'],
             'data_log' => [
@@ -107,6 +107,21 @@ class Witel extends Component
                                           ],
                             ],
           ]);
+
+          LogUser::create([
+            'id_user' => $this->picId,
+            'data_log' => [
+                            'aksi' => 'Tambah',
+                            'browser' => $_SERVER['HTTP_USER_AGENT'],
+                            'edited_by' => session('name'),
+                            'data_lama' =>  [],
+                            'data_baru' =>  [
+                                                'name' => $getLastUser['name'],
+                                                'nik' => $getLastUser['nik'],
+                                                'no_telp' => $getLastUser['no_telp'],
+                                            ],
+                            ],
+            ]);
 
         }catch (\Exception $ex) {
           return $this->addError('picNik', 'Nik Sudah terdaftar');
@@ -241,6 +256,21 @@ class Witel extends Component
                                           ],
                             ],
           ]);
+
+          LogUser::create([
+            'id_user' => $this->picId,
+            'data_log' => [
+                            'aksi' => 'Tambah',
+                            'browser' => $_SERVER['HTTP_USER_AGENT'],
+                            'edited_by' => session('name'),
+                            'data_lama' =>  [],
+                            'data_baru' =>  [
+                                                'name' => $getLastUser['name'],
+                                                'nik' => $getLastUser['nik'],
+                                                'no_telp' => $getLastUser['no_telp'],
+                                            ],
+                            ],
+            ]);
 
         }catch (\Exception $ex) {
           return $ex;

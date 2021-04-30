@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Perangkat;
 
 use App\Models\DoModel;
 use App\Models\Image;
+use App\Models\LogUser;
 use App\Models\Perangkat as ModelsPerangkat;
 use App\Models\SP;
 use App\Models\tipePerangkat;
@@ -119,6 +120,21 @@ class Perangkat extends Component
                     'sp' => $this->spPerangkat,
                     'perolehan' => $this->perolehan,
                 ]);
+
+                LogUser::create([
+                    'id_user' => $this->userId,
+                    'data_log' => [
+                                    'aksi' => 'Tambah',
+                                    'browser' => $_SERVER['HTTP_USER_AGENT'],
+                                    'edited_by' => session('name'),
+                                    'data_lama' =>  [],
+                                    'data_baru' =>  [
+                                                        'name' => $getLastUser['name'],
+                                                        'nik' => $getLastUser['nik'],
+                                                        'no_telp' => $getLastUser['no_telp'],
+                                                    ],
+                                    ],
+                    ]);
 
             } catch (\Throwable $th) {
                 return $this->addError('nikUser', 'Nik Sudah terdaftar');
@@ -254,6 +270,21 @@ class Perangkat extends Component
                     'sp' => $this->spPerangkat,
                     'perolehan' => $this->perolehan,
                 ]);
+
+                LogUser::create([
+                    'id_user' => $this->userId,
+                    'data_log' => [
+                                    'aksi' => 'Tambah',
+                                    'browser' => $_SERVER['HTTP_USER_AGENT'],
+                                    'edited_by' => session('name'),
+                                    'data_lama' =>  [],
+                                    'data_baru' =>  [
+                                                        'name' => $getLastUser['name'],
+                                                        'nik' => $getLastUser['nik'],
+                                                        'no_telp' => $getLastUser['no_telp'],
+                                                    ],
+                                    ],
+                    ]);
 
             } catch (\Throwable $th) {
                 return $this->addError('nikUser', 'Nik Sudah terdaftar');
