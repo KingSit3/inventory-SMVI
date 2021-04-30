@@ -13,7 +13,7 @@
 <body class="flex bg-gray-100">
 
     {{-- Sidabar --}}
-        <div class="w-72 h-screen flex flex-col justify-between bg-gradient-to-t from-indigo-700 to-indigo-600 text-indigo-100 text-opacity-80  font-semibold">
+        <div class="w-72 h-screen flex flex-col justify-between bg-gradient-to-t from-indigo-700 to-indigo-600 text-indigo-100 text-opacity-80 font-semibold overflow-y-scroll">
             <div class="pl-5 pt-4">
             {{-- Logo --}}
                 <div class="mt-3">
@@ -271,6 +271,7 @@
                             class="bg-gray-100 space-y-2 mr-4 py-2 rounded-xl">
                             <a href="/logimage" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Log Image</a>
                             <a href="/logtipeperangkat" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Log Tipe Perangkat</a>
+                            <a href="/logdeliveryorder" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Log Delivery Order</a>
                         </div>
                     </div>  
                 {{-- End Log --}}
