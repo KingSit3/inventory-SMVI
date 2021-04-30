@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Witel;
 
+use App\Models\LogWitel;
 use App\Models\User as ModelUser;
 use App\Models\Witel as ModelsWitel;
 use Illuminate\Validation\Rule;
@@ -12,8 +13,8 @@ class Witel extends Component
 {
     use WithPagination;
     public  $idWitel, $dbWitel, $submitType, $nama, 
-            $kode, $regional, $alamat, $keyword;
-    public $picNik, $picId, $no_telp, $picName, $picSearch, $dbUser, $oldNik;
+            $kode, $regional, $alamat, $keyword, $oldDataWitel;
+    public $picNik, $picId, $no_telp, $picName, $picSearch, $dbUser, $oldNik, $oldDataUser;
     public $isOpen, $addNewPic = false;
 
     public function updatingSearch()
@@ -76,7 +77,7 @@ class Witel extends Component
           ]);
 
           // Ambil id user terakhir
-          $getLastUser = ModelUser::get()->last();
+          $getLastUser = ModelUser::latest()->first();
           $this->picId = $getLastUser['id'];
   
           ModelsWitel::create([
@@ -85,6 +86,26 @@ class Witel extends Component
             'regional' => $this->regional,
             'alamat_witel' => $this->alamat,
             'id_pic' => $this->picId,
+          ]);
+
+          $getIdWitel = ModelsWitel::latest()->first();
+
+          LogWitel::create([
+            'id_witel' => $getIdWitel['id'],
+            'data_log' => [
+                          'aksi' => 'Tambah',
+                          'browser' => $_SERVER['HTTP_USER_AGENT'],
+                          'edited_by' => session('name'),
+                          'data_lama' =>  [],
+                          'data_baru' =>  [
+                                              'nama_witel' => $this->nama,
+                                              'kode_witel' => $this->kode,
+                                              'alamat_witel' => $this->alamat,
+                                              'regional_witel' => $this->regional,
+                                              'id_pic' => $this->picId,
+                                              'nama_pic' => $getLastUser['name'],
+                                          ],
+                            ],
           ]);
 
         }catch (\Exception $ex) {
@@ -101,6 +122,27 @@ class Witel extends Component
             'alamat_witel' => $this->alamat,
             'id_pic' => $this->picId,
           ]);
+
+          $getUser = ModelUser::where('id', $this->picId)->first();
+          $getIdWitel = ModelsWitel::latest()->first();
+          LogWitel::create([
+            'id_witel' => $getIdWitel['id'],
+            'data_log' => [
+                          'aksi' => 'Tambah',
+                          'browser' => $_SERVER['HTTP_USER_AGENT'],
+                          'edited_by' => session('name'),
+                          'data_lama' =>  [],
+                          'data_baru' =>  [
+                                              'nama_witel' => $this->nama,
+                                              'kode_witel' => $this->kode,
+                                              'alamat_witel' => $this->alamat,
+                                              'regional_witel' => $this->regional,
+                                              'id_pic' => $this->picName,
+                                              'nama_pic' => $getUser['name'],
+                                          ],
+                            ],
+          ]);
+
         } catch (\Exception $ex) {
           return $this->addError('picName', 'PIC Sudah ada di Witel lain');
         }
@@ -135,6 +177,9 @@ class Witel extends Component
       $this->picNik = $this->dbUser['nik'];
       $this->picName = $this->dbUser['name'];
       $this->no_telp = $this->dbUser['no_telp'];
+
+      $this->oldDataWitel = ModelsWitel::where('id', $id)->first();
+      $this->oldDataUser = ModelUser::where('id', $this->dbWitel['id_pic'])->withTrashed()->first();
     }
 
     public function update() 
@@ -172,8 +217,34 @@ class Witel extends Component
             'id_pic' => $this->picId,
           ]);
 
+          LogWitel::create([
+            'id_witel' => $this->idWitel,
+            'data_log' => [
+                          'aksi' => 'Edit',
+                          'browser' => $_SERVER['HTTP_USER_AGENT'],
+                          'edited_by' => session('name'),
+                          'data_lama' =>  [
+                                              'nama_witel' => $this->oldDataWitel['nama_witel'],
+                                              'kode_witel' => $this->oldDataWitel['kode_witel'],
+                                              'alamat_witel' => $this->oldDataWitel['alamat_witel'],
+                                              'regional_witel' => $this->oldDataWitel['regional'],
+                                              'id_pic' => $this->oldDataUser['id'],
+                                              'nama_pic' => $this->oldDataUser['name'],
+                                          ],
+                          'data_baru' =>  [
+                                              'nama_witel' => $this->nama,
+                                              'kode_witel' => $this->kode,
+                                              'alamat_witel' => $this->alamat,
+                                              'regional_witel' => $this->regional,
+                                              'id_pic' => $this->picId,
+                                              'nama_pic' => $getLastUser['name'],
+                                          ],
+                            ],
+          ]);
+
         }catch (\Exception $ex) {
-          return $this->addError('picNik', 'Nik Sudah terdaftar');
+          return $ex;
+          // return $this->addError('picNik', 'Nik Sudah terdaftar');
         }
         
       } else {
@@ -185,6 +256,32 @@ class Witel extends Component
             'regional' => $this->regional,
             'alamat_witel' => $this->alamat,
           ]);
+
+        LogWitel::create([
+          'id_witel' => $this->idWitel,
+          'data_log' => [
+                        'aksi' => 'Edit',
+                        'browser' => $_SERVER['HTTP_USER_AGENT'],
+                        'edited_by' => session('name'),
+                        'data_lama' =>  [
+                                            'nama_witel' => $this->oldDataWitel['nama_witel'],
+                                            'kode_witel' => $this->oldDataWitel['kode_witel'],
+                                            'alamat_witel' => $this->oldDataWitel['alamat_witel'],
+                                            'regional_witel' => $this->oldDataWitel['regional'],
+                                            'id_pic' => $this->oldDataUser['id'],
+                                            'nama_pic' => $this->oldDataUser['name'],
+                                        ],
+                        'data_baru' =>  [
+                                            'nama_witel' => $this->nama,
+                                            'kode_witel' => $this->kode,
+                                            'alamat_witel' => $this->alamat,
+                                            'regional_witel' => $this->regional,
+                                            'id_pic' => $this->picId,
+                                            'nama_pic' => $this->picName,
+                                        ],
+                          ],
+        ]);
+            
         } catch (\Exception $ex) {
           return $this->addError('kode', 'Kode Witel Sudah ada');
         }
@@ -221,7 +318,27 @@ class Witel extends Component
 
     public function delete($id)
     {
-      ModelsWitel::find($id)->delete();
+      $witelQuery = ModelsWitel::where('id', $id)->first();
+      $witelQuery->delete();
+
+      $dataUser  = ModelUser::where('id', $witelQuery['id_pic'])->first();
+      LogWitel::create([
+        'id_witel' => $id,
+        'data_log' => [
+                      'aksi' => 'Hapus',
+                      'browser' => $_SERVER['HTTP_USER_AGENT'],
+                      'edited_by' => session('name'),
+                      'data_lama' =>  [
+                                          'nama_witel' => $witelQuery['nama_witel'],
+                                          'kode_witel' => $witelQuery['kode_witel'],
+                                          'alamat_witel' => $witelQuery['alamat_witel'],
+                                          'regional_witel' => $witelQuery['regional'],
+                                          'id_pic' => $dataUser['id'],
+                                          'nama_pic' => $dataUser['name'],
+                                      ],
+                      'data_baru' =>  [],
+                        ],
+      ]);
     }
 
     public function resetData()
@@ -229,8 +346,6 @@ class Witel extends Component
         // Reset Validasi
         $this->resetValidation();
         // Reset input field
-        $this->reset('idWitel', 'dbWitel', 'submitType', 
-        'nama', 'kode', 'regional', 'alamat', 'picId', 
-        'picName', 'picNik', 'no_telp', 'dbUser', 'addNewPic');
+        $this->reset();
     }
 }
