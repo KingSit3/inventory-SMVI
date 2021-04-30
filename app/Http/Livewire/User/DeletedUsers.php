@@ -2,8 +2,8 @@
 
 namespace App\Http\Livewire\User;
 
+use App\Models\LogUser;
 use App\Models\User;
-use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -36,6 +36,22 @@ class DeletedUsers extends Component
 
     public function restore($id) 
     {
-        User::where('id', $id)->restore();
+        $userQuery = User::where('id', $id)->withTrashed()->first();
+        $userQuery->restore();
+
+        LogUser::create([
+            'id_user' => $id,
+            'data_log' => [
+                            'aksi' => 'Restore',
+                            'browser' => $_SERVER['HTTP_USER_AGENT'],
+                            'edited_by' => session('name'),
+                            'data_lama' =>  [
+                                                'name' => $userQuery['name'],
+                                                'nik' => $userQuery['nik'],
+                                                'no_telp' => $userQuery['no_telp'],
+                                            ],
+                            'data_baru' =>  [],
+                            ],
+            ]); 
     }
 }

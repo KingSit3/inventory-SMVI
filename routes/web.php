@@ -11,10 +11,12 @@ use App\Http\Livewire\DeliveryOrder\DeliveryOrderInfo;
 use App\Http\Livewire\Log\InfoLogDeliveryOrder;
 use App\Http\Livewire\Log\InfoLogImage;
 use App\Http\Livewire\Log\InfoLogTipe;
+use App\Http\Livewire\Log\InfoLogUser;
 use App\Http\Livewire\Log\InfoLogWitel;
 use App\Http\Livewire\Log\LogDeliveryOrder;
 use App\Http\Livewire\Log\LogImage;
 use App\Http\Livewire\Log\LogTipePerangkat;
+use App\Http\Livewire\Log\LogUser;
 use App\Http\Livewire\Log\LogWitel;
 use App\Http\Livewire\Perangkat\DeletedImage;
 use App\Http\Livewire\Perangkat\DeletedPerangkat;
@@ -93,6 +95,8 @@ Route::middleware('login')->group(function(){
     Route::get('/logdeliveryorder/{id}', InfoLogDeliveryOrder::class);
     Route::get('/logwitel', LogWitel::class);
     Route::get('/logwitel/{id}', InfoLogWitel::class);
+    Route::get('/loguser', LogUser::class);
+    Route::get('/loguser/{id}', InfoLogUser::class);
     
     Route::get('/admin', Admin::class);
 });
