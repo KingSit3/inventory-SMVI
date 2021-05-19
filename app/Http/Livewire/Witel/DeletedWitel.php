@@ -23,7 +23,8 @@ class DeletedWitel extends Component
         $keyword = '%'.$this->keyword.'%';
 
         $data = [
-            'witel' => Witel::onlyTrashed()
+            'witel' => Witel::with('users')
+                        ->onlyTrashed()
                         ->where('nama_witel', 'like', $keyword)
                         ->orderBy('deleted_at', 'DESC')
                         ->paginate(10),

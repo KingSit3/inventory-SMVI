@@ -36,8 +36,7 @@ class Witel extends Component
 
         $data = [
             // Joins using Relationship
-            'witel' => ModelsWitel::with('Users')
-                      ->where('nama_witel', 'like', $keyword)
+            'witel' => ModelsWitel::with('users')->where('nama_witel', 'like', $keyword)
                       ->orWhere('kode_witel', 'like', $keyword)
                       ->paginate(10),
             'pic' => $picQuery,

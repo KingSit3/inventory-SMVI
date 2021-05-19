@@ -35,7 +35,7 @@ class DeliveryOrder extends Component
 
         $data = [
             'witelResult' => $hasilWitel,
-            'deliveryOrder' => DoModel::with('Witel')
+            'deliveryOrder' => DoModel::with('witel')
                                 ->where('no_do', 'like', $keyword)
                                 ->orderBy('no_do', 'desc')
                                 ->paginate(10),

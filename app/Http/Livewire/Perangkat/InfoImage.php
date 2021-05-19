@@ -40,9 +40,4 @@ class InfoImage extends Component
         return view('livewire.perangkat.info-image', $data)
         ->extends('layouts.app');
     }
-
-    public function delete() 
-    {
-      
-    }
 }
