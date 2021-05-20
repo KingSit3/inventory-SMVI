@@ -28,11 +28,11 @@ class InfoUser extends Component
     {
         $keyword = '%'.$this->keyword.'%';
 
-        $dataPerangkat = Perangkat::with(['witel', 'TipePerangkat', 'DeliveryOrder'])
-                                    ->where('id_user', $this->userData['id'])
+        $dataPerangkat = Perangkat::with(['witel', 'tipePerangkat', 'deliveryOrder'])
+                                    ->where('id_user', $this->userData['id']) 
                                     ->where('sn_pengganti', 'like', $keyword)
                                     ->orderBy('updated_at', 'DESC')->paginate(7);
-
+        // dd($dataPerangkat[0]['deliveryOrder']['no_do']);
         $data = [
             'perangkat' => $dataPerangkat,
             'totalPerangkat' => Perangkat::where('id_user', $this->userData['id'])->count(),

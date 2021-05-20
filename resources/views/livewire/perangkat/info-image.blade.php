@@ -65,17 +65,9 @@
                             <td>{{ ($value['id_tipe']) ? $value['TipePerangkat']['kode_perangkat'] : '-' }}</td>
                             <td>{{ $value['sn_pengganti'] }}</td>
                             <td>{{ ($value['sn_monitor']) ? $value['sn_monitor'] : '-' }}</td>
-                            @if ($value['id_witel'] != null)
-                                <td class="truncate">{{ $value['witel']['nama_witel'] }}</td>
-                            @else
-                                <td>-</td>
-                            @endif
-                            @if ($value['id_user'] != null)
-                                <td class="truncate">{{ $value['users']['name'] }}</td>
-                            @else
-                                <td>-</td>
-                            @endif
-                            <td>{{ ($value['deliveryOrder']['no_do']) ? $value['deliveryOrder']['no_do'] : '-' }}</td>
+                            <td class="truncate">{{ ($value['id_witel']) ? $value['witel']['nama_witel'] : '-' }}</td>
+                            <td class="truncate">{{ ($value['id_user']) ? $value['users']['name'] : '-' }}</td>
+                            <td>{{ ($value['id_do']) ? $value['deliveryOrder']['no_do'] : '-' }}</td>
                             <td class="space-x-4 py-1 flex items-center justify-center">
 
                                 {{-- Lempar event infoPerangkat ke livewire infoPerangkat --}}
