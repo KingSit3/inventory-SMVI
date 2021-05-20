@@ -50,172 +50,7 @@
                     </a>
                 </div>
 
-                {{-- Users --}}
-                    <div x-data="{open: false}">
-                        <div class="mt-1 mr-3 group">
-                            <a class="cursor-pointer" @click="open = true">
-                            <div class="w-full pl-1 py-2 group-hover:bg-indigo-800 rounded duration-150">
-                                <div class="flex">
-                                    <svg class="group-hover:text-white duration-150 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                                    </svg>
-                                    <span class="ml-3 group-hover:text-white flex items-center duration-150">Users</span>
-                                </div>
-                                
-                            </div>
-                            </a>
-                        </div>
-                        <div x-show="open"
-                            @click.away="open = false" 
-                            x-transition:enter="transition ease-out duration-200"
-                            x-transition:enter-start="opacity-0 transform scale-90"
-                            x-transition:enter-end="opacity-100 transform scale-100"
-                            x-transition:leave="transition ease-in duration-200"
-                            x-transition:leave-start="opacity-100 transform scale-100"
-                            x-transition:leave-end="opacity-0 transform scale-90"
-                            class="bg-gray-100 space-y-2 mr-4 py-2 rounded-xl">
-                            <a href="/users" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Users</a>
-                            <a href="/deletedusers" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Deleted Users</a>
-                        </div>
-                    </div>  
-                {{-- End Users --}}
-
-                {{-- Perangkat --}}
-                <div x-data="{open: false}">
-                    <div class="mt-1 mr-3 group">
-                        <a class="cursor-pointer" @click="open = true">
-                        <div class="w-full pl-1 py-2 group-hover:bg-indigo-800 rounded duration-150">
-                            <div class="flex">
-                                <svg class="group-hover:text-white duration-150 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                                </svg>
-                                <span class="ml-3 group-hover:text-white flex items-center duration-150">Perangkat</span>
-                            </div>
-                            
-                        </div>
-                        </a>
-                    </div>
-                    <div x-show="open"
-                        @click.away="open = false" 
-                        x-transition:enter="transition ease-out duration-200"
-                        x-transition:enter-start="opacity-0 transform scale-90"
-                        x-transition:enter-end="opacity-100 transform scale-100"
-                        x-transition:leave="transition ease-in duration-200"
-                        x-transition:leave-start="opacity-100 transform scale-100"
-                        x-transition:leave-end="opacity-0 transform scale-90"
-                        class="bg-gray-100 space-y-2 mr-4 py-2 rounded-xl">
-                        <a href="/perangkat" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Perangkat</a>
-                        <a href="/deletedperangkat" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Deleted Perangkat</a>
-                    </div>
-                </div>  
-            {{-- End Perangkat --}}
-
-                {{-- Tipe --}}
-                    <div x-data="{open: false}">
-                        <div class="mt-1 mr-3 group">
-                            <a class="cursor-pointer" @click="open = true">
-                            <div class="w-full pl-1 py-2 group-hover:bg-indigo-800 rounded duration-150">
-                                <div class="flex">
-                                    <svg class="group-hover:text-white duration-150 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                                    </svg>
-                                    <span class="ml-3 group-hover:text-white flex items-center duration-150">Tipe Perangkat</span>
-                                </div>
-                                
-                            </div>
-                            </a>
-                        </div>
-                        <div x-show="open"
-                            @click.away="open = false" 
-                            x-transition:enter="transition ease-out duration-200"
-                            x-transition:enter-start="opacity-0 transform scale-90"
-                            x-transition:enter-end="opacity-100 transform scale-100"
-                            x-transition:leave="transition ease-in duration-200"
-                            x-transition:leave-start="opacity-100 transform scale-100"
-                            x-transition:leave-end="opacity-0 transform scale-90"
-                            class="bg-gray-100 space-y-2 mr-4 py-2 rounded-xl">
-                            <a href="/tipe" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Tipe</a>
-                            <a href="/deletedtipe" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Deleted Tipe</a>
-                        </div>
-                    </div>  
-                {{-- End Tipe --}}
-
-                {{-- Witel --}}
-                    <div x-data="{open: false}">
-                        <div class="mt-1 mr-3 group">
-                            <a class="cursor-pointer" @click="open = true">
-                            <div class="w-full pl-1 py-2 group-hover:bg-indigo-800 rounded duration-150">
-                                <div class="flex">
-                                    <svg class="group-hover:text-white duration-150 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
-                                    <span class="ml-3 group-hover:text-white flex items-center duration-150">Witel</span>
-                                </div>
-                                
-                            </div>
-                            </a>
-                        </div>
-                        <div x-show="open"
-                            @click.away="open = false" 
-                            x-transition:enter="transition ease-out duration-200"
-                            x-transition:enter-start="opacity-0 transform scale-90"
-                            x-transition:enter-end="opacity-100 transform scale-100"
-                            x-transition:leave="transition ease-in duration-200"
-                            x-transition:leave-start="opacity-100 transform scale-100"
-                            x-transition:leave-end="opacity-0 transform scale-90"
-                            class="bg-gray-100 space-y-2 mr-4 py-2 rounded-xl">
-                            <a href="/witel" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Witel</a>
-                            <a href="/deletedwitel" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Deleted Witel</a>
-                        </div>
-                    </div>  
-                {{-- End Witel --}}
-
-                {{-- Image --}}
-                    <div x-data="{open: false}">
-                        <div class="mt-1 mr-3 group">
-                            <a class="cursor-pointer" @click="open = true">
-                            <div class="w-full pl-1 py-2 group-hover:bg-indigo-800 rounded duration-150">
-                                <div class="flex">
-                                    <svg class="group-hover:text-white duration-150 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
-                                    </svg>
-                                    <span class="ml-3 group-hover:text-white flex items-center duration-150">Image</span>
-                                </div>
-                                
-                            </div>
-                            </a>
-                        </div>
-                        <div x-show="open"
-                            @click.away="open = false" 
-                            x-transition:enter="transition ease-out duration-200"
-                            x-transition:enter-start="opacity-0 transform scale-90"
-                            x-transition:enter-end="opacity-100 transform scale-100"
-                            x-transition:leave="transition ease-in duration-200"
-                            x-transition:leave-start="opacity-100 transform scale-100"
-                            x-transition:leave-end="opacity-0 transform scale-90"
-                            class="bg-gray-100 space-y-2 mr-4 py-2 rounded-xl">
-                            <a href="/image" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Image</a>
-                            <a href="/deletedimage" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Deleted Image</a>
-                        </div>
-                    </div>  
-                {{-- End Image --}}
-
-                {{-- SP --}}
-                    <div class="mt-1 mr-3 group">
-                        <a href="/sp">
-                        <div class="w-full pl-1 py-2 group-hover:bg-indigo-800 rounded duration-150">
-                            <div class="flex">
-                                <svg class="group-hover:text-white duration-150 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                </svg>
-                                <span class="ml-3 group-hover:text-white flex items-center duration-150">SP</span>
-                            </div>
-                        </div>
-                        </a>
-                    </div>
-                {{-- End SP --}}
-
-                {{-- Delivery Order --}}
+                {{-- Master Data --}}
                     <div x-data="{open: false}">
                         <div class="mt-1 mr-3 group">
                             <a class="cursor-pointer" @click="open = true">
@@ -224,7 +59,7 @@
                                     <svg class="group-hover:text-white duration-150 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                     </svg>
-                                    <span class="ml-3 group-hover:text-white flex items-center duration-150">Delivery Order</span>
+                                    <span class="ml-3 group-hover:text-white flex items-center duration-150">Master Data</span>
                                 </div>
                                 
                             </div>
@@ -239,12 +74,51 @@
                             x-transition:leave-start="opacity-100 transform scale-100"
                             x-transition:leave-end="opacity-0 transform scale-90"
                             class="bg-gray-100 space-y-2 mr-4 py-2 rounded-xl">
-                            <a href="/deliveryorder" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Data DO</a>
-                            <a href="/deleteddeliveryorder" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Deleted DO</a>
+                            <a href="/users" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">User</a>
+                            <a href="/perangkat" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Perangkat</a>
+                            <a href="/witel" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Witel</a>
+                            <a href="/image" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Image</a>
+                            <a href="/tipe" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Tipe Perangkat</a>
+                            <a href="/sp" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">SP</a>
+                            <a href="/deliveryorder" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Delivery Order</a>
                         </div>
                     </div>  
-                {{-- End Delivery Order --}}
+                {{-- End Master Data --}}
 
+                {{-- Master Data Terhapus --}}
+                    <div x-data="{open: false}">
+                        <div class="mt-1 mr-3 group">
+                            <a class="cursor-pointer" @click="open = true">
+                            <div class="w-full pl-1 py-2 group-hover:bg-indigo-800 rounded duration-150">
+                                <div class="flex">
+                                    <svg class="group-hover:text-white duration-150 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                    </svg>
+                                    <span class="ml-3 group-hover:text-white flex items-center duration-150">Master Data Terhapus</span>
+                                </div>
+                                
+                            </div>
+                            </a>
+                        </div>
+                        <div x-show="open"
+                            @click.away="open = false" 
+                            x-transition:enter="transition ease-out duration-200"
+                            x-transition:enter-start="opacity-0 transform scale-90"
+                            x-transition:enter-end="opacity-100 transform scale-100"
+                            x-transition:leave="transition ease-in duration-200"
+                            x-transition:leave-start="opacity-100 transform scale-100"
+                            x-transition:leave-end="opacity-0 transform scale-90"
+                            class="bg-gray-100 space-y-2 mr-4 py-2 rounded-xl">
+                            <a href="/deletedusers" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">User Terhapus</a>
+                            <a href="/deletedperangkat" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Perangkat Terhapus</a>
+                            <a href="/deletedwitel" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Witel Terhapus</a>
+                            <a href="/deletedimage" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Image Terhapus</a>
+                            <a href="/deletedtipe" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Tipe Perangkat Terhapus</a>
+                            <a href="/deleteddeliveryorder" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Delivery Order Terhapus</a>
+                        </div>
+                    </div>  
+                {{-- End Master Data Terhapus --}}
+                
                 {{-- Log --}}
                     <div x-data="{open: false}">
                         <div class="mt-1 mr-3 group">
