@@ -32,7 +32,6 @@ class InfoUser extends Component
                                     ->where('id_user', $this->userData['id']) 
                                     ->where('sn_pengganti', 'like', $keyword)
                                     ->orderBy('updated_at', 'DESC')->paginate(7);
-        // dd($dataPerangkat[0]['deliveryOrder']['no_do']);
         $data = [
             'perangkat' => $dataPerangkat,
             'totalPerangkat' => Perangkat::where('id_user', $this->userData['id'])->count(),
