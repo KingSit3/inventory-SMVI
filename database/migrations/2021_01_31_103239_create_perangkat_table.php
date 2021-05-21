@@ -16,14 +16,17 @@ class CreatePerangkatTable extends Migration
         Schema::create('perangkat', function (Blueprint $table) {
             $table->id();
             $table->string('sn_lama')->unique()->nullable();
-            $table->bigInteger('id_tipe');
             $table->string('sn_pengganti')->unique();
             $table->string('sn_monitor')->unique()->nullable();
-            $table->bigInteger('id_user')->nullable();
-            $table->bigInteger('id_image');
-            $table->bigInteger('id_witel')->nullable();
-            $table->bigInteger('id_do')->nullable();
+            $table->unsignedBigInteger('id_tipe')->index();
+            $table->unsignedBigInteger('id_user')->nullable()->index();
+            $table->unsignedBigInteger('id_sistem')->index();
+            $table->unsignedBigInteger('id_cabang')->nullable()->index();
+            $table->unsignedBigInteger('id_pengiriman')->nullable()->index();
             $table->text('keterangan')->nullable();
+            $table->string('cek_status')->nullable();
+            $table->string('perolehan')->nullable();
+            $table->smallInteger('gelombang')->nullable()->index();
             $table->softDeletes();
             $table->timestamps();
         });

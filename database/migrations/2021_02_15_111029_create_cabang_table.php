@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLogDeliveryOrderTable extends Migration
+class CreateCabangTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,14 @@ class CreateLogDeliveryOrderTable extends Migration
      */
     public function up()
     {
-        Schema::create('log_delivery_order', function (Blueprint $table) {
+        Schema::create('cabang', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('id_do');
-            $table->json('data_log');
+            $table->string('nama_cabang');
+            $table->string('kode_cabang')->unique();
+            $table->string('regional');
+            $table->string('alamat_cabang');
+            $table->unsignedBigInteger('id_pic')->unique();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -28,6 +32,6 @@ class CreateLogDeliveryOrderTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('log_delivery_order');
+        Schema::dropIfExists('cabang');
     }
 }

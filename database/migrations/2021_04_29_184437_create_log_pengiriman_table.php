@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLogWitelTable extends Migration
+class CreateLogPengirimanTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateLogWitelTable extends Migration
      */
     public function up()
     {
-        Schema::create('log_witel', function (Blueprint $table) {
+        Schema::create('log_pengiriman', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('id_witel');
+            $table->bigInteger('id_pengiriman')->index();
             $table->json('data_log');
             $table->timestamps();
         });
@@ -28,6 +28,6 @@ class CreateLogWitelTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('log_witel');
+        Schema::dropIfExists('log_pengiriman');
     }
 }

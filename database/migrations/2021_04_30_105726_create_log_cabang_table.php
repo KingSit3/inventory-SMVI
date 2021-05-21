@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLogImageTable extends Migration
+class CreateLogCabangTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateLogImageTable extends Migration
      */
     public function up()
     {
-        Schema::create('log_image', function (Blueprint $table) {
+        Schema::create('log_cabang', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('id_image');
+            $table->bigInteger('id_cabang')->index();
             $table->json('data_log');
             $table->timestamps();
         });
@@ -28,6 +28,6 @@ class CreateLogImageTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('log_image');
+        Schema::dropIfExists('log_cabang');
     }
 }

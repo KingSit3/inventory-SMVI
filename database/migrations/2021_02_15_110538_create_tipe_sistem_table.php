@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDoTable extends Migration
+class CreateTipeSistemTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class CreateDoTable extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_do', function (Blueprint $table) {
+        Schema::create('tipe_sistem', function (Blueprint $table) {
             $table->id();
-            $table->string('no_do')->unique();
-            $table->string('id_witel');
-            $table->timestamp('tanggal_do');
+            $table->string('kode_sistem')->unique();
             $table->softDeletes();
             $table->timestamps();
         });
@@ -30,6 +28,6 @@ class CreateDoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('do');
+        Schema::dropIfExists('tipe_sistem');
     }
 }

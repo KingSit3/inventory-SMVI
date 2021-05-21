@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class SpSeeder extends Seeder
+class gelombangSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,15 +14,15 @@ class SpSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('sp')->insert([
+        DB::table('gelombang')->insert([
             [
-                'nama_sp' => '1',
+                'nama_gelombang' => '1',
             ],
             [
-                'nama_sp' => '2',
+                'nama_gelombang' => '2',
             ],
             [
-                'nama_sp' => '3',
+                'nama_gelombang' => '3',
             ],
         ]);
     }

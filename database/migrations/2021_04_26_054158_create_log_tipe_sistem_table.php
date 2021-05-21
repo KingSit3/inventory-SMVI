@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateWitelTable extends Migration
+class CreateLogTipeSistemTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,10 @@ class CreateWitelTable extends Migration
      */
     public function up()
     {
-        Schema::create('witel', function (Blueprint $table) {
+        Schema::create('log_tipe_sistem', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_witel');
-            $table->string('kode_witel')->unique();
-            $table->string('regional');
-            $table->string('alamat_witel');
-            $table->bigInteger('id_pic')->unique();
-            $table->softDeletes();
+            $table->bigInteger('id_sistem')->index();
+            $table->json('data_log');
             $table->timestamps();
         });
     }
@@ -32,6 +28,6 @@ class CreateWitelTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('witel');
+        Schema::dropIfExists('log_tipe_sistem');
     }
 }

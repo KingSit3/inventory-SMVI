@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddSPPerangkatTable extends Migration
+class CreateGelombangTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class AddSPPerangkatTable extends Migration
      */
     public function up()
     {
-        Schema::table('perangkat', function (Blueprint $table) {
-            $table->string('cek_status')->nullable();
-            $table->string('perolehan')->nullable();
-            $table->string('sp')->nullable();
+        Schema::create('gelombang', function (Blueprint $table) {
+            $table->id();
+            $table->string('nama_gelombang')->unique();
+            $table->softDeletes();
+            $table->timestamps();
         });
     }
 
@@ -27,6 +28,6 @@ class AddSPPerangkatTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('gelombang');
     }
 }

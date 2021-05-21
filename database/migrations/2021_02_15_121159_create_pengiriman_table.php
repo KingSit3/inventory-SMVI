@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateImageTable extends Migration
+class CreatePengirimanTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class CreateImageTable extends Migration
      */
     public function up()
     {
-        Schema::create('image', function (Blueprint $table) {
+        Schema::create('pengiriman', function (Blueprint $table) {
             $table->id();
-            $table->string('kode_image')->unique();
+            $table->string('no_pengiriman')->unique();
+            $table->string('id_cabang');
+            $table->timestamp('tanggal_pengiriman');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -28,6 +30,6 @@ class CreateImageTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('image');
+        Schema::dropIfExists('pengiriman');
     }
 }

@@ -2,11 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Image;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class ImageSeeder extends Seeder
+class TipeSistemSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,17 +14,15 @@ class ImageSeeder extends Seeder
      */
     public function run()
     {
-        // Image::factory(50)->create();
-
-        DB::table('image')->insert([
+        DB::table('tipe_sistem')->insert([
             [
-                'kode_image' => 'GEN',
+                'kode_sistem' => 'GEN',
             ],
             [
-                'kode_image' => 'FIN3',
+                'kode_sistem' => 'FIN3',
             ],
             [
-                'kode_image' => 'FIN4',
+                'kode_sistem' => 'FIN4',
             ],
         ]);
     }
