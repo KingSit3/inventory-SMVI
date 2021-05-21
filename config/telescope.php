@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\SelainSuperAdmin;
 use Laravel\Telescope\Http\Middleware\Authorize;
 use Laravel\Telescope\Watchers;
 
@@ -77,7 +78,9 @@ return [
 
     'middleware' => [
         'web',
-        Authorize::class,
+        // pakai middleware si super admin
+        SelainSuperAdmin::class,
+        // Authorize::class,
     ],
 
     /*

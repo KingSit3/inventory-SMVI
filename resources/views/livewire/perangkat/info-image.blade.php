@@ -65,9 +65,7 @@
                             <td>{{ ($value['id_tipe']) ? $value['TipePerangkat']['kode_perangkat'] : '-' }}</td>
                             <td>{{ $value['sn_pengganti'] }}</td>
                             <td>{{ ($value['sn_monitor']) ? $value['sn_monitor'] : '-' }}</td>
-                            <td class="truncate">{{ ($value['id_witel']) ? $value['witel']['nama_witel'] : '-' }}</td>
-                            <td class="truncate">{{ ($value['id_user']) ? $value['users']['name'] : '-' }}</td>
-                            <td>{{ ($value['id_do']) ? $value['deliveryOrder']['no_do'] : '-' }}</td>
+                             
                             <td class="space-x-4 py-1 flex items-center justify-center">
 
                                 {{-- Lempar event infoPerangkat ke livewire infoPerangkat --}}
