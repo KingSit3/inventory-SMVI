@@ -16,7 +16,7 @@ class CreatePengirimanTable extends Migration
         Schema::create('pengiriman', function (Blueprint $table) {
             $table->id();
             $table->string('no_pengiriman')->unique();
-            $table->string('id_cabang');
+            $table->unsignedBigInteger('id_cabang')->index();
             $table->timestamp('tanggal_pengiriman');
             $table->softDeletes();
             $table->timestamps();

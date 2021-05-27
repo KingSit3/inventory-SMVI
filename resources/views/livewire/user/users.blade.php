@@ -52,7 +52,7 @@
                         <tr class="text-center items-center {{ ($loop->odd) ? "bg-indigo-100 bg-opacity-75" : "" }}">
                             <td class="py-2">{{ ($users->firstItem()-1) + $loop->iteration }}</td>
                             <td>{{ ($user['nik']) ? $user['nik'] : '-' }}</td>
-                            <td class="truncate capitalize">{{ $user['name'] }}</td>
+                            <td class="truncate capitalize">{{ $user['nama'] }}</td>
                             <td>{{ ($user['no_telp']) ? $user['no_telp'] : '-' }}</td>
                             <td class="space-x-4 py-1 flex items-center justify-center">
 
@@ -115,7 +115,7 @@
                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                 @enderror
                                 <label for="nama" class="cursor-default pt-3">Nama</label>
-                                <input wire:model.defer="name" class="inputBox" id="nama" type="text" autocomplete="off">
+                                <input wire:model.defer="nama" class="inputBox" id="nama" type="text" autocomplete="off">
                                 @error('name')
                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                 @enderror

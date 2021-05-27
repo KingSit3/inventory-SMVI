@@ -15,7 +15,7 @@ class CreateLogTipeSistemTable extends Migration
     {
         Schema::create('log_tipe_sistem', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('id_sistem')->index();
+            $table->unsignedBigInteger('id_sistem')->index();
             $table->json('data_log');
             $table->timestamps();
         });

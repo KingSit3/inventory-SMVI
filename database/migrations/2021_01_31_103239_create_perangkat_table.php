@@ -26,7 +26,7 @@ class CreatePerangkatTable extends Migration
             $table->text('keterangan')->nullable();
             $table->string('cek_status')->nullable();
             $table->string('perolehan')->nullable();
-            $table->smallInteger('gelombang')->nullable()->index();
+            $table->unsignedBigInteger('gelombang')->nullable()->index();
             $table->softDeletes();
             $table->timestamps();
         });

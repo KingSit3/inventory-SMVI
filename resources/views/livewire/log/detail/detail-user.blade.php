@@ -12,7 +12,7 @@
         <div class="mx-2 -mt-28">
             <div class="px-6 py-6">
                 <div class="text-center">
-                    <span class="text-xl font-semibold capitalize">Detail Log {{ $dataLog['user']['name'] }}</span>
+                    <span class="text-xl font-semibold capitalize">Detail Log {{ $dataLog['user']['nama'] }}</span>
                 </div>
                 <div class="text-center my-2">
                     <span class="text-xl font-semibold capitalize">Status User:</span>
@@ -39,7 +39,7 @@
                         <tr>
                             <td width="45%">Nama User baru</td>
                             <td width="5%">:</td>
-                            <td class="bg-green-500 bg-opacity-20" width="50%">{{ $dataLog['data_log']['data_baru']['name'] }}</td>
+                            <td class="bg-green-500 bg-opacity-20" width="50%">{{ $dataLog['data_log']['data_baru']['nama'] }}</td>
                         </tr>
                         <tr>
                             <td width="45%">Nik baru</td>
@@ -74,7 +74,7 @@
         <div class="mx-2 -mt-28">
             <div class="px-6 py-6">
                 <div class="text-center">
-                    <span class="text-xl font-semibold capitalize">Detail Log {{ $dataLog['user']['name'] }}</span>
+                    <span class="text-xl font-semibold capitalize">Detail Log {{ $dataLog['user']['nama'] }}</span>
                 </div>
                 <div class="text-center my-2">
                     <span class="text-xl font-semibold capitalize">Status User:</span>
@@ -102,7 +102,7 @@
                         <tr>
                             <td width="45%">Nama User baru</td>
                             <td width="5%">:</td>
-                            <td class="bg-green-500 bg-opacity-20" width="50%">{{ $dataLog['data_log']['data_baru']['name'] }}</td>
+                            <td class="bg-green-500 bg-opacity-20" width="50%">{{ $dataLog['data_log']['data_baru']['nama'] }}</td>
                         </tr>
                         <tr>
                             <td width="45%">Nik baru</td>
@@ -119,7 +119,7 @@
                         <tr>
                             <td width="45%">Nama User Lama</td>
                             <td width="5%">:</td>
-                            <td class="bg-red-500 bg-opacity-20" width="50%">{{ $dataLog['data_log']['data_lama']['name'] }}</td>
+                            <td class="bg-red-500 bg-opacity-20" width="50%">{{ $dataLog['data_log']['data_lama']['nama'] }}</td>
                         </tr>
                         <tr>
                             <td width="45%">Nik Lama</td>
@@ -180,17 +180,17 @@
 
                         <tr><td>&nbsp;</td></tr>
                         <tr>
-                            <td width="45%">Nama User Lama</td>
+                            <td width="45%">Nama User</td>
                             <td width="5%">:</td>
-                            <td>{{ $dataLog['data_log']['data_lama']['name'] }}</td>
+                            <td>{{ $dataLog['data_log']['data_lama']['nama'] }}</td>
                         </tr>
                         <tr>
-                            <td width="45%">Nik Lama</td>
+                            <td width="45%">Nik</td>
                             <td width="5%">:</td>
                             <td>{{ ($dataLog['data_log']['data_lama']['nik']) ? $dataLog['data_log']['data_lama']['nik'] : '-' }}</td>
                         </tr>
                         <tr>
-                            <td width="45%">No Telp Lama</td>
+                            <td width="45%">No Telp</td>
                             <td width="5%">:</td>
                             <td>{{ ($dataLog['data_log']['data_lama']['no_telp']) ? $dataLog['data_log']['data_lama']['no_telp'] : '-' }}</td>
                         </tr>
@@ -242,17 +242,17 @@
                         </tr>
                         <tr><td>&nbsp;</td></tr>
                         <tr>
-                            <td width="45%">Nama User Lama</td>
+                            <td width="45%">Nama User</td>
                             <td width="5%">:</td>
-                            <td>{{ $dataLog['data_log']['data_lama']['name'] }}</td>
+                            <td>{{ $dataLog['data_log']['data_lama']['nama'] }}</td>
                         </tr>
                         <tr>
-                            <td width="45%">Nik Lama</td>
+                            <td width="45%">Nik</td>
                             <td width="5%">:</td>
                             <td>{{ ($dataLog['data_log']['data_lama']['nik']) ? $dataLog['data_log']['data_lama']['nik'] : '-' }}</td>
                         </tr>
                         <tr>
-                            <td width="45%">No Telp Lama</td>
+                            <td width="45%">No Telp</td>
                             <td width="5%">:</td>
                             <td>{{ ($dataLog['data_log']['data_lama']['no_telp']) ? $dataLog['data_log']['data_lama']['no_telp'] : '-' }}</td>
                         </tr>

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Admin;
+use App\Models\ModelAdmin as Admin;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -30,7 +30,7 @@ class LoginController extends Controller
           if (Hash::check($password, $admin['password'])) {
             session([
               'login' => 1,
-              'name' => $admin['name'],
+              'nama' => $admin['nama'],
               'role' => $admin['role'],
             ]);
 
@@ -41,9 +41,8 @@ class LoginController extends Controller
 
             return redirect('/');
           } 
-        } else {
-          return redirect()->back()->with('gagal', 'Akun anda tidak aktif!')->withInput();
         }
+        return redirect()->back()->with('gagal', 'Akun anda tidak aktif!')->withInput();
       }
       return redirect()->back()->with('gagal', 'Password Atau Email Salah!')->withInput();
     }

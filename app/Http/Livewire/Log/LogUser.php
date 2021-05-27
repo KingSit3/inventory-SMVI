@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Log;
 
-use App\Models\LogUser as ModelsLogUser;
+use App\Models\ModelLogUser;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -16,9 +16,9 @@ class LogUser extends Component
         $keyword = '%'.$this->keyword.'%';
 
         $data = [
-            'logUser' => ModelsLogUser::whereHas('User', function($query) use ($keyword){
+            'logUser' => ModelLogUser::with('User')->whereHas('us er', function($query) use ($keyword){
                 // Jalankan query search seperti biasa
-                $query->where('name', 'like', $keyword);
+                $query->where('nama', 'like', $keyword);
             })
             ->orderBy('created_at', 'DESC')
             ->paginate(10),

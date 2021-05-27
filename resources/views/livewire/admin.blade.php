@@ -33,7 +33,7 @@
                             <tr class="text-center items-center">
                         @endif
                             <td class="py-2">{{ ($admin->firstItem()-1) + $loop->iteration }}</td>
-                            <td class="truncate capitalize">{{ ($value['name']) }}</td>
+                            <td class="truncate capitalize">{{ ($value['nama']) }}</td>
                             <td>{{ $value['email'] }}</td>
                             <td>{{ ($value['last_login'])}}</td>
                             <td class="space-x-4 py-1 flex items-center justify-center">
@@ -76,17 +76,17 @@
                             </div>
                             <div class="mt-4 space-y-1 mx-10 font-semibold">
                                 <label for="nama" class="cursor-default">Nama</label>
-                                <input wire:model="nama" id="nama" class="inputBox"  type="text" required>
+                                <input wire:model.defer="nama" id="nama" class="inputBox"  type="text" required>
                                 @error('nama')
                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                 @enderror
                                 <label for="email" class="cursor-default pt-3">Email</label>
-                                <input  wire:model="email" id="email" class="inputBox"  type="email" {{ ($submitType == 'update') ? 'disabled' : ''}}>
+                                <input  wire:model.defer="email" id="email" class="inputBox"  type="email" {{ ($submitType == 'update') ? 'disabled' : ''}}>
                                 @error('email')
                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                 @enderror
                                 <label for="password" class="cursor-default pt-3">Password</label>
-                                <input wire:model="password" id="password" class="inputBox"  type="password">
+                                <input wire:model.defer="password" id="password" class="inputBox"  type="password">
                                 @error('password')
                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                 @enderror

@@ -45,7 +45,7 @@
                         <tr class="text-center items-center {{ ($loop->odd) ? "bg-red-100 bg-opacity-75" : "" }}">
                             <td class="py-2">{{ ($users->firstItem()-1) + $loop->iteration }}</td>
                             <td>{{ ($user['nik']) ? $user['nik'] : '-' }}</td>
-                            <td class="truncate capitalize">{{ $user['name'] }}</td>
+                            <td class="truncate capitalize">{{ $user['nama'] }}</td>
                             <td>{{ ($user['no_telp']) ? $user['no_telp'] : '-' }}</td>
                             <td>{{ $user['tanggalDihapus'] }}</td>
 

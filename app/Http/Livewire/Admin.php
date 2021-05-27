@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Admin as ModelsAdmin;
+use App\Models\ModelAdmin as ModelsAdmin;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
@@ -18,7 +18,7 @@ class Admin extends Component
         
         $data = [
             'admin' => ModelsAdmin::paginate(10),
-        ];
+        ];  
 
         return view('livewire.admin', $data)
         ->extends('layouts.app');
@@ -36,17 +36,12 @@ class Admin extends Component
             [
                 'nama' => 'required',
                 'email' => 'unique:App\Models\Admin,email',
-            ],
-            // Message
-            [
-                'nama.required' => 'Nama Harus diisi',
-                'email.unique' => 'Email Sudah ada',
             ]
         );
 
         // Save data
         ModelsAdmin::create([
-            'name' => $this->nama,
+            'nama' => $this->nama,
             'email' => $this->email,
             'password' => Hash::make($this->password),
             'role' => $this->role,
@@ -70,7 +65,7 @@ class Admin extends Component
 
       $this->submitType = 'update';
       $this->adminId = $id;
-      $this->nama = $adminDb['name'];
+      $this->nama = $adminDb['nama'];
       $this->email = $adminDb['email'];
       $this->role = $adminDb['role'];
       $this->status = $adminDb['status'];
@@ -82,21 +77,19 @@ class Admin extends Component
             // Rules
             [
                 'nama' => 'required',
-            ],
-            // Message
-            [
-                'nama.required' => 'Nama Harus diisi',
             ]
         );
         
         //Kalau password kosong
         if ($this->password == null) {
             ModelsAdmin::where('id', $this->adminId)->update([
+                'nama' => $this->nama,
                 'role' => $this->role,
                 'status' => $this->status,
             ]);
         } else {
             ModelsAdmin::where('id', $this->adminId)->update([
+                'nama' => $this->nama,
                 'password' => Hash::make($this->password),
                 'role' => $this->role,
                 'status' => $this->status,
@@ -118,6 +111,6 @@ class Admin extends Component
         // Reset Validasi
         $this->resetValidation();
         // Reset input field
-        $this->reset('nama', 'password', 'email', 'submitType', 'status', 'adminId', 'role');
+        $this->reset();
     }
 }

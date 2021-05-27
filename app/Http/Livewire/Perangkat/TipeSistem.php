@@ -1,0 +1,161 @@
+<?php
+
+namespace App\Http\Livewire\Perangkat;
+
+use App\Models\ModelTipeSistem;
+use App\Models\ModelLogTipeSistem;
+use Illuminate\Validation\Rule;
+use Livewire\Component;
+use Livewire\WithPagination;
+
+class TipeSistem extends Component
+{
+    use WithPagination;
+    
+    public $submitType, $keyword, $kode, 
+    $imageId, $imageData, $oldtipeSistemData;
+    public $isOpen = false;
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
+    public function render()
+    {
+        $keyword = '%'.$this->keyword.'%';
+
+        $data = [
+            'tipeSistem' => ModelTipeSistem::where('kode_sistem', 'like', $keyword)
+            ->paginate(10),
+        ];
+        
+        return view('livewire.perangkat.tipe-sistem', $data)
+        ->extends('layouts.app');
+    }
+
+    public function add()
+    {
+        $this->submitType = 'tambah';
+    }
+
+    public function tambah()
+    {
+        // Validasi
+        $this->validate(
+            // Rules
+            [
+                'kode' => 'unique:App\Models\ModelTipeSistem,kode_sistem',
+            ]
+        );
+
+        // Save data
+        ModelTipeSistem::create([
+            'kode_sistem' => $this->kode,
+        ]);
+
+        $idtipeSistem = ModelTipeSistem::latest()->first();
+        ModelLogTipeSistem::create([
+            'id_sistem' => $idtipeSistem['id'],
+            'data_log' =>   [
+                                'aksi' => 'Tambah',
+                                'browser' => $_SERVER['HTTP_USER_AGENT'],
+                                'edited_by' => session('nama'),
+                                'data_lama' => [],
+                                'data_baru' => [
+                                    'kode_sistem' => $this->kode,
+                                    ],
+                            ],
+        ]);
+        
+        // Panggil fungsi Reset data
+        $this->resetData();
+
+        // Tutup Modal
+        $this->isOpen = false;
+
+        // Panggil SweetAlert berhasil
+        $this->emit('success', 'tipe sistem Berhasil Ditambahkan');
+    }
+
+    public function delete($id)
+    {
+        ModelTipeSistem::where(['id' => $id])->delete();
+
+        // Cari kode image yang dihapus
+        $kodetipeSistem = ModelTipeSistem::where(['id' => $id])->onlyTrashed()->first();
+        ModelLogTipeSistem::create([
+            'id_sistem' => $id,
+            'data_log' =>   [
+                                'aksi' => 'Hapus',
+                                'browser' => $_SERVER['HTTP_USER_AGENT'],
+                                'edited_by' => session('nama'),
+                                'data_lama' =>  [
+                                                    'kode_sistem' => $kodetipeSistem['kode_sistem'],
+                                                ],
+                                'data_baru' =>  [],
+                            ],
+        ]);
+    }
+
+    public function edit($id) 
+    {
+        $this->submitType = 'update';
+        $this->imageData = ModelTipeSistem::where('id', $id)->first();
+        $this->oldtipeSistemData = ModelTipeSistem::where('id', $id)->first();
+
+        // Masukkan value
+        $this->imageId = $id;
+        $this->kode = $this->imageData['kode_sistem'];
+    }
+
+    public function update()
+    {
+        $this->validate(
+            [
+                'kode' => [Rule::unique('tipe_sistem', 'kode_sistem')->ignore($this->kode, 'kode_sistem')],
+            ]
+        );
+
+
+        // Pakai fitur Try Catch Untuk mengatasi eror unique
+        try {
+            ModelTipeSistem::where('id', $this->imageId)->update([
+                'kode_sistem' => $this->kode,
+            ]);
+
+            ModelLogTipeSistem::create([
+                'id_sistem' => $this->imageId,
+                'data_log' =>   [
+                                    'aksi' => 'Edit',
+                                    'browser' => $_SERVER['HTTP_USER_AGENT'],
+                                    'edited_by' => session('nama'),
+                                    'data_lama' =>  [
+                                                        'kode_sistem' => $this->imageData['kode_sistem'],
+                                                    ],
+                                    'data_baru' =>  [
+                                                        'kode_sistem' => $this->kode,
+                                                    ],
+                                ],
+            ]);
+
+        } catch (\Exception $ex) {
+            return $this->addError('kode', 'Kode Tipe Sistem Sudah Ada');
+        }
+
+        // Panggil fungsi Reset data
+        $this->resetData();
+        // Tutup Modal
+        $this->isOpen = false;
+        // Panggil SweetAlert berhasil
+        $this->emit('success', 'Data Tipe Sistem Berhasil Diubah');
+    }
+
+    public function resetData() 
+    {
+        // Reset Validasi
+        $this->resetValidation();
+        // Reset input field
+        $this->reset();
+    }
+}

@@ -4,7 +4,7 @@
         <div>
             {{-- Top Bar --}}
             <div class="text-2xl text-center font-bold {{ ($userData['deleted_at'] != null) ? 'text-red-500' : 'text-indigo-600' }} cursor-default">
-                <p>Info User {{ $userData['name'] }}</p>
+                <p>Info User {{ $userData['nama'] }}</p>
             </div>
             {{-- End Top Bar --}}
 
@@ -72,7 +72,7 @@
                             <th class="w-1/12">Tipe</th>
                             <th class="w-1/3">Serial Number</th>
                             <th class="w-1/5">SN Monitor</th>
-                            <th class="w-1/5">Witel</th>
+                            <th class="w-1/5">Cabang</th>
                             <th class="w-1/5">NO DO</th>
                             <th class="w-1/5">Aksi</th>
                         </tr>
@@ -84,8 +84,8 @@
                             <td>{{ ($value['id_tipe']) ? $value['TipePerangkat']['kode_perangkat'] : '-' }}</td>
                             <td>{{ $value['sn_pengganti'] }}</td>
                             <td>{{ ($value['sn_monitor']) ? $value['sn_monitor'] : '-' }}</td>
-                            <td class="truncate">{{ ($value['id_witel']) ? $value['witel']['nama_witel'] : '-' }}</td>
-                            <td>{{ ($value['id_do']) ? $value['deliveryOrder']['no_do'] : '-' }}</td>
+                            <td class="truncate">{{ ($value['id_cabang']) ? $value['cabang']['nama_cabang'] : '-' }}</td>
+                            <td>{{ ($value['id_pengiriman']) ? $value['pengiriman']['no_pengiriman'] : '-' }}</td>
                             <td class="space-x-4 py-1 flex items-center justify-center">
 
                                 <button @click="infoPerangkat = true" wire:click="$emit('infoPerangkat', {{ $value['id'] }})" class="focus:outline-none" title="Info">

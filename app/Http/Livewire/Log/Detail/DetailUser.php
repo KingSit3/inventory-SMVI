@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Log\Detail;
 
-use App\Models\LogUser;
+use App\Models\ModelLogUser as LogUser;
 use Livewire\Component;
 
 class DetailUser extends Component
@@ -20,7 +20,6 @@ class DetailUser extends Component
       $this->dataLog = LogUser::with('user')
                             ->where('id', $id)
                             ->first();
-        // dd($this->dataLog);
     }
 
     public function resetData() 

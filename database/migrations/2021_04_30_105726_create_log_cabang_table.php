@@ -15,7 +15,7 @@ class CreateLogCabangTable extends Migration
     {
         Schema::create('log_cabang', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('id_cabang')->index();
+            $table->unsignedBigInteger('id_cabang')->index();
             $table->json('data_log');
             $table->timestamps();
         });

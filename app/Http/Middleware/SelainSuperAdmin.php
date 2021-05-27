@@ -16,8 +16,9 @@ class SelainSuperAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        if (session('role') == 2 || session('role') == 1) {
-            return redirect()->route('dashboard');
+        if (session('role') != 0) {
+            // return redirect()->route('dashboard');
+            return abort('404');
             exit;
         }
         

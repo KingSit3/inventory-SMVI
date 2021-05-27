@@ -2,15 +2,15 @@
 
 namespace App\Http\Livewire\Perangkat;
 
-use App\Models\DoModel;
-use App\Models\Image;
-use App\Models\LogPerangkat;
-use App\Models\LogUser;
-use App\Models\Perangkat as ModelsPerangkat;
-use App\Models\SP;
-use App\Models\tipePerangkat;
-use App\Models\User;
-use App\Models\Witel;
+use App\Models\ModelPengiriman as DoModel;
+use App\Models\ModelTipeSistem as Image;
+use App\Models\ModelLogPerangkat as LogPerangkat;
+use App\Models\ModelLogUser as LogUser;
+use App\Models\ModelPerangkat as ModelsPerangkat;
+use App\Models\ModelGelombang as Gelombang;
+use App\Models\ModelTipePerangkat as TipePerangkat;
+use App\Models\ModelUser as User;
+use App\Models\ModelCabang as Cabang;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -18,8 +18,11 @@ use Livewire\WithPagination;
 class Perangkat extends Component
 { 
     use WithPagination;
-    public $tipePerangkat, $sn_lama, $sn_pengganti, $sn_monitor, $imagePerangkat, $cekStatus, $perolehan, $spPerangkat, $ket, $oldSnLama, $oldSnPengganti, $oldSnMonitor, $dataLama = null;
-    public $dbPerangkat, $perangkatId, $dbWitel, $dbUser;
+    public $tipePerangkat, $sn_lama, $sn_pengganti, 
+    $sn_monitor, $imagePerangkat, $cekStatus, $perolehan, 
+    $spPerangkat, $ket, $oldSnLama, $oldSnPengganti, 
+    $oldSnMonitor, $dataLama;
+    public $dbPerangkat, $perangkatId, $dbCabang, $dbUser;
     public $namaUser, $nikUser, $telpUser, $userSearch, $userId;
     public $witel, $witelSearch, $witelId;
     public $kodeDo, $doId, $doSearch;
@@ -44,10 +47,10 @@ class Perangkat extends Component
             $hasilUser = User::where('name', 'like', $userSearchQuery)->limit(5)->get();
         }
 
-        $hasilWitel = '';
+        $hasilCabang = '';
         if (strlen($this->witelSearch) > 0) {
             $witelSearchQuery = '%'.$this->witelSearch.'%';
-            $hasilWitel = Witel::where('nama_witel', 'like', $witelSearchQuery)->limit(5)->get();
+            $hasilCabang = Cabang::where('nama_witel', 'like', $witelSearchQuery)->limit(5)->get();
         }
 
         $hasilDo = '';
@@ -59,8 +62,8 @@ class Perangkat extends Component
         $data = [
             'doResult' => $hasilDo,
             'userResult' => $hasilUser,
-            'witelResult' => $hasilWitel,
-            'sp' => SP::all()->sortDesc(),
+            'witelResult' => $hasilCabang,
+            'sp' => Gelombang::all()->sortDesc(),
             'image' => Image::all(),
             'tipe' => tipePerangkat::all(),
             'perangkatData' => ModelsPerangkat::with('users', 'witel', 'deliveryOrder', 'TipePerangkat', 'image')
@@ -259,7 +262,7 @@ class Perangkat extends Component
         $this->addUser = false;
 
         // Panggil SweetAlert berhasil
-        $this->emit('success', 'Data Witel Berhasil Ditambahkan');
+        $this->emit('success', 'Data Cabang Berhasil Ditambahkan');
     }
 
     public function delete($id)
@@ -276,11 +279,11 @@ class Perangkat extends Component
             $getDataUser = ['id' => null, 'name' => null];
         }
 
-        // Get Witel
+        // Get Cabang
         if ($getDataPerangkat['id_witel']) {
-            $getDataWitel = Witel::where('id', $getDataPerangkat['id_witel'])->withTrashed()->first();
+            $getDataCabang = Cabang::where('id', $getDataPerangkat['id_witel'])->withTrashed()->first();
         } else {
-            $getDataWitel = ['id' => null, 'nama_witel' => null];
+            $getDataCabang = ['id' => null, 'nama_witel' => null];
         }
 
         // Get DO
@@ -306,8 +309,8 @@ class Perangkat extends Component
                                                 'user' => $getDataUser['name'],
                                                 'id_image' => $getDataImage['id'],
                                                 'image' => $getDataImage['kode_image'],
-                                                'id_witel' => $getDataWitel['id'],
-                                                'witel' => $getDataWitel['nama_witel'],
+                                                'id_witel' => $getDataCabang['id'],
+                                                'witel' => $getDataCabang['nama_witel'],
                                                 'id_delivery_order' => $getDataDo['id'],
                                                 'delivery_order' => $getDataDo['no_do'],
                                                 'ket' => $getDataPerangkat['keterangan'],
@@ -336,9 +339,9 @@ class Perangkat extends Component
 
         if ($this->dbPerangkat['id_witel'] != null) {
             
-            $this->dbWitel = Witel::where('id', $this->dbPerangkat['id_witel'])->withTrashed()->first();
-            $this->witel = $this->dbWitel['nama_witel'];
-            $this->witelId = $this->dbWitel['id_witel'];
+            $this->dbCabang = Cabang::where('id', $this->dbPerangkat['id_witel'])->withTrashed()->first();
+            $this->witel = $this->dbCabang['nama_witel'];
+            $this->witelId = $this->dbCabang['id_witel'];
         }
 
         if ($this->dbPerangkat['id_do'] != null) {
@@ -375,11 +378,11 @@ class Perangkat extends Component
             $getDataUser = ['id' => null, 'name' => null];
         }
 
-        // Get Witel
+        // Get Cabang
         if ($this->dbPerangkat['id_witel']) {
-            $getDataWitel = Witel::where('id', $this->dbPerangkat['id_witel'])->withTrashed()->first();
+            $getDataCabang = Cabang::where('id', $this->dbPerangkat['id_witel'])->withTrashed()->first();
         } else {
-            $getDataWitel = ['id' => null, 'nama_witel' => null];
+            $getDataCabang = ['id' => null, 'nama_witel' => null];
         }
 
         // Get DO
@@ -400,7 +403,7 @@ class Perangkat extends Component
             'id_image' => $this->dbPerangkat['id_image'],
             'image' => $getDataImage['kode_image'],
             'id_witel' => $this->dbPerangkat['id_witel'],
-            'witel' => $getDataWitel['nama_witel'],
+            'witel' => $getDataCabang['nama_witel'],
             'id_delivery_order' => $this->dbPerangkat['id_do'],
             'delivery_order' => $getDataDo['no_do'],
             'ket' => $this->dbPerangkat['keterangan'],
@@ -431,11 +434,11 @@ class Perangkat extends Component
         $getDataTipe = tipePerangkat::where('id', $this->tipePerangkat)->withTrashed()->first();
         $getDataImage = Image::where('id', $this->imagePerangkat)->withTrashed()->first();
 
-        // Get Witel
+        // Get Cabang
         if ($this->witelId) {
-            $getDataWitel = Witel::where('id', $this->witelId)->withTrashed()->first();
+            $getDataCabang = Cabang::where('id', $this->witelId)->withTrashed()->first();
         } else {
-            $getDataWitel = ['id' => null, 'nama_witel' => null];
+            $getDataCabang = ['id' => null, 'nama_witel' => null];
         }
 
         // get User
@@ -522,8 +525,8 @@ class Perangkat extends Component
                                                         'user' => $getDataUser['name'],
                                                         'id_image' => $getDataImage['id'],
                                                         'image' => $getDataImage['kode_image'],
-                                                        'id_witel' => $getDataWitel['id'],
-                                                        'witel' => $getDataWitel['nama_witel'],
+                                                        'id_witel' => $getDataCabang['id'],
+                                                        'witel' => $getDataCabang['nama_witel'],
                                                         'id_delivery_order' => $getDataDo['id'],
                                                         'delivery_order' => $getDataDo['no_do'],
                                                         'ket' => $this->ket,
@@ -605,8 +608,8 @@ class Perangkat extends Component
                                                         'user' => $getDataUser['name'],
                                                         'id_image' => $getDataImage['id'],
                                                         'image' => $getDataImage['kode_image'],
-                                                        'id_witel' => $getDataWitel['id'],
-                                                        'witel' => $getDataWitel['nama_witel'],
+                                                        'id_witel' => $getDataCabang['id'],
+                                                        'witel' => $getDataCabang['nama_witel'],
                                                         'id_delivery_order' => $getDataDo['id'],
                                                         'delivery_order' => $getDataDo['no_do'],
                                                         'ket' => $this->ket,
@@ -629,7 +632,7 @@ class Perangkat extends Component
         $this->isOpen = false;
 
         // Panggil SweetAlert berhasil
-        $this->emit('success', 'Data Witel Berhasil Diubah');
+        $this->emit('success', 'Data Cabang Berhasil Diubah');
     }
 
     public function addUser() 
@@ -648,9 +651,9 @@ class Perangkat extends Component
       $this->reset('userSearch');
     }
 
-    public function chooseWitel($id) 
+    public function chooseCabang($id) 
     {
-        $this->witelData = Witel::where('id', $id)->first();
+        $this->witelData = Cabang::where('id', $id)->first();
         $this->witelId = $id;
         $this->witel = $this->witelData['kode_witel'].' | '.$this->witelData['nama_witel'];
         $this->reset('witelSearch');

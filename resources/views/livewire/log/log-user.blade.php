@@ -44,7 +44,7 @@
                         <tr class="text-center items-center {{ ($loop->odd) ? "bg-indigo-100 bg-opacity-75" : "" }}">
                             {{-- <td class="py-2">{{ ($logUser->firstItem()-1) + $loop->iteration }}</td> --}}
                             <td class="py-2">{{ ($logUser->firstItem()-1) + $loop->iteration }}</td>
-                            <td><a class="hover:text-blue-500 duration-200 font-semibold truncate" href="/loguser/{{ $value['id_user'] }}">{{ $value['User']['name']}}</a></td>
+                            <td><a class="hover:text-blue-500 duration-200 font-semibold truncate" href="/loguser/{{ $value['id_user'] }}">{{ $value['User']['nama']}}</a></td>
                             <td>{{ ($value['User']['nik']) ? $value['User']['nik'] : '-' }}</td>
                             <td class="capitalize">{{ $value['data_log']['aksi']}}</td>
                             <td class="capitalize">{{ $value['data_log']['edited_by']}}</td>

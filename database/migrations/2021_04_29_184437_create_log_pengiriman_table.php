@@ -15,7 +15,7 @@ class CreateLogPengirimanTable extends Migration
     {
         Schema::create('log_pengiriman', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('id_pengiriman')->index();
+            $table->unsignedBigInteger('id_pengiriman')->index();
             $table->json('data_log');
             $table->timestamps();
         });

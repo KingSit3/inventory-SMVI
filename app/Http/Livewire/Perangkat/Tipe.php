@@ -11,7 +11,8 @@ use Livewire\WithPagination;
 class Tipe extends Component
 {
     use WithPagination;
-    public $idPerangkat, $dbPerangkat, $oldDataTipe, $kode, $nama, $tipe, $submitType, $keyword;
+    public $idPerangkat, $dbPerangkat, $oldDataTipe, 
+    $kode, $nama, $tipe, $submitType, $keyword;
     public $isOpen = false;
 
      // Method dari Livewire untuk reset filter saat pagination
