@@ -15,9 +15,9 @@ class CreateTipePerangkatTable extends Migration
     {
         Schema::create('tipe_perangkat', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_perangkat');
-            $table->string('tipe_perangkat');
-            $table->string('kode_perangkat')->unique();
+            $table->string('nama_perangkat', 100);
+            $table->string('tipe_perangkat', 100);
+            $table->string('kode_perangkat', 100)->unique();
             $table->softDeletes();
             $table->timestamps();
         });

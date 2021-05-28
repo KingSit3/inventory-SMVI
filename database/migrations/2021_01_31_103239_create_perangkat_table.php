@@ -15,17 +15,17 @@ class CreatePerangkatTable extends Migration
     {
         Schema::create('perangkat', function (Blueprint $table) {
             $table->id();
-            $table->string('sn_lama')->unique()->nullable();
-            $table->string('sn_pengganti')->unique();
-            $table->string('sn_monitor')->unique()->nullable();
+            $table->string('sn_lama', 50)->unique()->nullable();
+            $table->string('sn_pengganti', 50)->unique();
+            $table->string('sn_monitor', 50)->unique()->nullable();
             $table->unsignedBigInteger('id_tipe')->index();
             $table->unsignedBigInteger('id_user')->nullable()->index();
             $table->unsignedBigInteger('id_sistem')->index();
             $table->unsignedBigInteger('id_cabang')->nullable()->index();
             $table->unsignedBigInteger('id_pengiriman')->nullable()->index();
             $table->text('keterangan')->nullable();
-            $table->string('cek_status')->nullable();
-            $table->string('perolehan')->nullable();
+            $table->string('cek_status', 50)->nullable();
+            $table->string('perolehan', 50)->nullable();
             $table->unsignedBigInteger('gelombang')->nullable()->index();
             $table->softDeletes();
             $table->timestamps();

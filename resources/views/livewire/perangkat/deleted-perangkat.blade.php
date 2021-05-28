@@ -35,12 +35,12 @@
                         <tr>
                             <th class="w-1/12">No</th>
                             <th class="w-1/12">Tipe</th>
-                            <th class="w-1/5">Serial Number</th>
+                            <th class="w-1/5">SN perangkat</th>
                             <th class="w-1/5">SN Monitor</th>
-                            <th class="w-1/5">Witel</th>
+                            <th class="w-1/5">Cabang</th>
                             <th class="w-1/5">User</th>
-                            <th class="w-1/5">No Do</th>
-                            <th class="w-1/12">SP</th>
+                            <th class="w-1/5">No pengiriman</th>
+                            <th class="w-1/5">gelombang</th>
                             <th class="w-1/5">Tanggal Dihapus</th>
                             <th class="w-1/5">Aksi</th>
                         </tr>
@@ -52,18 +52,10 @@
                             <td>{{ ($value['id_tipe']) ? $value['tipePerangkat']['kode_perangkat'] : '-' }}</td>
                             <td>{{ $value['sn_pengganti'] }}</td>
                             <td>{{ ($value['sn_monitor']) ? $value['sn_monitor'] : '-' }}</td>
-                            @if ($value['id_witel'] != null)
-                                <td class="truncate">{{ $value['witel']['nama_witel'] }}</td>
-                            @else
-                                <td>-</td>
-                            @endif
-                            @if ($value->id_user != null)
-                                <td class="truncate">{{ $value['users']['name'] }}</td>
-                            @else
-                                <td>-</td>
-                            @endif
-                            <td>{{ ($value['id_do']) ? $value['DeliveryOrder']['no_do'] : '-' }}</td>
-                            <td>{{ ($value['sp']) ? $value['sp'] : '-' }}</td>
+                            <td>{{ ($value['id_cabang']) ? $value['cabang']['nama_cabang'] : '-' }}</td>
+                            <td class="truncate">{{ ($value['id_user']) ? $value['users']['nama'] : '-' }}</td>
+                            <td>{{ ($value['id_pengiriman']) ? $value['pengiriman']['no_pengiriman'] : '-' }}</td>
+                            <td>{{ ($value['gelombang']) ? $value['gelombang'] : '-' }}</td>
                             <td>{{ $value['tanggalDihapus'] }}</td>
 
                             <td class="space-x-4 py-1 flex items-center justify-center">

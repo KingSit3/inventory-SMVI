@@ -2,11 +2,11 @@
 
 namespace App\Http\Livewire\Log;
 
-use App\Models\LogDeliveryOrder as ModelsLogDeliveryOrder;
+use App\Models\ModelLogpengiriman;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class LogDeliveryOrder extends Component
+class LogPengiriman extends Component
 {
     use WithPagination;
     public $keyword = '';
@@ -16,14 +16,14 @@ class LogDeliveryOrder extends Component
         $keyword = '%'.$this->keyword.'%';
 
         $data = [
-            'logDo' => ModelsLogDeliveryOrder::whereHas('deliveryOrder', function($query) use ($keyword){
+            'logPengiriman' => ModelLogpengiriman::whereHas('pengiriman', function($query) use ($keyword){
                                                     // Jalankan query search seperti biasa
-                                                    $query->where('no_do', 'like', $keyword);
+                                                    $query->where('no_pengiriman', 'like', $keyword);
                                                 })
                                                 ->orderBy('created_at', 'DESC')
                                                 ->paginate(10),
         ];
-        return view('livewire.log.log-delivery-order', $data)
+        return view('livewire.log.log-pengiriman', $data)
         ->extends('layouts.app');
     }
 }

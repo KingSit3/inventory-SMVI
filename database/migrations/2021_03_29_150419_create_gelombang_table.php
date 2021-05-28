@@ -15,7 +15,7 @@ class CreateGelombangTable extends Migration
     {
         Schema::create('gelombang', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_gelombang')->unique();
+            $table->string('nama_gelombang', 5)->unique();
             $table->softDeletes();
             $table->timestamps();
         });

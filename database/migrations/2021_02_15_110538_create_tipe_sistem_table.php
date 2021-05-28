@@ -15,7 +15,7 @@ class CreateTipeSistemTable extends Migration
     {
         Schema::create('tipe_sistem', function (Blueprint $table) {
             $table->id();
-            $table->string('kode_sistem')->unique();
+            $table->string('kode_sistem', 25)->unique();
             $table->softDeletes();
             $table->timestamps();
         });

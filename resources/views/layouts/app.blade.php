@@ -79,8 +79,8 @@
                             <a href="/cabang" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Cabang</a>
                             <a href="/tipesistem" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Tipe Sistem</a>
                             <a href="/tipe" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Tipe Perangkat</a>
-                            <a href="/sp" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Gelombang</a>
-                            <a href="/deliveryorder" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">pengiriman</a>
+                            <a href="/gelombang" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Gelombang</a>
+                            <a href="/pengiriman" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">pengiriman</a>
                         </div>
                     </div>  
                 {{-- End Master Data --}}
@@ -114,7 +114,7 @@
                             <a href="/deletedcabang" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Cabang Terhapus</a>
                             <a href="/deletedtipesistem" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Tipe Sistem Terhapus</a>
                             <a href="/deletedtipe" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Tipe Perangkat Terhapus</a>
-                            <a href="/deleteddeliveryorder" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Pengiriman Terhapus</a>
+                            <a href="/deletedpengiriman" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Pengiriman Terhapus</a>
                         </div>
                     </div>  
                 {{-- End Master Data Terhapus --}}
@@ -148,7 +148,7 @@
                             <a href="/logcabang" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Log Cabang</a>
                             <a href="/logtipesistem" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Log Tipe Sistem</a>
                             <a href="/logtipeperangkat" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Log Tipe Perangkat</a>
-                            <a href="/logdeliveryorder" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Log Pengiriman</a>
+                            <a href="/logpengiriman" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Log Pengiriman</a>
                         </div>
                     </div>  
                 {{-- End Log --}}

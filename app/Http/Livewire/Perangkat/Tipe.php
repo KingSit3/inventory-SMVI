@@ -2,8 +2,8 @@
 
 namespace App\Http\Livewire\Perangkat;
 
-use App\Models\LogTipePerangkat;
-use App\Models\tipePerangkat;
+use App\Models\ModelLogTipePerangkat as LogTipePerangkat;
+use App\Models\ModelTipePerangkat as tipePerangkat;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -31,7 +31,7 @@ class Tipe extends Component
                                         ->paginate(10),
         ];
 
-        return view('livewire.perangkat.tipe', $data)
+        return view('livewire.perangkat.tipe-perangkat', $data)
         ->extends('layouts.app');
     }
 
@@ -46,7 +46,7 @@ class Tipe extends Component
         $this->validate(
             // Rules
             [
-                'kode' => 'unique:App\Models\tipePerangkat,kode_perangkat',
+                'kode' => 'unique:App\Models\ModelTipePerangkat,kode_perangkat',
             ],
         );
 
@@ -65,7 +65,7 @@ class Tipe extends Component
             'data_log' =>   [
                                 'aksi' => 'Tambah',
                                 'browser' => $_SERVER['HTTP_USER_AGENT'],
-                                'edited_by' => session('name'),
+                                'edited_by' => session('nama'),
                                 'data_lama' =>  [],
                                 'data_baru' =>  [
                                                 'nama_tipe' => $this->nama,
@@ -95,7 +95,7 @@ class Tipe extends Component
             'data_log' =>   [
                                 'aksi' => 'Hapus',
                                 'browser' => $_SERVER['HTTP_USER_AGENT'],
-                                'edited_by' => session('name'),
+                                'edited_by' => session('nama'),
                                 'data_lama' =>  [
                                                     'nama_tipe' => $tipeQuery['nama_perangkat'],
                                                     'tipe_perangkat' => $tipeQuery['tipe_perangkat'],
@@ -140,7 +140,7 @@ class Tipe extends Component
                 'data_log' =>   [
                                     'aksi' => 'Edit',
                                     'browser' => $_SERVER['HTTP_USER_AGENT'],
-                                    'edited_by' => session('name'),
+                                    'edited_by' => session('nama'),
                                     'data_lama' =>  [
                                                         'nama_tipe' => $this->oldDataTipe['nama_perangkat'],
                                                         'tipe_perangkat' => $this->oldDataTipe['tipe_perangkat'],

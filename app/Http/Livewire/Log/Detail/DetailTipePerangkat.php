@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Log\Detail;
 
-use App\Models\LogTipePerangkat;
+use App\Models\ModelLogTipePerangkat as LogTipePerangkat;
 use Livewire\Component;
 
 class DetailTipePerangkat extends Component

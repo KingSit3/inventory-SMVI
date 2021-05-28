@@ -50,15 +50,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($deliveryOrder as $value)
+                        @forelse ($pengiriman as $value)
                         <tr class="text-center items-center {{ ($loop->odd) ? "bg-indigo-100 bg-opacity-75" : "" }}">
-                            <td class="py-2">{{ ($deliveryOrder->firstItem()-1) + $loop->iteration }}</td>
-                            <td>{{ $value['no_do'] }}</td>
-                            <td>{{ ($value['witel']['nama_witel']) ? $value['witel']['nama_witel'] : '-' }}</td>
-                            <td>{{ ($value['tanggal_do']) ? $value['tanggal_do'] : '-' }}</td>
+                            <td class="py-2">{{ ($pengiriman->firstItem()-1) + $loop->iteration }}</td>
+                            <td>{{ $value['no_pengiriman'] }}</td>
+                            <td>{{ ($value['cabang']['nama_cabang']) ? $value['cabang']['nama_cabang'] : '-' }}</td>
+                            <td>{{ ($value['tanggalPengiriman']) ? $value['tanggalPengiriman'] : '-' }}</td>
 
                             <td class="space-x-4 py-1 flex items-center justify-center">
-                            <a href="/do/{{ $value['id'] }}" class="focus:outline-none" title="Info Delivery Order">
+                            <a href="/pengiriman/{{ $value['id'] }}" class="focus:outline-none" title="Info Delivery Order">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="w-6 text-gray-500 hover:text-blue-500 py-1 duration-150 font-bold" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
@@ -83,7 +83,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td class="text-center pt-5 text-red-500" colspan="3">
+                            <td class="text-center pt-5 text-red-500" colspan="5">
                                 Data Tidak ditemukan!
                             </td>
                         </tr>
@@ -95,7 +95,7 @@
         <div>
             {{-- Pagination --}}
                 <div class="mt-2 mx-5">
-                    {{ $deliveryOrder->links() }}
+                    {{ $pengiriman->links() }}
                 </div>
             {{-- End Pagination --}}
         </div>
@@ -111,10 +111,10 @@
                                 <span class="text-xl font-semibold capitalize">{{ $submitType }} Data</span>
                             </div>
                             <div class="mt-4 space-y-1 mx-10 font-semibold">
-                                <label for="no_do" class="cursor-default">Nomor Delivery Order</label>
-                                <input wire:model.defer="no_do" id="no_do" class="inputBox"  type="text" required autocomplete="off">
+                                <label for="no_pengiriman" class="cursor-default">Nomor Delivery Order</label>
+                                <input wire:model.defer="no_pengiriman" id="no_pengiriman" class="inputBox"  type="text" required autocomplete="off">
                                 <p class="text-xs opacity-50 capitalize">*Berdasarkan DO terakhir + 1</p>
-                                @error('no_do')
+                                @error('no_pengiriman')
                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -128,25 +128,25 @@
                             </div>
 
                             {{-- Witel --}}
-                            <div  x-data="{witelSearch: false}"  class="mt-4 space-y-1 mx-10 font-semibold">
-                                    <label for="witel" class="cursor-default pt-2">Witel</label>
+                            <div  x-data="{cabangSearch: false}"  class="mt-4 space-y-1 mx-10 font-semibold">
+                                    <label for="cabang" class="cursor-default pt-2">Cabang</label>
                                     <div class="flex">
-                                        <input wire:model="witelSearch" @focus="witelSearch = true" @click.away="witelSearch = false" class="inputBox" id="witel" type="text" placeholder="Cari witel" autocomplete="off">
-                                        <div wire:loading wire:target="witelSearch" class="absolute animate-spin opacity-50 ml-72 mt-1">
+                                        <input wire:model="cabangSearch" @focus="cabangSearch = true" @click.away="cabangSearch = false" class="inputBox" id="cabang" type="text" placeholder="Cari Cabang" autocomplete="off">
+                                        <div wire:loading wire:target="cabangSearch" class="absolute animate-spin opacity-50 ml-72 mt-1">
                                             <svg xmlns="http://www.w3.org/2000/svg" class=" w-4 " fill="currentColor" class="bi bi-circle-half" viewBox="0 0 16 16">
                                                 <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
                                             </svg>
                                         </div>
                                     </div>
-                                    @error('witel')
+                                    @error('cabang')
                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                     @enderror
-                                    @if (strlen($witelSearch) > 0)
-                                        <div x-show="witelSearch">
+                                    @if (strlen($cabangSearch) > 0)
+                                        <div x-show="cabangSearch">
                                             <ul class="absolute mt-2 bg-white border-gray-500 border-opacity-25 border-2 shadow-lg rounded-md w-52 px-2 py-2 space-y-1">
-                                                @if ($witelResult)
-                                                    @forelse ($witelResult as $value)
-                                                        <button @click="witelSearch = false" wire:click="chooseWitel({{ $value['id'] }})" class="w-full text-left p-1 hover:bg-black hover:bg-opacity-10 truncate" type="button"><li>{{  $value['kode_witel'].' | '.$value['nama_witel'] }}</li></button>
+                                                @if ($cabangResult)
+                                                    @forelse ($cabangResult as $value)
+                                                        <button @click="cabangSearch = false" wire:click="chooseCabang({{ $value['id'] }})" class="w-full text-left p-1 hover:bg-black hover:bg-opacity-10 truncate" type="button"><li>{{  $value['kode_cabang'].' | '.$value['nama_cabang'] }}</li></button>
                                                     @empty
                                                         <span class="text-sm font-normal"> Data Witel tidak ditemukan!</span>
                                                     @endforelse
@@ -155,7 +155,7 @@
                                         </div>
                                     @endif
                                     <div class="">
-                                    <input wire:model.defer="witel" class="inputBox mt-3" type="text" disabled autocomplete="off">
+                                    <input wire:model.defer="cabang" class="inputBox mt-3" type="text" disabled autocomplete="off">
                                     </div>
                             </div>
                             {{-- End Witel --}}

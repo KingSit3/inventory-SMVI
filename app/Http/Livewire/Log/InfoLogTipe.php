@@ -2,8 +2,8 @@
 
 namespace App\Http\Livewire\Log;
 
-use App\Models\LogTipePerangkat;
-use App\Models\tipePerangkat;
+use App\Models\ModelLogTipePerangkat as LogTipePerangkat;
+use App\Models\ModelTipePerangkat as tipePerangkat;
 use Livewire\Component;
 use Livewire\WithPagination;
 

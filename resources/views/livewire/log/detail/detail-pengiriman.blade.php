@@ -12,11 +12,11 @@
         <div class="mx-2 -mt-28">
             <div class="px-6 py-6">
                 <div class="text-center">
-                    <span class="text-xl font-semibold capitalize">Detail Log {{ $dataLog['deliveryOrder']['no_do'] }}</span>
+                    <span class="text-xl font-semibold capitalize">Detail Log {{ $dataLog['pengiriman']['no_pengiriman'] }}</span>
                 </div>
                 <div class="text-center my-2">
-                    <span class="text-xl font-semibold capitalize">Status DO:</span>
-                    <span class="font-semibold capitalize p-2 text-white rounded-lg {{ ($dataLog['deliveryOrder']['deleted_at']) ? 'text-red-500' : 'text-blue-600' }}">{{ ($dataLog['deliveryOrder']['deleted_at']) ? 'Terhapus' : 'Aktif' }}</span>
+                    <span class="text-xl font-semibold capitalize">Status Pengiriman:</span>
+                    <span class="font-semibold capitalize p-2 text-white rounded-lg {{ ($dataLog['pengiriman']['deleted_at']) ? 'text-red-500' : 'text-blue-600' }}">{{ ($dataLog['pengiriman']['deleted_at']) ? 'Terhapus' : 'Aktif' }}</span>
                 </div>
                 {{-- Table Content --}}
                     <table width="100%" class="font-semibold mt-3">
@@ -39,17 +39,17 @@
                         <tr>
                             <td width="45%">No Delivery Order baru</td>
                             <td width="5%">:</td>
-                            <td class="bg-green-500 bg-opacity-20" width="50%">{{ $dataLog['data_log']['data_baru']['no_do'] }}</td>
+                            <td class="bg-green-500 bg-opacity-20" width="50%">{{ $dataLog['data_log']['data_baru']['no_pengiriman'] }}</td>
                         </tr>
                         <tr>
                             <td width="45%">Tanggal Delivery Order baru</td>
                             <td width="5%">:</td>
-                            <td class="bg-green-500 bg-opacity-20" width="50%">{{ date('d-M-Y', strtotime($dataLog['data_log']['data_baru']['tanggal_do'])) }}</td>
+                            <td class="bg-green-500 bg-opacity-20" width="50%">{{ date('d-M-Y', strtotime($dataLog['data_log']['data_baru']['tanggal_pengiriman'])) }}</td>
                         </tr>
                         <tr>
                             <td width="45%">Witel baru</td>
                             <td width="5%">:</td>
-                            <td class="bg-green-500 bg-opacity-20" width="50%"><a class="hover:text-blue-500 duration-200" href="/witel/{{ $dataLog['data_log']['data_baru']['id_witel'] }}">{{ $dataLog['data_log']['data_baru']['nama_witel'] }}</a></td>
+                            <td class="bg-green-500 bg-opacity-20" width="50%"><a class="hover:text-blue-500 duration-200" href="/cabang/{{ $dataLog['data_log']['data_baru']['id_cabang'] }}">{{ $dataLog['data_log']['data_baru']['nama_cabang'] }}</a></td>
                         </tr>
     
                         <tr><td>&nbsp;</td></tr>
@@ -74,11 +74,11 @@
         <div class="mx-2 -mt-28">
             <div class="px-6 py-6">
                 <div class="text-center">
-                    <span class="text-xl font-semibold capitalize">Detail Log {{ $dataLog['deliveryOrder']['no_do'] }}</span>
+                    <span class="text-xl font-semibold capitalize">Detail Log {{ $dataLog['pengiriman']['no_pengiriman'] }}</span>
                 </div>
                 <div class="text-center my-2">
-                    <span class="text-xl font-semibold capitalize">Status DO:</span>
-                    <span class="font-semibold capitalize p-2 text-white rounded-lg {{ ($dataLog['deliveryOrder']['deleted_at']) ? 'text-red-500' : 'text-blue-600' }}">{{ ($dataLog['deliveryOrder']['deleted_at']) ? 'Terhapus' : 'Aktif' }}</span>
+                    <span class="text-xl font-semibold capitalize">Status Pengiriman:</span>
+                    <span class="font-semibold capitalize p-2 text-white rounded-lg {{ ($dataLog['pengiriman']['deleted_at']) ? 'text-red-500' : 'text-blue-600' }}">{{ ($dataLog['pengiriman']['deleted_at']) ? 'Terhapus' : 'Aktif' }}</span>
                 </div>
                 {{-- Table Content --}}
                     <table width="100%" class="font-semibold mt-3">
@@ -102,34 +102,34 @@
                         <tr>
                             <td width="45%">No Delivery Order baru</td>
                             <td width="5%">:</td>
-                            <td class="bg-green-500 bg-opacity-20" width="50%">{{ $dataLog['data_log']['data_baru']['no_do'] }}</td>
+                            <td class="bg-green-500 bg-opacity-20" width="50%">{{ $dataLog['data_log']['data_baru']['no_pengiriman'] }}</td>
                         </tr>
                         <tr>
                             <td width="45%">Tanggal Delivery Order baru</td>
                             <td width="5%">:</td>
-                            <td class="bg-green-500 bg-opacity-20" width="50%">{{ date('d-M-Y', strtotime($dataLog['data_log']['data_baru']['tanggal_do'])) }}</td>
+                            <td class="bg-green-500 bg-opacity-20" width="50%">{{ date('d-M-Y', strtotime($dataLog['data_log']['data_baru']['tanggal_pengiriman'])) }}</td>
                         </tr>
                         <tr>
                             <td width="45%">Witel baru</td>
                             <td width="5%">:</td>
-                            <td class="bg-green-500 bg-opacity-20" width="50%"><a class="hover:text-blue-500 duration-200" href="/witel/{{ $dataLog['data_log']['data_baru']['id_witel'] }}">{{ $dataLog['data_log']['data_baru']['nama_witel'] }}</a></td>
+                            <td class="bg-green-500 bg-opacity-20" width="50%"><a class="hover:text-blue-500 duration-200" href="/cabang/{{ $dataLog['data_log']['data_baru']['id_cabang'] }}">{{ $dataLog['data_log']['data_baru']['nama_cabang'] }}</a></td>
                         </tr>
 
                         <tr><td>&nbsp;</td></tr>
                         <tr>
                             <td width="45%">No Delivery Order Lama</td>
                             <td width="5%">:</td>
-                            <td class="bg-red-500 bg-opacity-20" width="50%">{{ $dataLog['data_log']['data_lama']['no_do'] }}</td>
+                            <td class="bg-red-500 bg-opacity-20" width="50%">{{ $dataLog['data_log']['data_lama']['no_pengiriman'] }}</td>
                         </tr>
                         <tr>
                             <td width="45%">Tanggal Delivery Order Lama</td>
                             <td width="5%">:</td>
-                            <td class="bg-red-500 bg-opacity-20" width="50%">{{ date('d-M-Y', strtotime($dataLog['data_log']['data_lama']['tanggal_do'])) }}</td>
+                            <td class="bg-red-500 bg-opacity-20" width="50%">{{ date('d-M-Y', strtotime($dataLog['data_log']['data_lama']['tanggal_pengiriman'])) }}</td>
                         </tr>
                         <tr>
                             <td width="45%">Witel Lama</td>
                             <td width="5%">:</td>
-                            <td class="bg-red-500 bg-opacity-20" width="50%"><a class="hover:text-blue-500 duration-200" href="/witel/{{ $dataLog['data_log']['data_lama']['id_witel'] }}">{{ $dataLog['data_log']['data_lama']['nama_witel'] }}</a></td>
+                            <td class="bg-red-500 bg-opacity-20" width="50%"><a class="hover:text-blue-500 duration-200" href="/cabang/{{ $dataLog['data_log']['data_lama']['id_cabang'] }}">{{ $dataLog['data_log']['data_lama']['nama_cabang'] }}</a></td>
                         </tr>
     
                         <tr><td>&nbsp;</td></tr>
@@ -154,11 +154,11 @@
         <div class="mx-2 -mt-28">
             <div class="px-6 py-6">
                 <div class="text-center">
-                    <span class="text-xl font-semibold capitalize">Detail Log {{ $dataLog['deliveryOrder']['no_do'] }}</span>
+                    <span class="text-xl font-semibold capitalize">Detail Log {{ $dataLog['pengiriman']['no_pengiriman'] }}</span>
                 </div>
                 <div class="text-center my-2">
-                    <span class="text-xl font-semibold capitalize">Status DO:</span>
-                    <span class="font-semibold capitalize p-2 text-white rounded-lg {{ ($dataLog['deliveryOrder']['deleted_at']) ? 'text-red-500' : 'text-blue-600' }}">{{ ($dataLog['deliveryOrder']['deleted_at']) ? 'Terhapus' : 'Aktif' }}</span>
+                    <span class="text-xl font-semibold capitalize">Status Pengiriman:</span>
+                    <span class="font-semibold capitalize p-2 text-white rounded-lg {{ ($dataLog['pengiriman']['deleted_at']) ? 'text-red-500' : 'text-blue-600' }}">{{ ($dataLog['pengiriman']['deleted_at']) ? 'Terhapus' : 'Aktif' }}</span>
                 </div>
                 {{-- Table Content --}}
                     <table width="100%" class="font-semibold mt-3">
@@ -181,17 +181,17 @@
                         <tr>
                             <td width="45%">No Delivery Order</td>
                             <td width="5%">:</td>
-                            <td width="50%">{{ $dataLog['data_log']['data_lama']['no_do'] }}</td>
+                            <td width="50%">{{ $dataLog['data_log']['data_lama']['no_pengiriman'] }}</td>
                         </tr>
                         <tr>
                             <td width="45%">Tanggal Delivery Order</td>
                             <td width="5%">:</td>
-                            <td width="50%">{{ date('d-M-Y', strtotime($dataLog['data_log']['data_lama']['tanggal_do'])) }}</td>
+                            <td width="50%">{{ date('d-M-Y', strtotime($dataLog['data_log']['data_lama']['tanggal_pengiriman'])) }}</td>
                         </tr>
                         <tr>
                             <td width="45%">Witel Lama</td>
                             <td width="5%">:</td>
-                            <td width="50%"><a class="hover:text-blue-500 duration-200" href="/witel/{{ $dataLog['data_log']['data_lama']['id_witel'] }}">{{ $dataLog['data_log']['data_lama']['nama_witel'] }}</a></td>
+                            <td width="50%"><a class="hover:text-blue-500 duration-200" href="/cabang/{{ $dataLog['data_log']['data_lama']['id_cabang'] }}">{{ $dataLog['data_log']['data_lama']['nama_cabang'] }}</a></td>
                         </tr>
                         <tr><td>&nbsp;</td></tr>
                         <tr>
@@ -215,11 +215,11 @@
         <div class="mx-2 -mt-28">
             <div class="px-6 py-6">
                 <div class="text-center">
-                    <span class="text-xl font-semibold capitalize">Detail Log {{ $dataLog['deliveryOrder']['no_do'] }}</span>
+                    <span class="text-xl font-semibold capitalize">Detail Log {{ $dataLog['pengiriman']['no_pengiriman'] }}</span>
                 </div>
                 <div class="text-center my-2">
-                    <span class="text-xl font-semibold capitalize">Status DO:</span>
-                    <span class="font-semibold capitalize p-2 text-white rounded-lg {{ ($dataLog['deliveryOrder']['deleted_at']) ? 'text-red-500' : 'text-blue-600' }}">{{ ($dataLog['deliveryOrder']['deleted_at']) ? 'Terhapus' : 'Aktif' }}</span>
+                    <span class="text-xl font-semibold capitalize">Status Pengiriman:</span>
+                    <span class="font-semibold capitalize p-2 text-white rounded-lg {{ ($dataLog['pengiriman']['deleted_at']) ? 'text-red-500' : 'text-blue-600' }}">{{ ($dataLog['pengiriman']['deleted_at']) ? 'Terhapus' : 'Aktif' }}</span>
                 </div>
                 {{-- Table Content --}}
                     <table width="100%" class="font-semibold mt-3">
@@ -242,17 +242,17 @@
                         <tr>
                             <td width="45%">No Delivery Order</td>
                             <td width="5%">:</td>
-                            <td width="50%">{{ $dataLog['data_log']['data_lama']['no_do'] }}</td>
+                            <td width="50%">{{ $dataLog['data_log']['data_lama']['no_pengiriman'] }}</td>
                         </tr>
                         <tr>
                             <td width="45%">Tanggal Delivery Order</td>
                             <td width="5%">:</td>
-                            <td width="50%">{{ date('d-M-Y', strtotime(date('d-M-Y', strtotime($dataLog['data_log']['data_lama']['tanggal_do'])))) }}</td>
+                            <td width="50%">{{ date('d-M-Y', strtotime(date('d-M-Y', strtotime($dataLog['data_log']['data_lama']['tanggal_pengiriman'])))) }}</td>
                         </tr>
                         <tr>
                             <td width="45%">Witel Lama</td>
                             <td width="5%">:</td>
-                            <td width="50%"><a class="hover:text-blue-500 duration-200" href="/witel/{{ $dataLog['data_log']['data_lama']['id_witel'] }}">{{ $dataLog['data_log']['data_lama']['nama_witel'] }}</a></td>
+                            <td width="50%"><a class="hover:text-blue-500 duration-200" href="/cabang/{{ $dataLog['data_log']['data_lama']['id_cabang'] }}">{{ $dataLog['data_log']['data_lama']['nama_cabang'] }}</a></td>
                         </tr>
                         <tr><td>&nbsp;</td></tr>
                         <tr>

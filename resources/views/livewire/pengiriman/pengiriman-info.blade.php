@@ -4,7 +4,7 @@
         <div>
             {{-- Top Bar --}}
             <div class="text-2xl text-center font-bold text-indigo-600 cursor-default">
-                <p>Info {{ $doData['no_do'] }}</p>
+                <p>Info {{ $pengirimanData['no_pengiriman'] }}</p>
             </div>
             {{-- End Top Bar --}}
 
@@ -13,9 +13,9 @@
                     <div class="flex flex-col font-semibold">
                         <table>
                             <tr>
-                                <td>Tanggal DO</td>
+                                <td>Tanggal Pengiriman</td>
                                 <td>:</td>
-                                <td>{{ $tanggalDO }}</td>
+                                <td>{{ $tanggalPengiriman }}</td>
                             </tr>
                             <tr>
                                 <td class="pr-3">Total perangkat</td>
@@ -47,7 +47,7 @@
                 <button @click="isOpen = true" class="bg-blue-500 hover:shadow-md hover:bg-blue-700 px-3 py-2 rounded-xl text-white font-semibold duration-150 mb-2">Tambah Perangkat</button>
             @endif
             @if ($totalPerangkat > 0)
-                <a href="/printdo/{{ $doData['id'] }}" class="bg-yellow-500 hover:shadow-md hover:bg-yellow-600 px-3 py-2 rounded-xl text-white font-semibold duration-150 mb-2">Cetak DO</a>
+                <a href="/printPengiriman/{{ $pengirimanData['id'] }}" class="bg-yellow-500 hover:shadow-md hover:bg-yellow-600 px-3 py-2 rounded-xl text-white font-semibold duration-150 mb-2">Print pengriman</a>
             @endif
             
             {{-- Table --}}
@@ -58,9 +58,9 @@
                             <th class="w-1/12">Tipe</th>
                             <th class="w-1/3">Serial Number</th>
                             <th class="w-1/5">SN Monitor</th>
-                            <th class="w-1/5">Witel</th>
+                            <th class="w-1/5">Cabang</th>
                             <th class="w-1/5">User</th>
-                            <th class="w-1/12">SP</th>
+                            <th class="w-1/12">Gelombang</th>
                             <th class="w-1/5">Aksi</th>
                         </tr>
                     </thead>
@@ -71,17 +71,9 @@
                             <td>{{ ($value['id_tipe']) ? $value['TipePerangkat']['kode_perangkat'] : '-' }}</td>
                             <td>{{ $value['sn_pengganti'] }}</td>
                             <td>{{ ($value['sn_monitor']) ? $value['sn_monitor'] : '-' }}</td>
-                            @if ($value['id_witel'] != null)
-                                <td class="truncate">{{ $value['witel']['nama_witel'] }}</td>
-                            @else
-                                <td>-</td>
-                            @endif
-                            @if ($value['id_user'] != null)
-                                <td class="truncate">{{ $value['users']['name'] }}</td>
-                            @else
-                                <td>-</td>
-                            @endif
-                            <td>{{ ($value['sp']) ? $value['sp'] : '-' }}</td>
+                            <td class="truncate">{{ ($value['id_cabang']) ? $value['cabang']['nama_cabang'] : '-' }}</td>
+                            <td class="truncate">{{ ($value['id_user']) ? $value['users']['nama'] : '-' }}</td>
+                            <td>{{ ($value['gelombang']) ? $value['gelombang'] : '-' }}</td>
                             <td class="space-x-4 py-1 flex items-center justify-center">
 
                                 <button @click="infoPerangkat = true" wire:click="$emit('infoPerangkat', {{ $value['id'] }})" class="focus:outline-none" title="Info">

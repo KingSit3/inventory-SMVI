@@ -1,26 +1,26 @@
 <?php
 
-namespace App\Http\Livewire\DeliveryOrder;
+namespace App\Http\Livewire\Pengiriman;
 
-use App\Models\DoModel;
-use App\Models\Perangkat;
-use App\Models\Witel;
+use App\Models\ModelPengiriman;
+use App\Models\ModelPerangkat as Perangkat;
+use App\Models\ModelCabang as Cabang;
 use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class DeliveryOrderInfo extends Component
+class PengirimanInfo extends Component
 {
     use WithPagination;
-    public $sn, $tipe, $witel, $image, $dataPerangkat;
-    public $doData, $cariSn;
+    public $sn, $tipe, $cabang, $sistem, $dataPerangkat;
+    public $pengirimanData, $cariSn;
     public $keyword = '';
     public $isOpen = false;
 
     // ambil data dari route parameter
     public function mount($id) 
     {
-        $this->doData = DoModel::where('id', $id)->first();
+        $this->pengirimanData = ModelPengiriman::where('id', $id)->first();
     }
 
     public function render()
@@ -33,49 +33,49 @@ class DeliveryOrderInfo extends Component
             $hasilSn = Perangkat::where('sn_pengganti', 'like', $cariSnQuery)->limit(5)->get();
         }
 
-        $perangkatQuery = Perangkat::with(['users', 'witel', 'TipePerangkat'])
-                            ->where('id_do', $this->doData['id'])
+        $perangkatQuery = Perangkat::with(['users', 'cabang', 'TipePerangkat'])
+                            ->where('id_pengiriman', $this->pengirimanData['id'])
                             ->where('sn_pengganti', 'like', $keyword)
                             ->orderBy('updated_at', 'DESC')
                             ->paginate(10);
         $data = [
             'snResult' => $hasilSn,
             'perangkat' => $perangkatQuery,
-            'tanggalDO' => Carbon::parse($this->doData['tanggal_do'])->format('d-M-Y'),
-            'totalPerangkat' => Perangkat::where('id_do', $this->doData['id'])->count(),
+            'tanggalPengiriman' => Carbon::parse($this->pengirimanData['tanggal_pengiriman'])->format('d-M-Y'),
+            'totalPerangkat' => Perangkat::where('id_pengiriman', $this->pengirimanData['id'])->count(),
         ];
-        return view('livewire.delivery-order.delivery-order-info', $data)
+        return view('livewire.pengiriman.pengiriman-info', $data)
         ->extends('layouts.app');
     }
 
     public function delete($id) 
     {
-      Perangkat::where('id', $id)->update(['id_do' => null]);
+      Perangkat::where('id', $id)->update(['id_pengiriman' => null]);
     }
 
     public function chooseSn($id) 
     {
       $this->dataPerangkat = Perangkat::where('id', $id)->first();
-      if ($this->dataPerangkat['id_witel'] != null) {
-        $dataWitel = Witel::where('id', $this->dataPerangkat['id_witel'])->first();
+      if ($this->dataPerangkat['id_cabang'] != null) {
+        $dataCabang = Cabang::where('id', $this->dataPerangkat['id_cabang'])->first();
       } else {
-        $dataWitel = ['nama_witel' => null];
+        $dataCabang = ['nama_cabang' => null];
       }
 
-      if ($this->dataPerangkat['id_do'] != null) {
+      if ($this->dataPerangkat['id_pengiriman'] != null) {
         $this->resetData();
         return $this->addError('cariSn', 'perangkat ada di DO lain');
       }
 
       $this->sn = $this->dataPerangkat['sn_pengganti'];
       $this->tipe = $this->dataPerangkat['tipe_perangkat'];
-      $this->witel = $dataWitel['nama_witel'];
-      $this->image = $this->dataPerangkat['id_image'];
+      $this->cabang = $dataCabang['nama_cabang'];
+      $this->sistem = $this->dataPerangkat['id_sistem'];
     }
 
     public function tambah() 
     {
-      Perangkat::where('id', $this->dataPerangkat['id'])->update(['id_do' => $this->doData['id']]);
+      Perangkat::where('id', $this->dataPerangkat['id'])->update(['id_pengiriman' => $this->pengirimanData['id']]);
       
       // Panggil fungsi Reset data
       $this->resetData();
@@ -90,6 +90,6 @@ class DeliveryOrderInfo extends Component
     public function resetData() 
     {
       $this->resetValidation();
-      $this->reset('cariSn', 'sn', 'tipe', 'witel', 'image');
+      $this->reset('cariSn', 'sn', 'tipe', 'cabang', 'sistem');
     }
 }

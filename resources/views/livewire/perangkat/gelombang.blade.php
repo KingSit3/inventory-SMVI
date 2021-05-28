@@ -31,12 +31,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($SP as $value)
+                        @forelse ($gelombang as $value)
                         <tr class="text-center items-center {{ ($loop->odd) ? "bg-indigo-100 bg-opacity-75" : "" }}">
-                            <td class="py-2">{{ ($SP->firstItem()-1) + $loop->iteration }}</td>
-                            <td>{{ ($value['nama_sp']) }}</td>
+                            <td class="py-2">{{ ($gelombang->firstItem()-1) + $loop->iteration }}</td>
+                            <td>{{ ($value['nama_gelombang']) }}</td>
                             <td class="space-x-4 py-1 flex items-center justify-center">
-                                <a href="/sp/{{ $value['id'] }}" class="focus:outline-none">
+                                <a href="/gelombang/{{ $value['nama_gelombang'] }}" class="focus:outline-none">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="w-6 text-gray-500 hover:text-blue-500 py-1 duration-150 font-bold" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>
@@ -57,7 +57,7 @@
         <div>
             {{-- Pagination --}}
                 <div class="mt-2 mx-5">
-                    {{ $SP->links() }}
+                    {{ $gelombang->links() }}
                 </div>
             {{-- End Pagination --}}
         </div>

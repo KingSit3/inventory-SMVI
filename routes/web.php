@@ -3,18 +3,17 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\PrintDo;
+use App\Http\Controllers\PrintPengiriman;
 use App\Http\Livewire\Admin;
-use App\Http\Livewire\DeliveryOrder\DeletedDeliveryOrder;
-use App\Http\Livewire\DeliveryOrder\DeliveryOrder;
-use App\Http\Livewire\DeliveryOrder\DeliveryOrderInfo;
-use App\Http\Livewire\Log\InfoLogDeliveryOrder;
+use App\Http\Livewire\Pengiriman\DeletedPengiriman;
+use App\Http\Livewire\Pengiriman\Pengiriman;
+use App\Http\Livewire\Pengiriman\PengirimanInfo;
+use App\Http\Livewire\Log\InfoLogPengiriman;
 use App\Http\Livewire\Log\InfoLogTipeSistem;
 use App\Http\Livewire\Log\InfoLogPerangkat;
 use App\Http\Livewire\Log\InfoLogTipe;
 use App\Http\Livewire\Log\InfoLogUser;
 use App\Http\Livewire\Log\InfoLogCabang;
-use App\Http\Livewire\Log\LogDeliveryOrder;
 use App\Http\Livewire\Log\LogTipeSistem;
 use App\Http\Livewire\Log\LogPerangkat;
 use App\Http\Livewire\Log\LogTipePerangkat;
@@ -29,14 +28,15 @@ use App\Http\Livewire\User\DeletedUsers;
 use App\Http\Livewire\Perangkat\TipeSistem;
 use App\Http\Livewire\Perangkat\InfoTipeSistem;
 use App\Http\Livewire\Perangkat\InfoPerangkat;
-use App\Http\Livewire\Perangkat\InfoSp;
+use App\Http\Livewire\Perangkat\InfoGelombang;
 use App\Http\Livewire\Perangkat\InfoTipe;
 use App\Http\Livewire\Perangkat\Perangkat;
-use App\Http\Livewire\Perangkat\SP;
+use App\Http\Livewire\Perangkat\Gelombang;
 use App\Http\Livewire\User\InfoUser;
 use App\Http\Livewire\cabang\Cabang;
 use App\Http\Livewire\cabang\DeletedCabang;
 use App\Http\Livewire\cabang\InfoCabang;
+use App\Http\Livewire\Log\LogPengiriman;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,10 +64,10 @@ Route::middleware('login')->group(function(){
     Route::get('/deletedperangkat', DeletedPerangkat::class);
     Route::get('/infoperangkat/{id}', InfoPerangkat::class);
 
-    Route::get('/deliveryorder', DeliveryOrder::class);
-    Route::get('/deleteddeliveryorder', DeletedDeliveryOrder::class);
-    Route::get('/do/{id}', DeliveryOrderInfo::class);
-    Route::get('/printdo/{id}', [PrintDo::class, 'index']);
+    Route::get('/pengiriman', Pengiriman::class);
+    Route::get('/deletedpengiriman', DeletedPengiriman::class);
+    Route::get('/pengiriman/{id}', PengirimanInfo::class);
+    Route::get('/printpengiriman/{id}', [PrintPengiriman::class, 'index']);
 
     Route::get('/users', Users::class);
     Route::get('/user/{id}', InfoUser::class);
@@ -81,8 +81,8 @@ Route::middleware('login')->group(function(){
     Route::get('/tipesistem/{id}', InfoTipeSistem::class);
     Route::get('/deletedtipesistem', DeletedTipeSistem::class);
 
-    Route::get('/sp', SP::class);
-    Route::get('/sp/{id}', InfoSp::class);
+    Route::get('/gelombang', Gelombang::class);
+    Route::get('/gelombang/{nama}', InfoGelombang::class);
 
     Route::get('/cabang', Cabang::class);
     Route::get('/cabang/{id}', InfoCabang::class);
@@ -93,8 +93,8 @@ Route::middleware('login')->group(function(){
     Route::get('/logtipesistem/{id}', InfoLogTipeSistem::class);
     Route::get('/logtipeperangkat', LogTipePerangkat::class);
     Route::get('/logtipeperangkat/{id}', InfoLogTipe::class);
-    Route::get('/logdeliveryorder', LogDeliveryOrder::class);
-    Route::get('/logdeliveryorder/{id}', InfoLogDeliveryOrder::class);
+    Route::get('/logpengiriman', LogPengiriman::class);
+    Route::get('/logpengiriman/{id}', InfoLogPengiriman::class);
     Route::get('/logcabang', LogCabang::class);
     Route::get('/logcabang/{id}', InfoLogCabang::class);
     Route::get('/loguser', LogUser::class);

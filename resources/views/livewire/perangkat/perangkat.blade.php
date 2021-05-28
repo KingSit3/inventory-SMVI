@@ -30,7 +30,7 @@
                                         <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
                                     </svg>
                                 </div>
-                                <input wire:model.debounce.200="keyword" class=" focus:ring-4 outline-none focus:outline-none ring-blue-300 rounded-full pl-7 py-1 duration-150" type="text" placeholder="Cari Sn...">
+                                <input wire:model.debounce.200="keyword" class=" focus:ring-4 outline-none focus:outline-none ring-blue-300 rounded-full pl-7 py-1 duration-150" type="text" placeholder="Cari Perangkat...">
                             </div>
                         </div>
                 </div>
@@ -42,12 +42,12 @@
                         <tr>
                             <th class="w-1/12">No</th>
                             <th class="w-1/12">Tipe</th>
-                            <th class="w-1/3">Serial Number</th>
+                            <th class="w-1/3">SN perangkat</th>
                             <th class="w-1/5">SN Monitor</th>
-                            <th class="w-1/5">Witel</th>
+                            <th class="w-1/5">Cabang</th>
                             <th class="w-1/5">User</th>
-                            <th class="w-1/5">No Do</th>
-                            <th class="w-1/12">SP</th>
+                            <th class="w-1/5">No Pengiriman</th>
+                            <th class="w-1/12">Gelombang</th>
                             <th class="w-1/5">Aksi</th>
                         </tr>
                     </thead>
@@ -58,22 +58,10 @@
                             <td>{{ $value['TipePerangkat']['kode_perangkat'] }}</td>
                             <td>{{ $value['sn_pengganti'] }}</td>
                             <td>{{ ($value['sn_monitor']) ? $value['sn_monitor'] : '-' }}</td>
-                            @if ($value['id_witel'] != null)
-                                <td class="truncate">{{ $value['witel']['nama_witel'] }}</td>
-                            @else
-                                <td>-</td>
-                            @endif
-                            @if ($value['id_user'] != null)
-                                <td class="truncate">{{ $value['users']['name'] }}</td>
-                            @else
-                                <td>-</td>
-                            @endif
-                            @if ($value['id_do'] != null)
-                                <td>{{ $value['deliveryOrder']['no_do'] }}</td>
-                            @else
-                                <td>-</td>
-                            @endif
-                            <td>{{ ($value['sp']) ? $value['sp'] : '-' }}</td>
+                            <td>{{ ($value['id_cabang']) ? $value['cabang']['nama_cabang'] : '-' }}</td>
+                            <td>{{ ($value['id_user']) ? $value['users']['nama'] : '-' }}</td>
+                            <td>{{ ($value['id_pengiriman']) ? $value['pengiriman']['no_pengiriman']  : '-' }}</td>
+                            <td>{{ ($value['gelombang']) ? $value['gelombang'] : '-' }}</td>
                             <td class="space-x-4 py-1 flex items-center justify-center">
 
                                 <button @click="infoPerangkat = true" wire:click="$emit('infoPerangkat', {{ $value['id'] }})" class="focus:outline-none" title="Info">
@@ -160,6 +148,7 @@
                                         @enderror
                                     </div>
                                 </div>
+                                {{-- Tipe perangkat & Sistem --}}
                                 <div class="flex justify-between space-x-6">
                                     <div class="w-1/2">
                                         <p class="cursor-default pt-2">Tipe Perangkat</p>
@@ -175,19 +164,20 @@
                                         @enderror
                                     </div>
                                     <div class="w-1/2">
-                                        <p class="cursor-default pt-2">Image</p>
-                                        <select class="inputBox py-1" wire:model.defer="imagePerangkat" required>
+                                        <p class="cursor-default pt-2">Tipe Sistem</p>
+                                        <select class="inputBox py-1" wire:model.defer="sistemPerangkat" required>
                                             {{-- Wire:key sebagai pengganti opsi selected --}}
-                                            <option wire:key="" value="">-- Pilih Image --</option>
-                                            @foreach ($image as $item)
-                                                <option wire:key="{{ $item['kode_image'] }}" value="{{ $item['id'] }}">{{ $item['kode_image'] }}</option>
+                                            <option wire:key="" value="">-- Pilih Tipe Sistem --</option>
+                                            @foreach ($tipeSistem as $item)
+                                                <option wire:key="{{ $item['kode_sistem'] }}" value="{{ $item['id'] }}">{{ $item['kode_sistem'] }}</option>
                                             @endforeach
                                         </select>
-                                        @error('imagePerangkat')
+                                        @error('sistemPerangkat')
                                             <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
+                                {{-- End Tipe perangkat & Tipe Sistem --}}
 
                                 {{-- User  --}}
                                 <div x-data="{userSearch: false}" class="flex justify-between space-x-10 pt-2">
@@ -214,7 +204,7 @@
                                                 <ul class="absolute mt-2 bg-white border-gray-500 border-opacity-25 border-2 shadow-lg rounded-md w-52 px-2 py-2 space-y-1">
                                                     @if ($userResult)
                                                         @forelse ($userResult as $value)
-                                                            <button @click="userSearch = false" wire:click="chooseUser({{ $value['id'] }})" class="w-full text-left p-1 hover:bg-black hover:bg-opacity-10 truncate" type="button"><li>{{ ($value['nik']) ? $value['nik'] : '-' }} | {{  $value['name'] }}</li></button>
+                                                            <button @click="userSearch = false" wire:click="chooseUser({{ $value['id'] }})" class="w-full text-left p-1 hover:bg-black hover:bg-opacity-10 truncate" type="button"><li>{{ ($value['nik']) ? $value['nik'] : '-' }} | {{  $value['nama'] }}</li></button>
                                                         @empty
                                                             <span class="text-sm font-normal"> Data User tidak ditemukan!</span>
                                                         @endforelse
@@ -249,75 +239,76 @@
                                 {{-- End User --}}
 
                                 <div class="flex space-x-5">
-                                    {{-- Witel --}}
-                                    <div x-data="{witelSearch: false}" class="w-1/2 pt-3">
-                                        <label for="witel" class="cursor-default pt-2">Witel</label>
+                                    {{-- Cabang --}}
+                                    <div x-data="{cabangSearch: false}" class="w-1/2 pt-3">
+                                        <label for="cabang" class="cursor-default pt-2">Cabang</label>
                                         <div class="flex">
-                                            <input wire:model="witelSearch" @focus="witelSearch = true" @click.away="witelSearch = false" class="inputBox" id="witel" type="text" placeholder="Cari witel" autocomplete="off">
-                                            <div wire:loading wire:target="witelSearch" class="absolute animate-spin opacity-50 ml-60 mt-1">
+                                            <input wire:model="cabangSearch" @focus="cabangSearch = true" @click.away="cabangSearch = false" class="inputBox" id="cabang" type="text" placeholder="Cari cabang" autocomplete="off">
+                                            <div wire:loading wire:target="cabangSearch" class="absolute animate-spin opacity-50 ml-60 mt-1">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class=" w-4 " fill="currentColor" class="bi bi-circle-half" viewBox="0 0 16 16">
                                                     <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
                                                 </svg>
                                             </div>
                                         </div>
-                                        @if (strlen($witelSearch) > 0)
-                                            <div x-show="witelSearch">
+                                        @if (strlen($cabangSearch) > 0)
+                                            <div x-show="cabangSearch">
                                                 <ul class="absolute mt-2 bg-white border-gray-500 border-opacity-25 border-2 shadow-lg rounded-md w-52 px-2 py-2 space-y-1">
-                                                    @if ($witelResult)
-                                                        @forelse ($witelResult as $value)
-                                                            <button @click="witelSearch = false" wire:click="chooseWitel({{ $value['id'] }})" class="w-full text-left p-1 hover:bg-black hover:bg-opacity-10 truncate" type="button"><li>{{  $value['kode_witel'].' | '.$value['nama_witel'] }}</li></button>
+                                                    @if ($cabangResult)
+                                                        @forelse ($cabangResult as $value)
+                                                            <button @click="cabangSearch = false" wire:click="chooseCabang({{ $value['id'] }})" class="w-full text-left p-1 hover:bg-black hover:bg-opacity-10 truncate" type="button"><li>{{  $value['kode_cabang'].' | '.$value['nama_cabang'] }}</li></button>
                                                         @empty
-                                                            <span class="text-sm font-normal"> Data Witel tidak ditemukan!</span>
+                                                            <span class="text-sm font-normal"> Data Cabang tidak ditemukan!</span>
                                                         @endforelse
                                                     @endif
                                                 </ul>
                                             </div>
                                         @endif
-                                        <input wire:model.defer="witel" class="inputBox mt-3" type="text" disabled autocomplete="off">
+                                        <input wire:model.defer="cabang" class="inputBox mt-3" type="text" disabled autocomplete="off">
                                     </div>
-                                    {{-- End Witel --}}
-                                    {{-- DO --}}
-                                    <div x-data="{doSearch: false}" class="w-1/2 pt-3">
-                                        <label for="doSearch" class="cursor-default pt-2">Delivery Order</label>
+                                    {{-- End Cabang --}}
+
+                                    {{-- Pengiriman --}}
+                                    <div x-data="{pengirimanSearch: false}" class="w-1/2 pt-3">
+                                        <label for="pengirimanSearch" class="cursor-default pt-2">No Pengiriman</label>
                                         <div class="flex">
-                                            <input wire:model="doSearch" @focus="doSearch = true" @click.away="doSearch = false" class="inputBox" id="doSearch" type="text" placeholder="Cari do" autocomplete="off">
-                                            <div wire:loading wire:target="doSearch" class="absolute animate-spin opacity-50 ml-60 mt-1">
+                                            <input wire:model="pengirimanSearch" @focus="pengirimanSearch = true" @click.away="pengirimanSearch = false" class="inputBox" id="pengirimanSearch" type="text" placeholder="Cari No pengiriman" autocomplete="off">
+                                            <div wire:loading wire:target="pengirimanSearch" class="absolute animate-spin opacity-50 ml-60 mt-1">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class=" w-4 " fill="currentColor" class="bi bi-circle-half" viewBox="0 0 16 16">
                                                     <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
                                                 </svg>
                                             </div>
                                         </div>
-                                        @if (strlen($doSearch) > 0)
-                                            <div x-show="doSearch">
+                                        @if (strlen($pengirimanSearch) > 0)
+                                            <div x-show="pengirimanSearch">
                                                 <ul class="absolute mt-2 bg-white border-gray-500 border-opacity-25 border-2 shadow-lg rounded-md w-52 px-2 py-2 space-y-1">
-                                                    @if ($doResult)
-                                                        @forelse ($doResult as $value)
-                                                            <button @click="doSearch = false" wire:click="chooseDo({{ $value['id'] }})" class="w-full text-left p-1 hover:bg-black hover:bg-opacity-10 truncate" type="button"><li>{{  $value['no_do'] }}</li></button>
+                                                    @if ($pengirimanResult)
+                                                        @forelse ($pengirimanResult as $value)
+                                                            <button @click="pengirimanSearch = false" wire:click="choosePengiriman({{ $value['id'] }})" class="w-full text-left p-1 hover:bg-black hover:bg-opacity-10 truncate" type="button"><li>{{  $value['no_pengiriman'] }}</li></button>
                                                         @empty
-                                                            <span class="text-sm font-normal"> Data do tidak ditemukan!</span>
+                                                            <span class="text-sm font-normal"> Data Pengiriman tidak ditemukan!</span>
                                                         @endforelse
                                                     @endif
                                                 </ul>
                                             </div>
                                         @endif
-                                        <input wire:model.defer="kodeDo" class="inputBox mt-3" type="text" disabled autocomplete="off">
+                                        <input wire:model.defer="kodePengiriman" class="inputBox mt-3" type="text" disabled autocomplete="off">
                                     </div>
-                                    {{-- End Do --}}
+                                    {{-- End Pengiriman --}}
                                 </div>
                                 
-                                {{-- SP --}}
+                                {{-- Gelombang --}}
                                 <div class="w-1/2">
-                                    <p class="cursor-default pt-2">SP</p>
-                                    <select class="inputBox py-1" wire:model.defer="spPerangkat" required>
+                                    <p class="cursor-default pt-2">Gelombang</p>
+                                    <select class="inputBox py-1" wire:model.defer="gelombang" required>
                                         {{-- Sengaja di kosongkan --}}
                                         <option wire:key="" value="">--Pilih Sp--</option>
                                         {{-- Wire:key sebagai pengganti opsi selected --}}
-                                        @foreach ($sp as $item)
-                                            <option wire:key="{{ $item['nama_sp'] }}" value="{{ $item['nama_sp'] }}">{{ $item['nama_sp'] }}</option>
+                                        @foreach ($gelombangDb as $item)
+                                            <option wire:key="{{ $item['nama_gelombang'] }}" value="{{ $item['nama_gelombang'] }}">{{ $item['nama_gelombang'] }}</option>
                                         @endforeach
                                     </select>
                                 </div>
-                                {{-- End SP --}}
+                                {{-- End Gelombang --}}
 
                                 <div class="flex justify-between space-x-5">
                                     <div class="w-1/2">

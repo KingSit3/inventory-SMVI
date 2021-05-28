@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Perangkat;
 use PDF;
 
-class PrintDo extends Controller
+class PrintPengiriman extends Controller
 {
     public function index($id) 
     {

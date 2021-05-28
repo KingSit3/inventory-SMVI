@@ -15,8 +15,8 @@ class CreateCabangTable extends Migration
     {
         Schema::create('cabang', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_cabang');
-            $table->string('kode_cabang')->unique();
+            $table->string('nama_cabang', 50);
+            $table->string('kode_cabang', 50)->unique();
             $table->unsignedBigInteger('regional');
             $table->string('alamat_cabang');
             $table->unsignedBigInteger('id_pic')->unique();

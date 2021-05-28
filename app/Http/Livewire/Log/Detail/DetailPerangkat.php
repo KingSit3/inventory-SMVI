@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Log\Detail;
 
-use App\Models\LogPerangkat;
+use App\Models\ModelLogPerangkat;
 use Livewire\Component;
 
 class DetailPerangkat extends Component
@@ -17,10 +17,9 @@ class DetailPerangkat extends Component
 
     public function detailLog($id) 
     {
-      $this->dataLog = LogPerangkat::with('Perangkat')
+      $this->dataLog = ModelLogPerangkat::with('Perangkat')
                             ->where('id', $id)
                             ->first();
-        // dd($this->dataLog);
     }
 
     public function resetData() 

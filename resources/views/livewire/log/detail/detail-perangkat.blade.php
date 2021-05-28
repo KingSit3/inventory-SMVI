@@ -65,22 +65,22 @@
                         <tr>
                             <td width="45%">Image Baru</td>
                             <td width="5%">:</td>
-                            <td class="bg-green-500 bg-opacity-20" width="50%">{{ ($dataLog['data_log']['data_baru']['image']) ? $dataLog['data_log']['data_baru']['image'] : '-' }}</td>
+                            <td class="bg-green-500 bg-opacity-20" width="50%">{{ ($dataLog['data_log']['data_baru']['sistem']) ? $dataLog['data_log']['data_baru']['sistem'] : '-' }}</td>
                         </tr>
                         <tr>
                             <td width="45%">Witel Baru</td>
                             <td width="5%">:</td>
-                            <td class="bg-green-500 bg-opacity-20" width="50%">{{ ($dataLog['data_log']['data_baru']['witel']) ? $dataLog['data_log']['data_baru']['witel'] : '-' }}</td>
+                            <td class="bg-green-500 bg-opacity-20" width="50%">{{ ($dataLog['data_log']['data_baru']['cabang']) ? $dataLog['data_log']['data_baru']['cabang'] : '-' }}</td>
                         </tr>
                         <tr>
                             <td width="45%">Delivery Order Baru</td>
                             <td width="5%">:</td>
-                            <td class="bg-green-500 bg-opacity-20" width="50%">{{ ($dataLog['data_log']['data_baru']['delivery_order']) ? $dataLog['data_log']['data_baru']['delivery_order'] : '-' }}</td>
+                            <td class="bg-green-500 bg-opacity-20" width="50%">{{ ($dataLog['data_log']['data_baru']['no_pengiriman']) ? $dataLog['data_log']['data_baru']['no_pengiriman'] : '-' }}</td>
                         </tr>
                         <tr>
                             <td width="45%">SP Baru</td>
                             <td width="5%">:</td>
-                            <td class="bg-green-500 bg-opacity-20" width="50%">{{ ($dataLog['data_log']['data_baru']['sp']) ? $dataLog['data_log']['data_baru']['sp'] : '-' }}</td>
+                            <td class="bg-green-500 bg-opacity-20" width="50%">{{ ($dataLog['data_log']['data_baru']['gelombang']) ? $dataLog['data_log']['data_baru']['gelombang'] : '-' }}</td>
                         </tr>
                         <tr>
                             <td width="45%">Keterangan Baru</td>
@@ -173,22 +173,22 @@
                         <tr>
                             <td width="45%">Image Baru</td>
                             <td width="5%">:</td>
-                            <td class="bg-green-500 bg-opacity-20" width="50%">{{ ($dataLog['data_log']['data_baru']['image']) ? $dataLog['data_log']['data_baru']['image'] : '-' }}</td>
+                            <td class="bg-green-500 bg-opacity-20" width="50%">{{ ($dataLog['data_log']['data_baru']['sistem']) ? $dataLog['data_log']['data_baru']['sistem'] : '-' }}</td>
                         </tr>
                         <tr>
                             <td width="45%">Witel Baru</td>
                             <td width="5%">:</td>
-                            <td class="bg-green-500 bg-opacity-20" width="50%">{{ ($dataLog['data_log']['data_baru']['witel']) ? $dataLog['data_log']['data_baru']['witel'] : '-' }}</td>
+                            <td class="bg-green-500 bg-opacity-20" width="50%">{{ ($dataLog['data_log']['data_baru']['cabang']) ? $dataLog['data_log']['data_baru']['cabang'] : '-' }}</td>
                         </tr>
                         <tr>
                             <td width="45%">Delivery Order Baru</td>
                             <td width="5%">:</td>
-                            <td class="bg-green-500 bg-opacity-20" width="50%">{{ ($dataLog['data_log']['data_baru']['delivery_order']) ? $dataLog['data_log']['data_baru']['delivery_order'] : '-' }}</td>
+                            <td class="bg-green-500 bg-opacity-20" width="50%">{{ ($dataLog['data_log']['data_baru']['no_pengiriman']) ? $dataLog['data_log']['data_baru']['no_pengiriman'] : '-' }}</td>
                         </tr>
                         <tr>
                             <td width="45%">SP Baru</td>
                             <td width="5%">:</td>
-                            <td class="bg-green-500 bg-opacity-20" width="50%">{{ ($dataLog['data_log']['data_baru']['sp']) ? $dataLog['data_log']['data_baru']['sp'] : '-' }}</td>
+                            <td class="bg-green-500 bg-opacity-20" width="50%">{{ ($dataLog['data_log']['data_baru']['gelombang']) ? $dataLog['data_log']['data_baru']['gelombang'] : '-' }}</td>
                         </tr>
                         <tr>
                             <td width="45%">Keterangan Baru</td>
@@ -234,22 +234,22 @@
                         <tr>
                             <td width="45%">Image Lama</td>
                             <td width="5%">:</td>
-                            <td class="bg-red-500 bg-opacity-20" width="50%">{{ ($dataLog['data_log']['data_lama']['image']) ? $dataLog['data_log']['data_lama']['image'] : '-' }}</td>
+                            <td class="bg-red-500 bg-opacity-20" width="50%">{{ ($dataLog['data_log']['data_lama']['sistem']) ? $dataLog['data_log']['data_lama']['sistem'] : '-' }}</td>
                         </tr>
                         <tr>
                             <td width="45%">Witel Lama</td>
                             <td width="5%">:</td>
-                            <td class="bg-red-500 bg-opacity-20" width="50%">{{ ($dataLog['data_log']['data_lama']['witel']) ? $dataLog['data_log']['data_lama']['witel'] : '-' }}</td>
+                            <td class="bg-red-500 bg-opacity-20" width="50%">{{ ($dataLog['data_log']['data_lama']['cabang']) ? $dataLog['data_log']['data_lama']['cabang'] : '-' }}</td>
                         </tr>
                         <tr>
                             <td width="45%">Delivery Order Lama</td>
                             <td width="5%">:</td>
-                            <td class="bg-red-500 bg-opacity-20" width="50%">{{ ($dataLog['data_log']['data_lama']['delivery_order']) ? $dataLog['data_log']['data_lama']['delivery_order'] : '-' }}</td>
+                            <td class="bg-red-500 bg-opacity-20" width="50%">{{ ($dataLog['data_log']['data_lama']['no_pengiriman']) ? $dataLog['data_log']['data_lama']['no_pengiriman'] : '-' }}</td>
                         </tr>
                         <tr>
                             <td width="45%">SP Lama</td>
                             <td width="5%">:</td>
-                            <td class="bg-red-500 bg-opacity-20" width="50%">{{ ($dataLog['data_log']['data_lama']['sp']) ? $dataLog['data_log']['data_lama']['sp'] : '-' }}</td>
+                            <td class="bg-red-500 bg-opacity-20" width="50%">{{ ($dataLog['data_log']['data_lama']['gelombang']) ? $dataLog['data_log']['data_lama']['gelombang'] : '-' }}</td>
                         </tr>
                         <tr>
                             <td width="45%">Keterangan Lama</td>
@@ -342,22 +342,22 @@
                         <tr>
                             <td width="45%">Image</td>
                             <td width="5%">:</td>
-                            <td width="50%">{{ ($dataLog['data_log']['data_lama']['image']) ? $dataLog['data_log']['data_lama']['image'] : '-' }}</td>
+                            <td width="50%">{{ ($dataLog['data_log']['data_lama']['sistem']) ? $dataLog['data_log']['data_lama']['sistem'] : '-' }}</td>
                         </tr>
                         <tr>
                             <td width="45%">Witel</td>
                             <td width="5%">:</td>
-                            <td width="50%">{{ ($dataLog['data_log']['data_lama']['witel']) ? $dataLog['data_log']['data_lama']['witel'] : '-' }}</td>
+                            <td width="50%">{{ ($dataLog['data_log']['data_lama']['cabang']) ? $dataLog['data_log']['data_lama']['cabang'] : '-' }}</td>
                         </tr>
                         <tr>
                             <td width="45%">Delivery Order</td>
                             <td width="5%">:</td>
-                            <td width="50%">{{ ($dataLog['data_log']['data_lama']['delivery_order']) ? $dataLog['data_log']['data_lama']['delivery_order'] : '-' }}</td>
+                            <td width="50%">{{ ($dataLog['data_log']['data_lama']['no_pengiriman']) ? $dataLog['data_log']['data_lama']['no_pengiriman'] : '-' }}</td>
                         </tr>
                         <tr>
                             <td width="45%">SP</td>
                             <td width="5%">:</td>
-                            <td width="50%">{{ ($dataLog['data_log']['data_lama']['sp']) ? $dataLog['data_log']['data_lama']['sp'] : '-' }}</td>
+                            <td width="50%">{{ ($dataLog['data_log']['data_lama']['gelombang']) ? $dataLog['data_log']['data_lama']['gelombang'] : '-' }}</td>
                         </tr>
                         <tr>
                             <td width="45%">Keterangan</td>
@@ -450,22 +450,22 @@
                         <tr>
                             <td width="45%">Image</td>
                             <td width="5%">:</td>
-                            <td width="50%">{{ ($dataLog['data_log']['data_lama']['image']) ? $dataLog['data_log']['data_lama']['image'] : '-' }}</td>
+                            <td width="50%">{{ ($dataLog['data_log']['data_lama']['sistem']) ? $dataLog['data_log']['data_lama']['sistem'] : '-' }}</td>
                         </tr>
                         <tr>
                             <td width="45%">Witel</td>
                             <td width="5%">:</td>
-                            <td width="50%">{{ ($dataLog['data_log']['data_lama']['witel']) ? $dataLog['data_log']['data_lama']['witel'] : '-' }}</td>
+                            <td width="50%">{{ ($dataLog['data_log']['data_lama']['cabang']) ? $dataLog['data_log']['data_lama']['cabang'] : '-' }}</td>
                         </tr>
                         <tr>
                             <td width="45%">Delivery Order</td>
                             <td width="5%">:</td>
-                            <td width="50%">{{ ($dataLog['data_log']['data_lama']['delivery_order']) ? $dataLog['data_log']['data_lama']['delivery_order'] : '-' }}</td>
+                            <td width="50%">{{ ($dataLog['data_log']['data_lama']['no_pengiriman']) ? $dataLog['data_log']['data_lama']['no_pengiriman'] : '-' }}</td>
                         </tr>
                         <tr>
                             <td width="45%">SP</td>
                             <td width="5%">:</td>
-                            <td width="50%">{{ ($dataLog['data_log']['data_lama']['sp']) ? $dataLog['data_log']['data_lama']['sp'] : '-' }}</td>
+                            <td width="50%">{{ ($dataLog['data_log']['data_lama']['gelombang']) ? $dataLog['data_log']['data_lama']['gelombang'] : '-' }}</td>
                         </tr>
                         <tr>
                             <td width="45%">Keterangan</td>

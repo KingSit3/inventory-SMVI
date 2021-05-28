@@ -3,7 +3,7 @@
         <div>
             {{-- Top Bar --}}
             <div class="text-2xl text-center font-bold text-red-500 cursor-default">
-                <p>Deleted Delivery Order Menu</p>
+                <p class="capitalize">menu Pengiriman terhapus</p>
             </div>
             {{-- End Top Bar --}}
 
@@ -21,7 +21,7 @@
                                         <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
                                     </svg>
                                 </div>
-                                <input wire:model.debounce.200="keyword" class=" focus:ring-4 outline-none focus:outline-none ring-blue-300 rounded-full pl-7 py-1 duration-150" type="text" placeholder="Cari DO...">
+                                <input wire:model.debounce.200="keyword" class=" focus:ring-4 outline-none focus:outline-none ring-blue-300 rounded-full pl-7 py-1 duration-150" type="text" placeholder="Cari Pengiriman...">
                             </div>
                         </div>
                 </div>
@@ -32,8 +32,8 @@
                     <thead>
                         <tr>
                             <th class="w-1/12">No</th>
-                            <th class="w-1/6">Delivery Order</th>
-                            <th class="w-1/6">Witel</th>
+                            <th class="w-1/6">Pengiriman</th>
+                            <th class="w-1/6">Cabang</th>
                             <th class="w-1/5">Tanggal Dihapus</th>
                             @if (session('role') != 2)
                                 <th class="w-1/5">Aksi</th>
@@ -41,11 +41,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($doData as $value)
+                        @forelse ($pengiriman as $value)
                         <tr class="text-center items-center {{ ($loop->odd) ? "bg-red-100 bg-opacity-75" : "" }}">
-                            <td class="py-2">{{ ($doData->firstItem()-1) + $loop->iteration }}</td>
-                            <td>{{ ($value['no_do']) }}</td>
-                            <td>{{ ($value['witel']['nama_witel']) }}</td>
+                            <td class="py-2">{{ ($pengiriman->firstItem()-1) + $loop->iteration }}</td>
+                            <td>{{ ($value['no_pengiriman']) }}</td>
+                            <td>{{ ($value['cabang']['nama_cabang']) }}</td>
                             <td>{{ $value['deleted_at'] }}</td>
 
                             @if (session('role') != 2)
@@ -73,7 +73,7 @@
         <div>
             {{-- Pagination --}}
                 <div class="mt-2 mx-5">
-                    {{ $doData->links() }}
+                    {{ $pengiriman->links() }}
                 </div>
             {{-- End Pagination --}}
         </div>
@@ -86,7 +86,7 @@
                 @this.on('restore', id => {
                     // Jalankan sweet alert
                     Swal.fire({
-                    title: 'Yakin ingin mengembalikkan DO ini?',
+                    title: 'Yakin ingin mengembalikkan Pengiriman ini?',
                     // text: "User ".name." akan dihapus",
                     icon: 'info',
                     showCancelButton: true,
@@ -101,7 +101,7 @@
                         // Pesan berhasil
                         Swal.fire(
                         'Berhasil!',
-                        'Image berhasil dikembalikkan',
+                        'Pengiriman berhasil dikembalikkan',
                         'success'
                         )
                     }

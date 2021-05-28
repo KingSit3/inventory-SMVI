@@ -2,9 +2,8 @@
 
 namespace App\Http\Livewire\Log;
 
-use App\Models\LogPerangkat;
-use App\Models\Perangkat;
-use App\Models\tipePerangkat;
+use App\Models\ModelLogPerangkat;
+use App\Models\ModelPerangkat;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -15,7 +14,7 @@ class InfoLogPerangkat extends Component
     
     public function mount($id) 
     {
-        $this->logData = Perangkat::where('id', $id)
+        $this->logData = ModelPerangkat::where('id', $id)
                                 ->withTrashed()
                                 ->first();
     }
@@ -23,7 +22,7 @@ class InfoLogPerangkat extends Component
     public function render()
     {
         $data = [
-            'logPerangkat' => LogPerangkat::where('id_perangkat', $this->logData['id'])
+            'logPerangkat' => ModelLogPerangkat::where('id_perangkat', $this->logData['id'])
                                 ->orderBy('created_at', 'DESC')->paginate(10),
         ];
 

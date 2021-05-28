@@ -13,7 +13,7 @@ class TipeSistem extends Component
     use WithPagination;
     
     public $submitType, $keyword, $kode, 
-    $imageId, $imageData, $oldtipeSistemData;
+    $tipeSistemId, $tipeSistemData, $oldtipeSistemData;
     public $isOpen = false;
 
     public function updatingSearch()
@@ -82,7 +82,7 @@ class TipeSistem extends Component
     {
         ModelTipeSistem::where(['id' => $id])->delete();
 
-        // Cari kode image yang dihapus
+        // Cari kode Tipe Sistem yang dihapus
         $kodetipeSistem = ModelTipeSistem::where(['id' => $id])->onlyTrashed()->first();
         ModelLogTipeSistem::create([
             'id_sistem' => $id,
@@ -101,12 +101,12 @@ class TipeSistem extends Component
     public function edit($id) 
     {
         $this->submitType = 'update';
-        $this->imageData = ModelTipeSistem::where('id', $id)->first();
+        $this->tipeSistemData = ModelTipeSistem::where('id', $id)->first();
         $this->oldtipeSistemData = ModelTipeSistem::where('id', $id)->first();
 
         // Masukkan value
-        $this->imageId = $id;
-        $this->kode = $this->imageData['kode_sistem'];
+        $this->tipeSistemId = $id;
+        $this->kode = $this->tipeSistemData['kode_sistem'];
     }
 
     public function update()
@@ -120,18 +120,18 @@ class TipeSistem extends Component
 
         // Pakai fitur Try Catch Untuk mengatasi eror unique
         try {
-            ModelTipeSistem::where('id', $this->imageId)->update([
+            ModelTipeSistem::where('id', $this->tipeSistemId)->update([
                 'kode_sistem' => $this->kode,
             ]);
 
             ModelLogTipeSistem::create([
-                'id_sistem' => $this->imageId,
+                'id_sistem' => $this->tipeSistemId,
                 'data_log' =>   [
                                     'aksi' => 'Edit',
                                     'browser' => $_SERVER['HTTP_USER_AGENT'],
                                     'edited_by' => session('nama'),
                                     'data_lama' =>  [
-                                                        'kode_sistem' => $this->imageData['kode_sistem'],
+                                                        'kode_sistem' => $this->tipeSistemData['kode_sistem'],
                                                     ],
                                     'data_baru' =>  [
                                                         'kode_sistem' => $this->kode,

@@ -66,7 +66,6 @@ class Cabang extends Component
       );
 
       if ($this->addNewPic == true) {
-        // Tambah data user + witel
 
         try {
 
@@ -128,7 +127,7 @@ class Cabang extends Component
         
       } else {
         try {
-          // Tambah data witel
+          // Tambah data Cabang
           ModelCabang::create([
             'nama_cabang' => $this->nama,
             'kode_cabang' => $this->kode,
@@ -210,7 +209,7 @@ class Cabang extends Component
       );
 
       if ($this->addNewPic == true) {
-        // Tambah data user + witel
+        // Tambah data user + Cabang
 
         try {
           ModelUser::create([
@@ -278,7 +277,7 @@ class Cabang extends Component
         
       } else {
         try {
-          // Ubah data witel
+          // Ubah data Cabang
           ModelCabang::where('id', $this->idCabang)->update([
             'nama_cabang' => $this->nama,
             'kode_cabang' => $this->kode,
@@ -346,10 +345,10 @@ class Cabang extends Component
 
     public function delete($id)
     {
-      $witelQuery = ModelCabang::where('id', $id)->first();
-      $witelQuery->delete();
+      $cabangQuery = ModelCabang::where('id', $id)->first();
+      $cabangQuery->delete();
 
-      $dataUser  = ModelUser::where('id', $witelQuery['id_pic'])->first();
+      $dataUser  = ModelUser::where('id', $cabangQuery['id_pic'])->first();
       ModelLogCabang::create([
         'id_cabang' => $id,
         'data_log' => [
@@ -357,10 +356,10 @@ class Cabang extends Component
                       'browser' => $_SERVER['HTTP_USER_AGENT'],
                       'edited_by' => session('nama'),
                       'data_lama' =>  [
-                                          'nama_cabang' => $witelQuery['nama_cabang'],
-                                          'kode_cabang' => $witelQuery['kode_cabang'],
-                                          'alamat_cabang' => $witelQuery['alamat_cabang'],
-                                          'regional' => $witelQuery['regional'],
+                                          'nama_cabang' => $cabangQuery['nama_cabang'],
+                                          'kode_cabang' => $cabangQuery['kode_cabang'],
+                                          'alamat_cabang' => $cabangQuery['alamat_cabang'],
+                                          'regional' => $cabangQuery['regional'],
                                           'id_pic' => $dataUser['id'],
                                           'nama_pic' => $dataUser['nama'],
                                       ],

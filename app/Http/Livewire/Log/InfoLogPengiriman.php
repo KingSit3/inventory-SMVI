@@ -2,19 +2,19 @@
 
 namespace App\Http\Livewire\Log;
 
-use App\Models\DoModel;
-use App\Models\LogDeliveryOrder;
+use App\Models\ModelPengiriman;
+use App\Models\ModelLogPengiriman;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class InfoLogDeliveryOrder extends Component
+class InfoLogpengiriman extends Component
 {
     use WithPagination;
     public $logData;
 
     public function mount($id) 
     {
-        $this->logData = DoModel::where('id', $id)
+        $this->logData = ModelPengiriman::where('id', $id)
                                 ->withTrashed()
                                 ->first();
     }
@@ -22,11 +22,12 @@ class InfoLogDeliveryOrder extends Component
     public function render()
     {
         $data = [
-            'logDo' => LogDeliveryOrder::where('id_do', $this->logData['id'])
+            'logPengiriman' => ModelLogPengiriman::with('pengiriman')->where('id_pengiriman', $this->logData['id'])
                                 ->orderBy('created_at', 'DESC')->paginate(10),
         ];
 
-        return view('livewire.log.info-log-delivery-order', $data)
+
+        return view('livewire.log.info-log-pengiriman', $data)
         ->extends('layouts.app');
     }
 }

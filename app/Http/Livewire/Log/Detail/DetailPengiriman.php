@@ -2,26 +2,25 @@
 
 namespace App\Http\Livewire\Log\Detail;
 
-use App\Models\LogDeliveryOrder;
+use App\Models\ModelLogPengiriman;
 use Livewire\Component;
 
-class DetailDeliveryOrder extends Component
+class DetailPengiriman extends Component
 {
     public $dataLog;
-    protected $listeners = ['detailLogDeliveryOrder' => 'detailLog'];
+    protected $listeners = ['detailLogPengiriman' => 'detailLog'];
 
     public function render()
     {
-        return view('livewire.log.detail.detail-delivery-order')
+        return view('livewire.log.detail.detail-pengiriman')
         ->extends('layouts.app');
     }
 
     public function detailLog($id) 
     {
-      $this->dataLog = LogDeliveryOrder::with('deliveryOrder')
+      $this->dataLog = ModelLogPengiriman::with('pengiriman')
                             ->where('id', $id)
                             ->first();
-        // dd($this->dataLog);
     }
 
     public function resetData() 
