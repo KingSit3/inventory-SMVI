@@ -59,7 +59,7 @@
                         @empty
                         <tr>
                             <td class="text-center pt-5 text-red-500" colspan="6">
-                            Data Tidak ditemukan!
+                            ata Tidak ditemukan!
                             </td>
                         </tr>
                         @endforelse

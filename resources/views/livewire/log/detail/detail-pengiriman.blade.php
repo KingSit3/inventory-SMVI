@@ -37,17 +37,17 @@
                         </tr>
                         <tr><td>&nbsp;</td></tr>
                         <tr>
-                            <td width="45%">No Delivery Order baru</td>
+                            <td width="45%">No Pengiriman baru</td>
                             <td width="5%">:</td>
                             <td class="bg-green-500 bg-opacity-20" width="50%">{{ $dataLog['data_log']['data_baru']['no_pengiriman'] }}</td>
                         </tr>
                         <tr>
-                            <td width="45%">Tanggal Delivery Order baru</td>
+                            <td width="45%">Tanggal Pengiriman baru</td>
                             <td width="5%">:</td>
                             <td class="bg-green-500 bg-opacity-20" width="50%">{{ date('d-M-Y', strtotime($dataLog['data_log']['data_baru']['tanggal_pengiriman'])) }}</td>
                         </tr>
                         <tr>
-                            <td width="45%">Witel baru</td>
+                            <td width="45%">Cabang baru</td>
                             <td width="5%">:</td>
                             <td class="bg-green-500 bg-opacity-20" width="50%"><a class="hover:text-blue-500 duration-200" href="/cabang/{{ $dataLog['data_log']['data_baru']['id_cabang'] }}">{{ $dataLog['data_log']['data_baru']['nama_cabang'] }}</a></td>
                         </tr>
@@ -100,34 +100,34 @@
     
                         <tr><td>&nbsp;</td></tr>
                         <tr>
-                            <td width="45%">No Delivery Order baru</td>
+                            <td width="45%">No Pengiriman baru</td>
                             <td width="5%">:</td>
                             <td class="bg-green-500 bg-opacity-20" width="50%">{{ $dataLog['data_log']['data_baru']['no_pengiriman'] }}</td>
                         </tr>
                         <tr>
-                            <td width="45%">Tanggal Delivery Order baru</td>
+                            <td width="45%">Tanggal Pengiriman baru</td>
                             <td width="5%">:</td>
                             <td class="bg-green-500 bg-opacity-20" width="50%">{{ date('d-M-Y', strtotime($dataLog['data_log']['data_baru']['tanggal_pengiriman'])) }}</td>
                         </tr>
                         <tr>
-                            <td width="45%">Witel baru</td>
+                            <td width="45%">Cabang baru</td>
                             <td width="5%">:</td>
                             <td class="bg-green-500 bg-opacity-20" width="50%"><a class="hover:text-blue-500 duration-200" href="/cabang/{{ $dataLog['data_log']['data_baru']['id_cabang'] }}">{{ $dataLog['data_log']['data_baru']['nama_cabang'] }}</a></td>
                         </tr>
 
                         <tr><td>&nbsp;</td></tr>
                         <tr>
-                            <td width="45%">No Delivery Order Lama</td>
+                            <td width="45%">No Pengiriman Lama</td>
                             <td width="5%">:</td>
                             <td class="bg-red-500 bg-opacity-20" width="50%">{{ $dataLog['data_log']['data_lama']['no_pengiriman'] }}</td>
                         </tr>
                         <tr>
-                            <td width="45%">Tanggal Delivery Order Lama</td>
+                            <td width="45%">Tanggal Pengiriman Lama</td>
                             <td width="5%">:</td>
                             <td class="bg-red-500 bg-opacity-20" width="50%">{{ date('d-M-Y', strtotime($dataLog['data_log']['data_lama']['tanggal_pengiriman'])) }}</td>
                         </tr>
                         <tr>
-                            <td width="45%">Witel Lama</td>
+                            <td width="45%">Cabang Lama</td>
                             <td width="5%">:</td>
                             <td class="bg-red-500 bg-opacity-20" width="50%"><a class="hover:text-blue-500 duration-200" href="/cabang/{{ $dataLog['data_log']['data_lama']['id_cabang'] }}">{{ $dataLog['data_log']['data_lama']['nama_cabang'] }}</a></td>
                         </tr>
@@ -179,17 +179,17 @@
                         </tr>
                         <tr><td>&nbsp;</td></tr>
                         <tr>
-                            <td width="45%">No Delivery Order</td>
+                            <td width="45%">No Pengiriman</td>
                             <td width="5%">:</td>
                             <td width="50%">{{ $dataLog['data_log']['data_lama']['no_pengiriman'] }}</td>
                         </tr>
                         <tr>
-                            <td width="45%">Tanggal Delivery Order</td>
+                            <td width="45%">Tanggal Pengiriman</td>
                             <td width="5%">:</td>
                             <td width="50%">{{ date('d-M-Y', strtotime($dataLog['data_log']['data_lama']['tanggal_pengiriman'])) }}</td>
                         </tr>
                         <tr>
-                            <td width="45%">Witel Lama</td>
+                            <td width="45%">Cabang Lama</td>
                             <td width="5%">:</td>
                             <td width="50%"><a class="hover:text-blue-500 duration-200" href="/cabang/{{ $dataLog['data_log']['data_lama']['id_cabang'] }}">{{ $dataLog['data_log']['data_lama']['nama_cabang'] }}</a></td>
                         </tr>
@@ -240,17 +240,17 @@
                         </tr>
                         <tr><td>&nbsp;</td></tr>
                         <tr>
-                            <td width="45%">No Delivery Order</td>
+                            <td width="45%">No Pengiriman</td>
                             <td width="5%">:</td>
                             <td width="50%">{{ $dataLog['data_log']['data_lama']['no_pengiriman'] }}</td>
                         </tr>
                         <tr>
-                            <td width="45%">Tanggal Delivery Order</td>
+                            <td width="45%">Tanggal Pengiriman</td>
                             <td width="5%">:</td>
                             <td width="50%">{{ date('d-M-Y', strtotime(date('d-M-Y', strtotime($dataLog['data_log']['data_lama']['tanggal_pengiriman'])))) }}</td>
                         </tr>
                         <tr>
-                            <td width="45%">Witel Lama</td>
+                            <td width="45%">Cabang Lama</td>
                             <td width="5%">:</td>
                             <td width="50%"><a class="hover:text-blue-500 duration-200" href="/cabang/{{ $dataLog['data_log']['data_lama']['id_cabang'] }}">{{ $dataLog['data_log']['data_lama']['nama_cabang'] }}</a></td>
                         </tr>

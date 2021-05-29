@@ -40,7 +40,7 @@
                             <th class="w-1/5">Cabang</th>
                             <th class="w-1/5">User</th>
                             <th class="w-1/5">No pengiriman</th>
-                            <th class="w-1/5">gelombang</th>
+                            <th class="w-1/5">Gelombang</th>
                             <th class="w-1/5">Tanggal Dihapus</th>
                             <th class="w-1/5">Aksi</th>
                         </tr>

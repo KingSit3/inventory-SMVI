@@ -4,7 +4,7 @@
         <div>
             {{-- Top Bar --}}
             <div class="text-2xl text-center font-bold text-indigo-600 cursor-default">
-                <p>Delivery Order Menu</p>
+                <p>Pengiriman Menu</p>
             </div>
             {{-- End Top Bar --}}
 
@@ -13,7 +13,7 @@
                     {{-- Tambah Button --}}
                         <div>
                         @if (session('role') != 2)
-                            <button @click="isOpen = true" wire:click="add" class="bg-blue-500 hover:shadow-md hover:bg-blue-700 px-3 py-2 rounded-xl text-white font-semibold duration-150">Tambah DO</button>
+                            <button @click="isOpen = true" wire:click="add" class="bg-blue-500 hover:shadow-md hover:bg-blue-700 px-3 py-2 rounded-xl text-white font-semibold duration-150">Tambah Pengiriman</button>
                         @endif
                         </div>
                         
@@ -30,7 +30,7 @@
                                         <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
                                     </svg>
                                 </div>
-                                <input wire:model.debounce.200="keyword" class=" focus:ring-4 outline-none focus:outline-none ring-blue-300 rounded-full pl-7 py-1 duration-150" type="text" placeholder="Cari DO...">
+                                <input wire:model.debounce.200="keyword" class=" focus:ring-4 outline-none focus:outline-none ring-blue-300 rounded-full pl-7 py-1 duration-150" type="text" placeholder="Cari Pengiriman...">
                             </div>
                         </div>
                 </div>
@@ -41,9 +41,9 @@
                     <thead>
                         <tr>
                             <th class="w-1/12">No</th>
-                            <th class="w-1/6">Delivery Order</th>
-                            <th class="w-1/6">Witel</th>
-                            <th class="w-1/6">Tanggal Do</th>
+                            <th class="w-1/6">Pengiriman</th>
+                            <th class="w-1/6">Cabang</th>
+                            <th class="w-1/6">Tanggal Pengiriman</th>
                             @if (session('role') != 2)
                             <th class="w-1/5">Aksi</th>
                             @endif
@@ -58,7 +58,7 @@
                             <td>{{ ($value['tanggalPengiriman']) ? $value['tanggalPengiriman'] : '-' }}</td>
 
                             <td class="space-x-4 py-1 flex items-center justify-center">
-                            <a href="/pengiriman/{{ $value['id'] }}" class="focus:outline-none" title="Info Delivery Order">
+                            <a href="/pengiriman/{{ $value['id'] }}" class="focus:outline-none" title="Info Pengiriman">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="w-6 text-gray-500 hover:text-blue-500 py-1 duration-150 font-bold" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
@@ -111,15 +111,15 @@
                                 <span class="text-xl font-semibold capitalize">{{ $submitType }} Data</span>
                             </div>
                             <div class="mt-4 space-y-1 mx-10 font-semibold">
-                                <label for="no_pengiriman" class="cursor-default">Nomor Delivery Order</label>
+                                <label for="no_pengiriman" class="cursor-default">Nomor Pengiriman</label>
                                 <input wire:model.defer="no_pengiriman" id="no_pengiriman" class="inputBox"  type="text" required autocomplete="off">
-                                <p class="text-xs opacity-50 capitalize">*Berdasarkan DO terakhir + 1</p>
+                                <p class="text-xs opacity-50 capitalize">*Berdasarkan Pengiriman terakhir + 1</p>
                                 @error('no_pengiriman')
                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="mt-4 space-y-1 mx-10 font-semibold">
-                                <label for="tanggal" class="cursor-default">Tanggal Delivery Order</label>
+                                <label for="tanggal" class="cursor-default">Tanggal Pengiriman</label>
                                 <input wire:model.defer="tanggal" id="tanggal" class="inputBox" type="date" autocomplete="off">
                                 <p class="text-xs opacity-50 capitalize">*Kosongkan Jika hari ini</p>
                                 @error('tanggal')
@@ -127,7 +127,7 @@
                                 @enderror
                             </div>
 
-                            {{-- Witel --}}
+                            {{-- Cabang --}}
                             <div  x-data="{cabangSearch: false}"  class="mt-4 space-y-1 mx-10 font-semibold">
                                     <label for="cabang" class="cursor-default pt-2">Cabang</label>
                                     <div class="flex">
@@ -148,7 +148,7 @@
                                                     @forelse ($cabangResult as $value)
                                                         <button @click="cabangSearch = false" wire:click="chooseCabang({{ $value['id'] }})" class="w-full text-left p-1 hover:bg-black hover:bg-opacity-10 truncate" type="button"><li>{{  $value['kode_cabang'].' | '.$value['nama_cabang'] }}</li></button>
                                                     @empty
-                                                        <span class="text-sm font-normal"> Data Witel tidak ditemukan!</span>
+                                                        <span class="text-sm font-normal"> Data Cabang tidak ditemukan!</span>
                                                     @endforelse
                                                 @endif
                                             </ul>
@@ -158,7 +158,7 @@
                                     <input wire:model.defer="cabang" class="inputBox mt-3" type="text" disabled autocomplete="off">
                                     </div>
                             </div>
-                            {{-- End Witel --}}
+                            {{-- End Cabang --}}
 
                         </div>
                         <div class="border-t-2 border-gray-200 mt-5">

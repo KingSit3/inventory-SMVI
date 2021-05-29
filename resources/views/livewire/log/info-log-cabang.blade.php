@@ -3,7 +3,7 @@
         <div>
             {{-- Top Bar --}}
             <div class="text-2xl text-center font-bold  cursor-default">
-                <p class="{{ ($logCabang['deleted_at']) ? 'text-red-500' : 'text-blue-600' }}">Info Log Witel {{ $logCabang['nama_Witel'] }}</p>
+                <p class="{{ ($logData['deleted_at']) ? 'text-red-500' : 'text-blue-600' }}">Info Log Cabang {{ $logData['nama_cabang'] }}</p>
             </div>
            
             {{-- End Top Bar --}}
@@ -13,32 +13,32 @@
                     <div class="flex flex-col font-semibold">
                         <table>
                             <tr>
-                                <td class="pr-3">Nama Witel</td>
+                                <td class="pr-3">Nama Cabang</td>
                                 <td>:</td>
                                 <td>{{ $logData['nama_cabang'] }}</td>
                             </tr>
                             <tr>
-                                <td class="pr-3">Kode Witel</td>
+                                <td class="pr-3">Kode Cabang</td>
                                 <td>:</td>
                                 <td>{{ $logData['kode_cabang'] }}</td>
                             </tr>
                             <tr>
-                                <td class="pr-3">Regional Witel</td>
+                                <td class="pr-3">Regional Cabang</td>
                                 <td>:</td>
                                 <td>{{ $logData['regional'] }}</td>
                             </tr>
                             <tr>
-                                <td class="pr-3">Alamat Witel</td>
+                                <td class="pr-3">Alamat Cabang</td>
                                 <td>:</td>
                                 <td>{{ $logData['alamat_cabang'] }}</td>
                             </tr>
                             <tr>
                                 <td class="pr-3">PIC</td>
                                 <td>:</td>
-                                <td>{{ $dataPic['name'] }}</td>
+                                <td>{{ ($dataPic['name']) ? $dataPic['name'] : '-' }}</td>
                             </tr>
                             <tr>
-                                <td class="pr-3">Status Witel</td>
+                                <td class="pr-3">Status Cabang</td>
                                 <td>:</td>
                                 <td class="font-semibold capitalize rounded-lg {{ ($logData['deleted_at']) ? 'text-red-500' : 'text-blue-500' }}">{{ ($logData['deleted_at']) ? 'Terhapus' : 'Aktif' }}</td>
                             </tr>
@@ -52,7 +52,7 @@
                     <thead>
                         <tr>
                             <th class="w-1/12">No</th>
-                            <th class="w-1/6">Nama Witel</th>
+                            <th class="w-1/6">Nama Cabang</th>
                             <th class="w-1/6">Perubahan</th>
                             <th class="w-1/6">Oleh</th>
                             <th class="w-1/6">Tanggal Log</th>
@@ -69,7 +69,7 @@
                             <td>{{ $value['tanggal'] }}</td>
 
                             <td class="space-x-4 py-1 flex items-center justify-center">
-                                <button @click="detailLog = true" wire:click="$emit('detailWitel', {{ $value['id'] }})" class="focus:outline-none" title="Info">
+                                <button @click="detailLog = true" wire:click="$emit('detailCabang', {{ $value['id'] }})" class="focus:outline-none" title="Info">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="w-6 text-gray-500 hover:text-blue-500 py-1 duration-150 font-bold" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>

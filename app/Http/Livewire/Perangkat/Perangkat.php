@@ -71,7 +71,7 @@ class Perangkat extends Component
                             ->where('sn_pengganti', 'like', $keyword)
                             ->paginate(10),
         ];
-        
+
         return view('livewire.perangkat.perangkat', $data)
         ->extends('layouts.app');
     }
@@ -349,7 +349,6 @@ class Perangkat extends Component
             $this->kodePengiriman = $dbPengiriman['no_pengiriman'];
         }
 
-        // $this->dbTipePerangkat = tipePerangkat::where('id', $this->dbPerangkat['id_tipe'])->withTrashed()->first();
         $this->oldSnLama = $this->dbPerangkat['sn_lama'];
         $this->oldSnPengganti = $this->dbPerangkat['sn_pengganti'];
         $this->oldSnMonitor = $this->dbPerangkat['sn_monitor'];

@@ -1,9 +1,9 @@
-<div>
+    <div>
     <div x-data="{detailLog: false}" class="px-7 py-3 flex flex-col justify-between h-screen">
         <div>
             {{-- Top Bar --}}
             <div class="text-2xl text-center font-bold  cursor-default">
-                <p class="{{ ($logTipeSistem['deleted_at']) ? 'text-red-500' : 'text-blue-600' }}">Info Log Sistem {{ $logTipeSistem['kode_sistem'] }}</p>
+                <p class="{{ ($logData['deleted_at']) ? 'text-red-500' : 'text-blue-600' }}">Info Log Sistem {{ $logData['kode_sistem'] }}</p>
             </div>
            
             {{-- End Top Bar --}}

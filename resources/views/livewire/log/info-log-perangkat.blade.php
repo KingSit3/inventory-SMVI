@@ -3,7 +3,7 @@
         <div>
             {{-- Top Bar --}}
             <div class="text-2xl text-center font-bold  cursor-default">
-                <p class="{{ ($logPerangkat['deleted_at']) ? 'text-red-500' : 'text-blue-600' }}">Info Log Perangkat {{ $logPerangkat['sn_pengganti'] }}</p>
+                <p class="{{ ($logData['deleted_at']) ? 'text-red-500' : 'text-blue-600' }}">Info Log Perangkat {{ $logData['sn_pengganti'] }}</p>
             </div>
            
             {{-- End Top Bar --}}

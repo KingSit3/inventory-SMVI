@@ -15,7 +15,7 @@
                     <span class="text-xl font-semibold capitalize">Detail Log {{ $dataLog['cabang']['nama_cabang'] }}</span>
                 </div>
                 <div class="text-center my-2">
-                    <span class="text-xl font-semibold capitalize">Status DO:</span>
+                    <span class="text-xl font-semibold capitalize">Status Cabang:</span>
                     <span class="font-semibold capitalize p-2 text-white rounded-lg {{ ($dataLog['cabang']['deleted_at']) ? 'text-red-500' : 'text-blue-600' }}">{{ ($dataLog['cabang']['deleted_at']) ? 'Terhapus' : 'Aktif' }}</span>
                 </div>
                 {{-- Table Content --}}
@@ -88,7 +88,7 @@
                     <span class="text-xl font-semibold capitalize">Detail Log {{ $dataLog['cabang']['no_do'] }}</span>
                 </div>
                 <div class="text-center my-2">
-                    <span class="text-xl font-semibold capitalize">Status DO:</span>
+                    <span class="text-xl font-semibold capitalize">Status Cabang:</span>
                     <span class="font-semibold capitalize p-2 text-white rounded-lg {{ ($dataLog['cabang']['deleted_at']) ? 'text-red-500' : 'text-blue-600' }}">{{ ($dataLog['cabang']['deleted_at']) ? 'Terhapus' : 'Aktif' }}</span>
                 </div>
                 {{-- Table Content --}}
@@ -190,7 +190,7 @@
                     <span class="text-xl font-semibold capitalize">Detail Log {{ $dataLog['cabang']['no_do'] }}</span>
                 </div>
                 <div class="text-center my-2">
-                    <span class="text-xl font-semibold capitalize">Status DO:</span>
+                    <span class="text-xl font-semibold capitalize">Status Cabang:</span>
                     <span class="font-semibold capitalize p-2 text-white rounded-lg {{ ($dataLog['cabang']['deleted_at']) ? 'text-red-500' : 'text-blue-600' }}">{{ ($dataLog['cabang']['deleted_at']) ? 'Terhapus' : 'Aktif' }}</span>
                 </div>
                 {{-- Table Content --}}
@@ -264,7 +264,7 @@
                     <span class="text-xl font-semibold capitalize">Detail Log {{ $dataLog['cabang']['no_do'] }}</span>
                 </div>
                 <div class="text-center my-2">
-                    <span class="text-xl font-semibold capitalize">Status DO:</span>
+                    <span class="text-xl font-semibold capitalize">Status Cabang:</span>
                     <span class="font-semibold capitalize p-2 text-white rounded-lg {{ ($dataLog['cabang']['deleted_at']) ? 'text-red-500' : 'text-blue-600' }}">{{ ($dataLog['cabang']['deleted_at']) ? 'Terhapus' : 'Aktif' }}</span>
                 </div>
                 {{-- Table Content --}}

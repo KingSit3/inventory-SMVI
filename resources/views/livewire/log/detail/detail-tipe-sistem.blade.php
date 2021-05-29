@@ -64,7 +64,7 @@
     <div class="mx-2 -mt-28">
         <div class="px-6 py-6">
             <div class="text-center">
-                <span class="text-xl font-semibold capitalize">Detail Log Image {{ $dataLog['tipesistem']['kode_sistem'] }}</span>
+                <span class="text-xl font-semibold capitalize">Detail Log Sistem {{ $dataLog['tipesistem']['kode_sistem'] }}</span>
             </div>
             <div class="text-center my-2">
                 <span class="text-xl font-semibold capitalize">Status Sistem:</span>
@@ -122,7 +122,7 @@
     <div class="mx-2 -mt-28">
         <div class="px-6 py-6">
             <div class="text-center">
-                <span class="text-xl font-semibold capitalize">Detail Log Image {{ $dataLog['tipesistem']['kode_sistem'] }}</span>
+                <span class="text-xl font-semibold capitalize">Detail Log Sistem {{ $dataLog['tipesistem']['kode_sistem'] }}</span>
             </div>
             <div class="text-center my-2">
                 <span class="text-xl font-semibold capitalize">Status Sistem:</span>
@@ -173,7 +173,7 @@
     <div class="mx-2 -mt-28">
         <div class="px-6 py-6">
             <div class="text-center">
-                <span class="text-xl font-semibold capitalize">Detail Log Image {{ $dataLog['tipesistem']['kode_sistem'] }}</span>
+                <span class="text-xl font-semibold capitalize">Detail Log Sistem {{ $dataLog['tipesistem']['kode_sistem'] }}</span>
             </div>
             <div class="text-center my-2">
                 <span class="text-xl font-semibold capitalize">Status Sistem:</span>
