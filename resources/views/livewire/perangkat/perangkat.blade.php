@@ -124,7 +124,7 @@
                                 <div class="flex justify-between space-x-5">
                                     <div class="w-1/2">
                                         <label for="sn_lama" class="cursor-default">Serial Number lama</label>
-                                        <input wire:model.defer="sn_lama" class="inputBox" id="sn_lama" type="text" autocomplete="off">
+                                        <input wire:model="sn_lama" class="inputBox" id="sn_lama" type="text" autocomplete="off">
                                         <p class="text-xs text-gray-500">*Kosongkan jika tidak ada</p>
                                         @error('sn_lama')
                                             <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
@@ -142,7 +142,7 @@
                                     </div>
                                     <div class="w-1/2">
                                         <label for="sn_monitor" class="cursor-default">Serial Number Monitor</label>
-                                        <input wire:model.defer="sn_monitor" class="inputBox" id="sn_monitor" type="text" autocomplete="off">
+                                        <input wire:model="sn_monitor" class="inputBox" id="sn_monitor" type="text" autocomplete="off">
                                         @error('sn_monitor')
                                             <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                         @enderror

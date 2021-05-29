@@ -17,7 +17,7 @@ class CreateCabangTable extends Migration
             $table->id();
             $table->string('nama_cabang', 50);
             $table->string('kode_cabang', 50)->unique();
-            $table->unsignedBigInteger('regional');
+            $table->unsignedSmallInteger('regional');
             $table->string('alamat_cabang');
             $table->unsignedBigInteger('id_pic')->unique();
             $table->softDeletes();

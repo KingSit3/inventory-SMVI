@@ -64,7 +64,7 @@ class PengirimanInfo extends Component
 
       if ($this->dataPerangkat['id_pengiriman'] != null) {
         $this->resetData();
-        return $this->addError('cariSn', 'perangkat ada di DO lain');
+        return $this->addError('cariSn', 'perangkat ada di Pengiriman lain');
       }
 
       $this->sn = $this->dataPerangkat['sn_pengganti'];
@@ -90,6 +90,6 @@ class PengirimanInfo extends Component
     public function resetData() 
     {
       $this->resetValidation();
-      $this->reset('cariSn', 'sn', 'tipe', 'cabang', 'sistem');
+      $this->reset();
     }
 }

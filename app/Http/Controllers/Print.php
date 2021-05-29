@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Perangkat;
+use App\Models\ModelPerangkat;
 use PDF;
 
 class PrintPengiriman extends Controller
 {
     public function index($id) 
     {
-        $data = collect(Perangkat::with(['users', 'witel', 'TipePerangkat'])->where('id_do', $id)->get());
+        $data = collect(modelPerangkat::with(['users', 'cabang', 'TipePerangkat'])->where('id_do', $id)->get());
         $totalPerangkat = $data->count();
         // $namaPerangkat = $data['tipePerangkat'];
         $dataPerangkat = $data->chunk(3);

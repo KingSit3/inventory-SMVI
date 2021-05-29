@@ -56,7 +56,7 @@ class Users extends Component
 
         User::create([
             'nama' => $this->nama,
-            'nik' => $this->nik,
+            'nik' => (trim($this->nik) == '') ? null : $this->nik,
             'no_telp' => $this->no_telp,
         ]);
 
@@ -136,7 +136,7 @@ class Users extends Component
         // Pakai fitur Try Catch Untuk mengatasi eror unique
         try {
             User::where('id', $this->userId)->update([
-                'nik' => $this->nik,
+                'nik' => (trim($this->nik) == '') ? null : $this->nik,
                 'nama' => $this->nama,
                 'no_telp' => $this->no_telp,
             ]);

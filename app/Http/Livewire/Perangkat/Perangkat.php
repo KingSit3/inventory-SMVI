@@ -21,7 +21,7 @@ class Perangkat extends Component
     public $tipePerangkat, $sn_lama, $sn_pengganti, 
     $sn_monitor, $sistemPerangkat, $cekStatus, $perolehan, 
     $gelombang, $ket, $oldSnLama, $oldSnPengganti, 
-    $oldSnMonitor, $dataLama;
+    $oldSnMonitor, $dataLama = null;
     public $dbPerangkat, $perangkatId, $dbCabang, $dbUser;
     public $namaUser, $nikUser, $telpUser, $userSearch, $userId;
     public $cabang, $cabangSearch, $cabangId;
@@ -38,6 +38,7 @@ class Perangkat extends Component
 
     public function render()
     {
+
         $keyword = '%'.$this->keyword.'%';
 
         $hasilUser = '';
@@ -97,13 +98,11 @@ class Perangkat extends Component
             'nikUser' => $nikValidate,
             'sistemPerangkat' => 'required',
         ]);
-        if ($this->sn_lama == null) {
-            $this->sn_lama = null;
-        }
 
         if ($this->pengirimanData == null) {
             $this->pengirimanData = ['id' => null, 'no_pengiriman' => null];
         }
+        
         if ($this->cabangData == null) {
             $this->cabangData = ['id' => null, 'nama_cabang' => null];
         }
@@ -112,9 +111,9 @@ class Perangkat extends Component
         }
 
         if ($this->sistemPerangkat) {
-            $dataImage = ModelTipeSistem::where('id', $this->sistemPerangkat)->first();
+            $dataSistem = ModelTipeSistem::where('id', $this->sistemPerangkat)->first();
         } else {
-            $dataImage = ['id' => null, 'kode_sistem' => null];
+            $dataSistem = ['id' => null, 'kode_sistem' => null];
         }
 
         if ($this->tipePerangkat) {
@@ -123,26 +122,25 @@ class Perangkat extends Component
             $dataTipe = ['id' => null, 'kode_perangkat' => null];
         }
         
-
         if ($this->addUser == true) {
             // Jika tambah user
             try {
-                User::create([
+                $saveUser = User::create([
                 'nama' => $this->namaUser,
-                'nik' => $this->nikUser,
+                'nik' => (trim($this->nikUser) == '') ? null : $this->nikUser,
                 'no_telp' => $this->telpUser,
                 ]);
 
                 // Ambil id user terakhir
-                $getLastUser = User::latest()->first();
-                $this->userId = $getLastUser['id'];
+                $this->userId = $saveUser->id;
+                $getLastUser = User::where('id', $saveUser->id)->first();
 
                 ModelsPerangkat::create([
-                    'sn_lama' => $this->sn_lama,
-                    'id_tipe' => $this->tipePerangkat,
+                    'sn_lama' => (trim($this->sn_lama) == '') ? null : strtoupper($this->sn_lama),
                     'sn_pengganti' => $this->sn_pengganti,
-                    'sn_monitor' => $this->sn_monitor,
+                    'sn_monitor' => (trim($this->sn_monitor) == '') ? null : strtoupper($this->sn_monitor),
                     'id_user' => $this->userId,
+                    'id_tipe' => $this->tipePerangkat,
                     'id_sistem' => $this->sistemPerangkat,
                     'id_cabang' => $this->cabangId,
                     'id_pengiriman' => $this->pengirimanId,
@@ -169,8 +167,8 @@ class Perangkat extends Component
                                                         'tipe' => $dataTipe['kode_perangkat'],
                                                         'id_user' => $this->userData['id'],
                                                         'user' => $this->userData['nama'],
-                                                        'id_sistem' => $dataImage['id'],
-                                                        'sistem' => $dataImage['kode_sistem'],
+                                                        'id_sistem' => $dataSistem['id'],
+                                                        'sistem' => $dataSistem['kode_sistem'],
                                                         'id_cabang' => $this->cabangData['id'],
                                                         'cabang' => $this->cabangData['nama_cabang'],
                                                         'id_pengiriman' => $this->pengirimanData['id'],
@@ -206,10 +204,10 @@ class Perangkat extends Component
         } else {
             try {
                 ModelsPerangkat::create([
-                    'sn_lama' => $this->sn_lama,
-                    'id_tipe' => $this->tipePerangkat,
+                    'sn_lama' => (trim($this->sn_lama) == '') ? null : strtoupper($this->sn_lama),
                     'sn_pengganti' => $this->sn_pengganti,
-                    'sn_monitor' => $this->sn_monitor,
+                    'sn_monitor' => (trim($this->sn_monitor) == '') ? null : strtoupper($this->sn_monitor),
+                    'id_tipe' => $this->tipePerangkat,
                     'id_user' => $this->userId,
                     'id_sistem' => $this->sistemPerangkat,
                     'id_cabang' => $this->cabangId,
@@ -236,8 +234,8 @@ class Perangkat extends Component
                                                         'tipe' => $dataTipe['kode_perangkat'],
                                                         'id_user' => $this->userData['id'],
                                                         'user' => $this->userData['nama'],
-                                                        'id_sistem' => $dataImage['id'],
-                                                        'sistem' => $dataImage['kode_sistem'],
+                                                        'id_sistem' => $dataSistem['id'],
+                                                        'sistem' => $dataSistem['kode_sistem'],
                                                         'id_cabang' => $this->cabangData['id'],
                                                         'cabang' => $this->cabangData['nama_cabang'],
                                                         'id_pengiriman' => $this->pengirimanData['id'],
@@ -250,7 +248,7 @@ class Perangkat extends Component
                                 ],
                 ]);
             }catch (\Exception $ex) {
-                throw $ex;
+                // throw $ex;
                 return $this->addError('sn_lama', 'Sn Sudah ada');
             }
         }
@@ -287,7 +285,7 @@ class Perangkat extends Component
             $getDataCabang = ['id' => null, 'nama_cabang' => null];
         }
 
-        // Get DO
+        // Get Pengiriman
         if ($getDataPerangkat['id_pengiriman']) {
             $getDataPengiriman = ModelPengiriman::where('id', $getDataPerangkat['id_pengiriman'])->withTrashed()->first();
         } else {
@@ -347,9 +345,9 @@ class Perangkat extends Component
 
         if ($this->dbPerangkat['id_pengiriman'] != null) {
 
-            $dbDo = ModelPengiriman::where('id', $this->dbPerangkat['id_pengiriman'])->withTrashed()->first();
+            $dbPengiriman = ModelPengiriman::where('id', $this->dbPerangkat['id_pengiriman'])->withTrashed()->first();
             $this->pengirimanId = $this->dbPerangkat['id_pengiriman'];
-            $this->kodePengiriman = $dbDo['no_pengiriman'];
+            $this->kodePengiriman = $dbPengiriman['no_pengiriman'];
         }
 
         // $this->dbTipePerangkat = tipePerangkat::where('id', $this->dbPerangkat['id_tipe'])->withTrashed()->first();
@@ -370,7 +368,7 @@ class Perangkat extends Component
 
         // untuk Log
         $getDataTipe = tipePerangkat::where('id', $this->dbPerangkat['id_tipe'])->withTrashed()->first();
-        $getDataImage = ModelTipeSistem::where('id', $this->dbPerangkat['id_sistem'])->withTrashed()->first();
+        $getDataSistem = ModelTipeSistem::where('id', $this->dbPerangkat['id_sistem'])->withTrashed()->first();
 
         // get User
         if ($this->dbPerangkat['id_user']) {
@@ -386,7 +384,7 @@ class Perangkat extends Component
             $getDataCabang = ['id' => null, 'nama_cabang' => null];
         }
 
-        // Get DO
+        // Get Pengiriman
         if ($this->dbPerangkat['id_pengiriman']) {
             $getDataPengiriman = ModelPengiriman::where('id', $this->dbPerangkat['id_pengiriman'])->withTrashed()->first();
         } else {
@@ -402,7 +400,7 @@ class Perangkat extends Component
             'id_user' => $this->dbPerangkat['id_user'],
             'user' => $getDataUser['nama'],
             'id_sistem' => $this->dbPerangkat['id_sistem'],
-            'sistem' => $getDataImage['kode_sistem'],
+            'sistem' => $getDataSistem['kode_sistem'],
             'id_cabang' => $this->dbPerangkat['id_cabang'],
             'cabang' => $getDataCabang['nama_cabang'],
             'id_pengiriman' => $this->dbPerangkat['id_pengiriman'],
@@ -432,7 +430,7 @@ class Perangkat extends Component
         ]);
 
         $getDataTipe = tipePerangkat::where('id', $this->tipePerangkat)->withTrashed()->first();
-        $getDataImage = ModelTipeSistem::where('id', $this->sistemPerangkat)->withTrashed()->first();
+        $getDataSistem = ModelTipeSistem::where('id', $this->sistemPerangkat)->withTrashed()->first();
 
         // Get Cabang
         if ($this->cabangId) {
@@ -448,7 +446,7 @@ class Perangkat extends Component
             $getDataUser = ['id' => null, 'nama' => null];
         }
 
-        // Get DO
+        // Get pengiriman
         if ($this->pengirimanId) {
             $getDataPengiriman = ModelPengiriman::where('id', $this->pengirimanId)->withTrashed()->first();
         } else {
@@ -458,15 +456,15 @@ class Perangkat extends Component
         if ($this->addUser == true) {
             // Jika tambah user
             try {
-                User::create([
+                $saveUser = User::create([
                 'nama' => $this->namaUser,
-                'nik' => $this->nikUser,
+                'nik' => (trim($this->nikUser) == '') ? null : $this->nikUser,
                 'no_telp' => $this->telpUser,
                 ]);
 
                 // Ambil id user terakhir
-                $getLastUser = User::get()->last();
-                $this->userId = $getLastUser['id'];
+                $this->userId = $saveUser->id;
+                $getLastUser = User::where('id', $saveUser->id)->first();
 
                 // get User
                 if ($this->userId) {
@@ -476,10 +474,10 @@ class Perangkat extends Component
                 }
 
                 ModelsPerangkat::where('id', $this->perangkatId)->update([
-                    'sn_lama' => $this->sn_lama,
-                    'id_tipe' => $this->tipePerangkat,
+                    'sn_lama' => (trim($this->sn_lama) == '') ? null : strtoupper($this->sn_lama),
                     'sn_pengganti' => $this->sn_pengganti,
-                    'sn_monitor' => $this->sn_monitor,
+                    'sn_monitor' => (trim($this->sn_monitor) == '') ? null : strtoupper($this->sn_monitor),
+                    'id_tipe' => $this->tipePerangkat,
                     'id_user' => $this->userId,
                     'id_sistem' => $this->sistemPerangkat,
                     'id_cabang' => $this->cabangId,
@@ -523,8 +521,8 @@ class Perangkat extends Component
                                                         'tipe' => $getDataTipe['kode_perangkat'],
                                                         'id_user' => $getDataUser['id'],
                                                         'user' => $getDataUser['nama'],
-                                                        'id_sistem' => $getDataImage['id'],
-                                                        'sistem' => $getDataImage['kode_sistem'],
+                                                        'id_sistem' => $getDataSistem['id'],
+                                                        'sistem' => $getDataSistem['kode_sistem'],
                                                         'id_cabang' => $getDataCabang['id'],
                                                         'cabang' => $getDataCabang['nama_cabang'],
                                                         'id_pengiriman' => $getDataPengiriman['id'],
@@ -559,10 +557,10 @@ class Perangkat extends Component
         } else {
             try {
                 ModelsPerangkat::where('id', $this->perangkatId)->update([
-                    'sn_lama' => $this->sn_lama,
-                    'id_tipe' => $this->tipePerangkat,
+                    'sn_lama' => (trim($this->sn_lama) == '') ? null : strtoupper($this->sn_lama),
                     'sn_pengganti' => $this->sn_pengganti,
-                    'sn_monitor' => $this->sn_monitor,
+                    'sn_monitor' => (trim($this->sn_monitor) == '') ? null : strtoupper($this->sn_monitor),
+                    'id_tipe' => $this->tipePerangkat,
                     'id_user' => $this->userId,
                     'id_sistem' => $this->sistemPerangkat,
                     'id_cabang' => $this->cabangId,
@@ -606,8 +604,8 @@ class Perangkat extends Component
                                                         'tipe' => $getDataTipe['kode_perangkat'],
                                                         'id_user' => $getDataUser['id'],
                                                         'user' => $getDataUser['nama'],
-                                                        'id_sistem' => $getDataImage['id'],
-                                                        'sistem' => $getDataImage['kode_sistem'],
+                                                        'id_sistem' => $getDataSistem['id'],
+                                                        'sistem' => $getDataSistem['kode_sistem'],
                                                         'id_cabang' => $getDataCabang['id'],
                                                         'cabang' => $getDataCabang['nama_cabang'],
                                                         'id_pengiriman' => $getDataPengiriman['id'],
@@ -620,8 +618,7 @@ class Perangkat extends Component
                                 ],
                 ]);
             }catch (\Exception $ex) {
-                throw $ex;
-                // return $this->addError('sn_lama', 'Sn Sudah ada');
+                return $this->addError('sn_lama', 'Sn Sudah ada');
             }
         }
 
@@ -673,7 +670,6 @@ class Perangkat extends Component
         // Reset Validasi
         $this->resetValidation();
         // Reset input field
-        // $this->reset('submitType', 'tipePerangkat', 'userSearch', 'cabangSearch', 'pengirimanSearch', 'sn_lama', 'sn_pengganti', 'sn_monitor', 'sistemPerangkat', 'cabang', 'cabangId', 'kodePengiriman', 'gelombang', 'cekStatus', 'perolehan', 'ket', 'namaUser', 'nikUser', 'telpUser', 'pengirimanId');
         $this->reset();
     }
 

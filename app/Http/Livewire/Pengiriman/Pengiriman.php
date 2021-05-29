@@ -72,7 +72,7 @@ class Pengiriman extends Component
                 'tanggal_pengiriman' => $this->tanggal,
             ]);
 
-            // get Id Do
+            // get Id Pengiriman
             $idpengiriman = ModelPengiriman::latest()->first();
             // // Get Cabang Data
             $cabangData = ModelCabang::where('id', $this->cabangId)->first();
@@ -104,7 +104,7 @@ class Pengiriman extends Component
         $this->isOpen = false;
 
         // Panggil SweetAlert berhasil
-        $this->emit('success', 'Data DO Berhasil Ditambahkan');
+        $this->emit('success', 'Data pengiriman Berhasil Ditambahkan');
         
     }
 
@@ -130,7 +130,7 @@ class Pengiriman extends Component
             $this->tanggal = Carbon::now();
         } 
 
-        $oldDataDo = ModelPengiriman::where('id', $this->pengirimanId)->first();
+        $oldDataPengiriman = ModelPengiriman::where('id', $this->pengirimanId)->first();
         $this->validate([
             'no_pengiriman' => [Rule::unique('pengiriman', 'no_pengiriman')->ignore($this->no_pengiriman, 'no_pengiriman')],
             'cabang' => 'required'
@@ -151,10 +151,10 @@ class Pengiriman extends Component
                     'browser' => $_SERVER['HTTP_USER_AGENT'],
                     'edited_by' => session('nama'),
                     'data_lama' =>  [
-                                'no_pengiriman' => $oldDataDo['no_pengiriman'],
+                                'no_pengiriman' => $oldDataPengiriman['no_pengiriman'],
                                 'id_cabang' => $this->oldDataCabang['id'],
                                 'nama_cabang' => $this->oldDataCabang['nama_cabang'],
-                                'tanggal_pengiriman' => $oldDataDo['tanggal_pengiriman'],
+                                'tanggal_pengiriman' => $oldDataPengiriman['tanggal_pengiriman'],
                     ],
                     'data_baru' =>  [
                                         'no_pengiriman' => $this->no_pengiriman,
@@ -176,7 +176,7 @@ class Pengiriman extends Component
         $this->isOpen = false;
 
         // Panggil SweetAlert berhasil
-        $this->emit('success', 'Data DO Berhasil diubah');
+        $this->emit('success', 'Data pengiriman Berhasil diubah');
     }
 
     public function delete($id)

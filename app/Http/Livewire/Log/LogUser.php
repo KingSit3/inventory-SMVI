@@ -16,7 +16,7 @@ class LogUser extends Component
         $keyword = '%'.$this->keyword.'%';
 
         $data = [
-            'logUser' => ModelLogUser::with('User')->whereHas('us er', function($query) use ($keyword){
+            'logUser' => ModelLogUser::with('User')->whereHas('user', function($query) use ($keyword){
                 // Jalankan query search seperti biasa
                 $query->where('nama', 'like', $keyword);
             })

@@ -68,16 +68,15 @@ class Cabang extends Component
       if ($this->addNewPic == true) {
 
         try {
-
-          ModelUser::create([
+          $saveUser = ModelUser::create([
             'nama' => $this->picName,
-            'nik' => $this->picNik,
+            'nik' => (trim($this->picNik) == '') ? null : $this->picNik,
             'no_telp' => $this->no_telp,
           ]);
 
           // Ambil id user terakhir
-          $getLastUser = ModelUser::latest()->first();
-          $this->picId = $getLastUser['id'];
+          $this->picId = $saveUser->id;
+          $getLastUser = ModelUser::where('id', $saveUser->id)->first();
   
           ModelCabang::create([
             'nama_cabang' => $this->nama,
@@ -157,7 +156,7 @@ class Cabang extends Component
           ]);
 
         } catch (\Exception $ex) {
-          return $this->addError('picName', 'PIC Sudah ada di Witel lain');
+          return $this->addError('picName', 'PIC Sudah ada di Cabang lain');
         }
       }
 
@@ -169,7 +168,7 @@ class Cabang extends Component
       $this->addNewPic = false;
 
       // Panggil SweetAlert berhasil
-      $this->emit('success', 'Data Witel Berhasil Ditambahkan');
+      $this->emit('success', 'Data Cabang Berhasil Ditambahkan');
 
     }
 
@@ -212,15 +211,15 @@ class Cabang extends Component
         // Tambah data user + Cabang
 
         try {
-          ModelUser::create([
+          $saveUser = ModelUser::create([
             'nama' => $this->picName,
-            'nik' => $this->picNik,
+            'nik' => (trim($this->picNik) == '') ? null : $this->picNik,
             'no_telp' => $this->no_telp,
           ]);
 
           // Ambil id user terakhir
-          $getLastUser = ModelUser::get()->last();
-          $this->picId = $getLastUser['id'];
+          $this->picId = $saveUser->id;
+          $getLastUser = ModelUser::where('id', $saveUser->id)->first();
   
           ModelCabang::where('id', $this->idCabang)->update([
             'nama_cabang' => $this->nama,
@@ -311,7 +310,7 @@ class Cabang extends Component
         ]);
             
         } catch (\Exception $ex) {
-          return $this->addError('kode', 'Kode Witel Sudah ada');
+          return $this->addError('kode', 'Kode Cabang Sudah ada');
         }
       }
 
@@ -323,7 +322,7 @@ class Cabang extends Component
       $this->addNewPic = false;
 
       // Panggil SweetAlert berhasil
-      $this->emit('success', 'Data Witel Berhasil Ditambahkan');
+      $this->emit('success', 'Data Cabang Berhasil Ditambahkan');
 
     }
 

@@ -27,7 +27,7 @@ class InfoTipe extends Component
     {
         $keyword = '%'.$this->keyword.'%';
 
-        $dataPerangkat = Perangkat::with(['users', 'cabang', 'TipePerangkat', 'pengiriman'])
+        $dataPerangkat = Perangkat::with(['user', 'cabang', 'TipePerangkat', 'pengiriman'])
                                     ->where('id_tipe', $this->tipeData['id'])
                                     ->where('sn_pengganti', 'like', $keyword)
                                     ->orderBy('updated_at', 'DESC')->paginate(10);
