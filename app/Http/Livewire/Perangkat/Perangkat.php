@@ -76,7 +76,6 @@ class Perangkat extends Component
         ->extends('layouts.app');
     }
    
-
     public function add() 
     {
         $this->submitType = 'tambah';
@@ -197,7 +196,7 @@ class Perangkat extends Component
                     ]);
 
             } catch (\Exception $ex) {
-                throw $ex;
+                // throw $ex;
                 return $this->addError('nikUser', 'Nik Sudah terdaftar');
             }
             

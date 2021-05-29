@@ -26,7 +26,6 @@ class InfoLogTipe extends Component
                                         ->orderBy('created_at', 'DESC')
                                         ->paginate(7),
                 ];
-        // dd($data['logImage']);
 
         return view('livewire.log.info-log-tipe', $data)
         ->extends('layouts.app');

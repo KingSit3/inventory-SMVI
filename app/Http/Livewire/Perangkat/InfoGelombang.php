@@ -36,7 +36,6 @@ class Infogelombang extends Component
         $data = [
             'perangkat' => $dataPerangkat,
             'totalPerangkat' => Perangkat::where('gelombang', $this->gelombang)->count(),
-                            
         ];
 
         return view('livewire.perangkat.info-gelombang', $data)

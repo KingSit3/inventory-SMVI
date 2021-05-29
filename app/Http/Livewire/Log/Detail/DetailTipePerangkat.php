@@ -12,14 +12,12 @@ class DetailTipePerangkat extends Component
 
     public function render()
     {
-        return view('livewire.log.detail.detail-tipe-perangkat')
-        ->extends('layouts.app');
+        return view('livewire.log.detail.detail-tipe-perangkat');
     }
 
     public function detailLog($id) 
     {
         $this->dataLog = LogTipePerangkat::with(['tipePerangkat'])->where('id', $id)->first();
-        // dd($this->dataLog['data_log']);
     }
 
     public function resetData() 

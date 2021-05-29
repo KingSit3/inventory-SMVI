@@ -12,7 +12,8 @@ class DetailCabang extends Component
 
     public function render()
     {
-        return view('livewire.log.detail.detail-cabang');
+        return view('livewire.log.detail.detail-cabang')
+        ;
     }
 
     public function detailLog($id) 

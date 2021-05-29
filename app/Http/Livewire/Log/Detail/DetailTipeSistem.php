@@ -13,8 +13,7 @@ class DetailTipeSistem extends Component
 
     public function render()
     {
-        return view('livewire.log.detail.detail-tipe-sistem')
-        ->extends('layouts.app');
+        return view('livewire.log.detail.detail-tipe-sistem');
     }
 
     public function detailLog($id) 

@@ -117,7 +117,6 @@ class TipeSistem extends Component
             ]
         );
 
-
         // Pakai fitur Try Catch Untuk mengatasi eror unique
         try {
             ModelTipeSistem::where('id', $this->tipeSistemId)->update([

@@ -24,7 +24,6 @@ class DeletedTipe extends Component
         $data = [
             'tipe_perangkat' => tipePerangkat::onlyTrashed()
                                 ->where('kode_perangkat', 'like', $keyword)
-                                // ->orWhere('nama_perangkat', 'like', $keyword)
                                 ->orderBy('deleted_at', 'DESC')
                                 ->paginate(10),
         ];
