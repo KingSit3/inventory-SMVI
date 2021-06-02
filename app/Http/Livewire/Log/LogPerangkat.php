@@ -16,7 +16,7 @@ class LogPerangkat extends Component
         $keyword = '%'.$this->keyword.'%';
 
         $data = [
-            'logPerangkat' => ModelLogPerangkat::whereHas('Perangkat', function($query) use ($keyword){
+            'logPerangkat' => ModelLogPerangkat::with('Perangkat')->whereHas('Perangkat', function($query) use ($keyword){
                 // Jalankan query search seperti biasa
                 $query->where('sn_pengganti', 'like', $keyword);
             })

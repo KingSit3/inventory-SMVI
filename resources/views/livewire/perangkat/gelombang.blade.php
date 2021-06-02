@@ -4,7 +4,7 @@
         <div>
             {{-- Top Bar --}}
             <div class="text-2xl text-center font-bold text-indigo-600 cursor-default">
-                <p>SP Menu</p>
+                <p>Gelombang Menu</p>
             </div>
             {{-- End Top Bar --}}
 
@@ -13,7 +13,7 @@
                     {{-- Tambah Button --}}
                         <div>
                         @if (session('role') != 2)
-                            <button wire:click="$emit('tambah')" class="bg-blue-500 hover:shadow-md hover:bg-blue-700 px-3 py-2 rounded-xl text-white font-semibold duration-150">Tambah SP</button>
+                            <button wire:click="$emit('tambah')" class="bg-blue-500 hover:shadow-md hover:bg-blue-700 px-3 py-2 rounded-xl text-white font-semibold duration-150">Tambah Gelombang</button>
                         @endif
                         </div>
                 </div>
@@ -24,7 +24,7 @@
                     <thead>
                         <tr>
                             <th class="w-1/12">No</th>
-                            <th class="w-1/6">SP</th>
+                            <th class="w-1/6">Gelombang</th>
                             @if (session('role') != 2)
                             <th class="w-1/5">Aksi</th>
                             @endif
@@ -70,7 +70,7 @@
                 @this.on('tambah', id => {
                     // Jalankan sweet alert
                     Swal.fire({
-                    title: 'Yakin Mau nambah SP?',
+                    title: 'Yakin Mau nambah Gelombang?',
                     // text: "User ".name." akan dihapus",
                     icon: 'warning',
                     showCancelButton: true,
@@ -85,7 +85,7 @@
                         // Pesan berhasil
                         Swal.fire(
                         'Berhasil!',
-                        'Data SP berhasil ditambah',
+                        'Data Gelombang berhasil ditambah',
                         'success'
                         )
                     }

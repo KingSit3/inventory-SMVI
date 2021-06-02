@@ -36,7 +36,7 @@ class DeletedCabang extends Component
 
     public function restore($id) 
     {
-        $cabangQuery = ModelCabang::where('id', $id)->withTrashed()->first();
+        $cabangQuery = ModelCabang::where('id', $id)->onlyTrashed()->first();
         $cabangQuery->restore();
 
         $dataUser  = User::where('id', $cabangQuery['id_pic'])->withTrashed()->first();

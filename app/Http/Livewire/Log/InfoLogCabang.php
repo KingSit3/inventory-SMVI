@@ -18,7 +18,9 @@ class InfoLogCabang extends Component
         $this->logData = ModelCabang::where('id', $id)
                                 ->withTrashed()
                                 ->first();
-        $this->dataPic = User::where('id', $this->logData['id_pic'])->first();
+        $this->dataPic = User::where('id', $this->logData['id_pic'])
+                        ->withTrashed()
+                        ->first();
     }
 
     public function render()

@@ -36,8 +36,8 @@ class DeletedPengiriman extends Component
     public function restore($id) 
     {
         $query = ModelPengiriman::where(['id' => $id])->onlyTrashed()->first();
-        $cabang = ModelCabang::where('id', $query['id_cabang'])->first();
         $query->restore();
+        $cabang = ModelCabang::where('id', $query['id_cabang'])->withTrashed()->first();
 
         ModelLogPengiriman::create([
             'id_pengiriman' => $id,

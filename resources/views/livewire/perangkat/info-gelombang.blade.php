@@ -4,7 +4,7 @@
         <div x-data="{infoPerangkat: false}">
             {{-- Top Bar --}}
             <div class="text-2xl text-center font-bold text-indigo-600 cursor-default">
-                <p>Info SP {{ $gelombang }}</p>
+                <p>Info Gelombang {{ $gelombang }}</p>
             </div>
             {{-- End Top Bar --}}
 

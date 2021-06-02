@@ -15,7 +15,7 @@ class Cabang extends Component
     use WithPagination;
     public  $idCabang, $dbCabang, $submitType, $nama, 
             $kode, $regional, $alamat, $keyword, $oldDataCabang;
-    public $picNik, $picId, $no_telp, $picName, $picSearch, $dbUser, $oldNik, $oldDataUser;
+    public $picNik, $picId, $no_telp, $picName, $picSearch, $dbUser, $oldNik, $oldDataUser = null;
     public $isOpen, $addNewPic = false;
 
     public function updatingSearch()
@@ -54,14 +54,20 @@ class Cabang extends Component
     public function tambah()
     {
 
+      if ($this->addNewPic == true) {
+        $nikValidate = ['numeric', 'nullable', Rule::unique('users', 'nik')->ignore($this->picNik, 'nik')];
+      } else {
+          $nikValidate = '';
+      }
+
       $this->validate(
         // Rules
         [
           'regional' => 'nullable|numeric',
-          'picName' => 'required',
-          'picNik' => ['numeric', 'nullable', Rule::unique('users', 'nik')->ignore($this->picNik, 'nik')],
+          'picName' => 'required|max:100',
+          'picNik' => $nikValidate,
           'kode' => 'unique:App\Models\ModelCabang,kode_cabang',
-          'no_telp' => 'nullable',
+          'no_telp' => 'nullable|max:50',
         ],
       );
 
@@ -74,21 +80,16 @@ class Cabang extends Component
             'no_telp' => $this->no_telp,
           ]);
 
-          // Ambil id user terakhir
-          $this->picId = $saveUser->id;
-          $getLastUser = ModelUser::where('id', $saveUser->id)->first();
-  
-          ModelCabang::create([
+          $saveCabang = ModelCabang::create([
             'nama_cabang' => $this->nama,
             'kode_cabang' => $this->kode,
             'regional' => $this->regional,
             'alamat_cabang' => $this->alamat,
-            'id_pic' => $this->picId,
+            'id_pic' => $saveUser->id,
           ]);
 
-          $getIdCabang = ModelCabang::latest()->first();
           ModelLogCabang::create([
-            'id_cabang' => $getIdCabang['id'],
+            'id_cabang' => $saveCabang->id,
             'data_log' => [
                           'aksi' => 'Tambah',
                           'browser' => $_SERVER['HTTP_USER_AGENT'],
@@ -99,23 +100,23 @@ class Cabang extends Component
                                               'kode_cabang' => $this->kode,
                                               'alamat_cabang' => $this->alamat,
                                               'regional' => $this->regional,
-                                              'id_pic' => $this->picId,
-                                              'nama_pic' => $getLastUser['nama'],
+                                              'id_pic' => $saveUser->id,
+                                              'nama_pic' => $saveUser->nama,
                                           ],
                             ],
           ]);
 
           LogUser::create([
-            'id_user' => $this->picId,
+            'id_user' => $saveUser->id,
             'data_log' => [
                             'aksi' => 'Tambah',
                             'browser' => $_SERVER['HTTP_USER_AGENT'],
                             'edited_by' => session('nama'),
                             'data_lama' =>  [],
                             'data_baru' =>  [
-                                                'nama' => $getLastUser['nama'],
-                                                'nik' => $getLastUser['nik'],
-                                                'no_telp' => $getLastUser['no_telp'],
+                                                'nama' => $saveUser->nama,
+                                                'nik' => $saveUser->nik,
+                                                'no_telp' => $saveUser->no_telp,
                                             ],
                             ],
             ]);
@@ -127,7 +128,7 @@ class Cabang extends Component
       } else {
         try {
           // Tambah data Cabang
-          ModelCabang::create([
+          $saveCabang = ModelCabang::create([
             'nama_cabang' => $this->nama,
             'kode_cabang' => $this->kode,
             'regional' => $this->regional,
@@ -135,10 +136,8 @@ class Cabang extends Component
             'id_pic' => $this->picId,
           ]);
 
-          $getUser = ModelUser::where('id', $this->picId)->first();
-          $getIdCabang = ModelCabang::latest()->first();
           ModelLogCabang::create([
-            'id_cabang' => $getIdCabang['id'],
+            'id_cabang' => $saveCabang->id,
             'data_log' => [
                           'aksi' => 'Tambah',
                           'browser' => $_SERVER['HTTP_USER_AGENT'],
@@ -149,8 +148,8 @@ class Cabang extends Component
                                               'kode_cabang' => $this->kode,
                                               'alamat_cabang' => $this->alamat,
                                               'regional' => $this->regional,
-                                              'id_pic' => $this->picName,
-                                              'nama_pic' => $getUser['nama'],
+                                              'id_pic' => $this->picId,
+                                              'nama_pic' => $this->picName,
                                           ],
                             ],
           ]);
@@ -169,16 +168,16 @@ class Cabang extends Component
 
       // Panggil SweetAlert berhasil
       $this->emit('success', 'Data Cabang Berhasil Ditambahkan');
-
     }
 
-    public function edit($id) 
+    public function edit($id)
     {
       $this->submitType = 'update';
       $this->dbCabang = ModelCabang::where('id', $id)->first();
       $this->dbUser = ModelUser::where('id', $this->dbCabang['id_pic'])->withTrashed()->first();
 
       $this->idCabang = $id;
+      $this->picId = $this->dbCabang['id_pic'];
       // Value input
       $this->nama = $this->dbCabang['nama_cabang'];
       $this->kode = $this->dbCabang['kode_cabang'];
@@ -196,20 +195,27 @@ class Cabang extends Component
 
     public function update() 
     {
+      if ($this->addNewPic == true) {
+        $nikValidate = ['numeric', 'nullable', Rule::unique('users', 'nik')->ignore($this->oldNik, 'nik')];
+      } else {
+          $nikValidate = '';
+      }
+
       $this->validate(
         // Rules
         [
           'regional' => 'nullable|numeric',
-          'picName' => 'required',
-          'picNik' => ['numeric', 'nullable', Rule::unique('users', 'nik')->ignore($this->oldNik, 'nik')],
+          'picName' => 'required|max:100',
+          'picNik' => $nikValidate,
           'kode' => [Rule::unique('cabang', 'kode_cabang')->ignore($this->kode, 'kode_cabang')],
-          'no_telp' => 'nullable',
+          'no_telp' => 'nullable|max:50',
         ]
       );
+      
 
       if ($this->addNewPic == true) {
         // Tambah data user + Cabang
-
+        dd('masuk tambah');
         try {
           $saveUser = ModelUser::create([
             'nama' => $this->picName,
@@ -217,10 +223,63 @@ class Cabang extends Component
             'no_telp' => $this->no_telp,
           ]);
 
-          // Ambil id user terakhir
-          $this->picId = $saveUser->id;
-          $getLastUser = ModelUser::where('id', $saveUser->id)->first();
-  
+          ModelCabang::where('id', $this->idCabang)->update([
+            'nama_cabang' => $this->nama,
+            'kode_cabang' => $this->kode,
+            'regional' => $this->regional,
+            'alamat_cabang' => $this->alamat,
+            'id_pic' => $saveUser->id,
+          ]);
+
+          ModelLogCabang::create([
+            'id_cabang' => $this->idCabang,
+            'data_log' => [
+                          'aksi' => 'Edit',
+                          'browser' => $_SERVER['HTTP_USER_AGENT'],
+                          'edited_by' => session('nama'),
+                          'data_lama' =>  [
+                                              'nama_cabang' => $this->oldDataCabang['nama_cabang'],
+                                              'kode_cabang' => $this->oldDataCabang['kode_cabang'],
+                                              'alamat_cabang' => $this->oldDataCabang['alamat_cabang'],
+                                              'regional' => $this->oldDataCabang['regional'],
+                                              'id_pic' => $this->oldDataUser['id'],
+                                              'nama_pic' => $this->oldDataUser['nama'],
+                                          ],
+                          'data_baru' =>  [
+                                              'nama_cabang' => $this->nama,
+                                              'kode_cabang' => $this->kode,
+                                              'alamat_cabang' => $this->alamat,
+                                              'regional' => $this->regional,
+                                              'id_pic' => $saveUser->id,
+                                              'nama_pic' => $saveUser->nama,
+                                          ],
+                            ],
+          ]);
+
+          LogUser::create([
+            'id_user' => $saveUser->id,
+            'data_log' => [
+                            'aksi' => 'Tambah',
+                            'browser' => $_SERVER['HTTP_USER_AGENT'],
+                            'edited_by' => session('nama'),
+                            'data_lama' =>  [],
+                            'data_baru' =>  [
+                                                'nama' => $saveUser->nama,
+                                                'nik' => $saveUser->nik,
+                                                'no_telp' => $saveUser->no_telp,
+                                            ],
+                            ],
+            ]);
+
+        }catch (\Exception $ex) {
+          // throw $ex;
+          return $this->addError('picNik', 'Nik Sudah terdaftar');
+        }
+        
+      } else {
+        try {
+          
+          // Ubah data Cabang
           ModelCabang::where('id', $this->idCabang)->update([
             'nama_cabang' => $this->nama,
             'kode_cabang' => $this->kode,
@@ -249,67 +308,13 @@ class Cabang extends Component
                                               'alamat_cabang' => $this->alamat,
                                               'regional' => $this->regional,
                                               'id_pic' => $this->picId,
-                                              'nama_pic' => $getLastUser['nama'],
+                                              'nama_pic' => $this->picName,
                                           ],
                             ],
           ]);
-
-          LogUser::create([
-            'id_user' => $this->picId,
-            'data_log' => [
-                            'aksi' => 'Tambah',
-                            'browser' => $_SERVER['HTTP_USER_AGENT'],
-                            'edited_by' => session('nama'),
-                            'data_lama' =>  [],
-                            'data_baru' =>  [
-                                                'nama' => $getLastUser['nama'],
-                                                'nik' => $getLastUser['nik'],
-                                                'no_telp' => $getLastUser['no_telp'],
-                                            ],
-                            ],
-            ]);
-
-        }catch (\Exception $ex) {
-          return $ex;
-          // return $this->addError('picNik', 'Nik Sudah terdaftar');
-        }
-        
-      } else {
-        try {
-          // Ubah data Cabang
-          ModelCabang::where('id', $this->idCabang)->update([
-            'nama_cabang' => $this->nama,
-            'kode_cabang' => $this->kode,
-            'regional' => $this->regional,
-            'alamat_cabang' => $this->alamat,
-          ]);
-
-        ModelLogCabang::create([
-          'id_cabang' => $this->idCabang,
-          'data_log' => [
-                        'aksi' => 'Edit',
-                        'browser' => $_SERVER['HTTP_USER_AGENT'],
-                        'edited_by' => session('nama'),
-                        'data_lama' =>  [
-                                            'nama_cabang' => $this->oldDataCabang['nama_cabang'],
-                                            'kode_cabang' => $this->oldDataCabang['kode_cabang'],
-                                            'alamat_cabang' => $this->oldDataCabang['alamat_cabang'],
-                                            'regional' => $this->oldDataCabang['regional'],
-                                            'id_pic' => $this->oldDataUser['id'],
-                                            'nama_pic' => $this->oldDataUser['nama'],
-                                        ],
-                        'data_baru' =>  [
-                                            'nama_cabang' => $this->nama,
-                                            'kode_cabang' => $this->kode,
-                                            'alamat_cabang' => $this->alamat,
-                                            'regional' => $this->regional,
-                                            'id_pic' => $this->picId,
-                                            'nama_pic' => $this->picName,
-                                        ],
-                          ],
-        ]);
             
         } catch (\Exception $ex) {
+          // throw $ex;
           return $this->addError('kode', 'Kode Cabang Sudah ada');
         }
       }
@@ -347,7 +352,7 @@ class Cabang extends Component
       $cabangQuery = ModelCabang::where('id', $id)->first();
       $cabangQuery->delete();
 
-      $dataUser  = ModelUser::where('id', $cabangQuery['id_pic'])->first();
+      $dataUser  = ModelUser::where('id', $cabangQuery['id_pic'])->withTrashed()->first();
       ModelLogCabang::create([
         'id_cabang' => $id,
         'data_log' => [

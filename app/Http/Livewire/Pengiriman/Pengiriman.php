@@ -47,7 +47,7 @@ class Pengiriman extends Component
 
     public function add() 
     {
-        $datapengiriman = ModelPengiriman::orderBy('created_at', 'DESC')->first();
+        $datapengiriman = ModelPengiriman::orderBy('created_at', 'DESC')->withTrashed()->first();
         $noPengirimanEdit = str_replace('DO-', '', $datapengiriman['no_pengiriman']) + 1;
         $this->no_pengiriman = "DO-".$noPengirimanEdit;
         $this->submitType = 'tambah';
@@ -93,8 +93,8 @@ class Pengiriman extends Component
                 ],
             ]);
 
-        } catch (\Illuminate\Validation\ValidationException $ex) {
-            // return $ex;
+        } catch (\Exception $ex) {
+            // throw $ex;
         }
 
         // Panggil fungsi Reset data
@@ -128,7 +128,7 @@ class Pengiriman extends Component
     {
         if ($this->tanggal == null) {
             $this->tanggal = Carbon::now();
-        } 
+        }
 
         $oldDataPengiriman = ModelPengiriman::where('id', $this->pengirimanId)->first();
         $this->validate([
@@ -166,7 +166,7 @@ class Pengiriman extends Component
             ]);
 
         } catch (\Exception $ex) {
-            return $ex;
+            return $this->addError('no_pengiriman', 'No Pengiriman Sudah Ada');
         }
 
         // Panggil fungsi Reset data
@@ -182,10 +182,9 @@ class Pengiriman extends Component
     public function delete($id)
     {
         $query = ModelPengiriman::where(['id' => $id])->first();
-        $cabang = ModelCabang::where('id', $query['id_cabang'])->first();
+        $cabang = ModelCabang::where('id', $query['id_cabang'])->withTrashed()->first();
         $query->delete();
-
-         
+        
         ModelLogPengiriman::create([
             'id_pengiriman' => $id,
             'data_log' =>   [
@@ -201,6 +200,8 @@ class Pengiriman extends Component
                 'data_baru' =>  [],
             ],
         ]);
+
+       
     }
 
     public function chooseCabang($id) 
@@ -214,6 +215,6 @@ class Pengiriman extends Component
     public function resetData() 
     {
         $this->resetValidation();
-        $this->reset('submitType', 'no_pengiriman', 'tanggal', 'cabangId', 'cabang', 'tanggal', 'cabangSearch', 'oldDataCabang');
+        $this->reset();
     }
 }

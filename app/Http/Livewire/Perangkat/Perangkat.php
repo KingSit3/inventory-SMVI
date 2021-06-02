@@ -85,8 +85,12 @@ class Perangkat extends Component
     {
         if ($this->addUser == true) {
             $nikValidate = ['nullable', 'numeric', Rule::unique('users', 'nik')->ignore($this->nikUser, 'nik')];
+            $namaValidate = ['required', 'max:100'];
+            $noTelpvalidate = ['nullable', 'max:50'];
         } else {
             $nikValidate = '';
+            $noTelpvalidate = '';
+            $namaValidate= '';
         }
 
         $this->validate([
@@ -95,6 +99,8 @@ class Perangkat extends Component
             'sn_pengganti' => 'unique:App\Models\ModelPerangkat,sn_pengganti',
             'sn_monitor' => 'unique:App\Models\ModelPerangkat,sn_monitor|nullable',
             'nikUser' => $nikValidate,
+            'namaUser' => $namaValidate,
+            'telpUser' => $noTelpvalidate,
             'sistemPerangkat' => 'required',
         ]);
 
@@ -134,7 +140,7 @@ class Perangkat extends Component
                 $this->userId = $saveUser->id;
                 $getLastUser = User::where('id', $saveUser->id)->first();
 
-                ModelsPerangkat::create([
+                $savePerangkat = ModelsPerangkat::create([
                     'sn_lama' => (trim($this->sn_lama) == '') ? null : strtoupper($this->sn_lama),
                     'sn_pengganti' => $this->sn_pengganti,
                     'sn_monitor' => (trim($this->sn_monitor) == '') ? null : strtoupper($this->sn_monitor),
@@ -150,9 +156,9 @@ class Perangkat extends Component
                 ]);
 
                 // Ambil Id Perangkat terakhir
-                $getLastPerangkat = ModelsPerangkat::latest()->first();
+                // $getLastPerangkat = ModelsPerangkat::latest()->first();
                 LogPerangkat::create([
-                    'id_perangkat' => $getLastPerangkat['id'],
+                    'id_perangkat' => $savePerangkat['id'],
                     'data_log' => [
                                     'aksi' => 'Tambah',
                                     'browser' => $_SERVER['HTTP_USER_AGENT'],
@@ -414,8 +420,12 @@ class Perangkat extends Component
     {
         if ($this->addUser == true) {
             $nikValidate = ['nullable', 'numeric', Rule::unique('users', 'nik')->ignore($this->nikUser, 'nik')];
+            $namaValidate = ['required', 'max:100'];
+            $noTelpvalidate = ['nullable', 'max:50'];
         } else {
             $nikValidate = '';
+            $noTelpvalidate = '';
+            $namaValidate= '';
         }
 
         $this->validate([
@@ -424,6 +434,8 @@ class Perangkat extends Component
             'sn_pengganti' => [Rule::unique('perangkat', 'sn_pengganti')->ignore($this->oldSnPengganti, 'sn_pengganti')],
             'sn_monitor' => [Rule::unique('perangkat', 'sn_monitor')->ignore($this->oldSnMonitor, 'sn_monitor'), 'nullable'],
             'nikUser' => $nikValidate,
+            'namaUser' => $namaValidate,
+            'telpUser' => $noTelpvalidate,
             'sistemPerangkat' => 'required',
         ]);
 

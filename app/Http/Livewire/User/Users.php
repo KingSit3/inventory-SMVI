@@ -49,8 +49,8 @@ class Users extends Component
             // Rules
             [
                 'nik' => 'unique:App\Models\ModelUser,nik|numeric|nullable',
-                'nama' => 'required',
-                'no_telp' => 'nullable',
+                'nama' => 'required|max:100',
+                'no_telp' => 'nullable|max:50',
             ]
         );
 
@@ -128,8 +128,8 @@ class Users extends Component
                 [
                     // Gagal validasi unique
                     'nik' => ['numeric', 'nullable', Rule::unique('users', 'nik')->ignore($this->nik, 'nik')],
-                    'nama' => 'required',
-                    'no_telp' => 'nullable',
+                    'nama' => 'required|max:100',
+                    'no_telp' => 'nullable|max:50',
                 ]
             );
 

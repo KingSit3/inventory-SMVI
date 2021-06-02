@@ -16,7 +16,7 @@ class LogPengiriman extends Component
         $keyword = '%'.$this->keyword.'%';
 
         $data = [
-            'logPengiriman' => ModelLogpengiriman::whereHas('pengiriman', function($query) use ($keyword){
+            'logPengiriman' => ModelLogpengiriman::with('pengiriman')->whereHas('pengiriman', function($query) use ($keyword){
                                                     // Jalankan query search seperti biasa
                                                     $query->where('no_pengiriman', 'like', $keyword);
                                                 })

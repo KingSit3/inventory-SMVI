@@ -22,7 +22,7 @@ class InfoLogPerangkat extends Component
     public function render()
     {
         $data = [
-            'logPerangkat' => ModelLogPerangkat::where('id_perangkat', $this->logData['id'])
+            'logPerangkat' => ModelLogPerangkat::with('Perangkat')->where('id_perangkat', $this->logData['id'])
                                 ->orderBy('created_at', 'DESC')->paginate(10),
         ];
 

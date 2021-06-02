@@ -14,7 +14,9 @@ class InfoLogTipeSistem extends Component
 
     public function mount($id) 
     {
-        $this->logData = ModelTipeSistem::where('id', $id)->withTrashed()->first();
+        $this->logData = ModelTipeSistem::where('id', $id)
+                        ->withTrashed()
+                        ->first();
     }
 
     public function render()

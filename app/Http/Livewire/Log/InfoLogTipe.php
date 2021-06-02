@@ -22,7 +22,7 @@ class InfoLogTipe extends Component
     public function render()
     {
         $data = [
-            'logTipe' => LogTipePerangkat::where('id_tipe', $this->logData['id'])
+            'logTipe' => LogTipePerangkat::with('TipePerangkat')->where('id_tipe', $this->logData['id'])
                                         ->orderBy('created_at', 'DESC')
                                         ->paginate(7),
                 ];
