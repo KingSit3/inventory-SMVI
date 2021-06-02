@@ -14,7 +14,7 @@ class Pengiriman extends Component
 {
     use WithPagination;
     public $no_pengiriman, $tanggal, $dbPengiriman, $pengirimanId;
-    public $cabang, $cabangSearch, $cabangId, $dbCabang, $oldDataCabang;
+    public $cabang, $cabangSearch, $cabangId, $dbCabang, $cabangData;
     public $submitType, $keyword = '';
     public $isOpen = false;
 
@@ -66,19 +66,14 @@ class Pengiriman extends Component
         ]);
 
         try {
-            ModelPengiriman::create([
+            $savePengiriman = ModelPengiriman::create([
                 'no_pengiriman' => $this->no_pengiriman,
-                'id_cabang' => $this->cabangId,
+                'id_cabang' => $this->cabangData['id'],
                 'tanggal_pengiriman' => $this->tanggal,
             ]);
 
-            // get Id Pengiriman
-            $idpengiriman = ModelPengiriman::latest()->first();
-            // // Get Cabang Data
-            $cabangData = ModelCabang::where('id', $this->cabangId)->first();
-            // // dd($cabangData);
             ModelLogPengiriman::create([
-                'id_pengiriman' => $idpengiriman['id'],
+                'id_pengiriman' => $savePengiriman->id,
                 'data_log' =>   [
                     'aksi' => 'Tambah',
                     'browser' => $_SERVER['HTTP_USER_AGENT'],
@@ -86,8 +81,8 @@ class Pengiriman extends Component
                     'data_lama' =>  [],
                     'data_baru' =>  [
                                         'no_pengiriman' => $this->no_pengiriman,
-                                        'id_cabang' => $cabangData['id'],
-                                        'nama_cabang' => $cabangData['nama_cabang'],
+                                        'id_cabang' => $this->cabangData['id'],
+                                        'nama_cabang' => $this->cabangData['nama_cabang'],
                                         'tanggal_pengiriman' => $this->tanggal,
                                         ],
                 ],
@@ -105,23 +100,19 @@ class Pengiriman extends Component
 
         // Panggil SweetAlert berhasil
         $this->emit('success', 'Data pengiriman Berhasil Ditambahkan');
-        
     }
 
     public function edit($id) 
     {
         $this->submitType = 'update';
-        $this->dbPengiriman = ModelPengiriman::where('id', $id)->first();
-        $this->dbCabang = ModelCabang::where('id', $this->dbPengiriman['id_cabang'])->first();
+        $this->dbPengiriman = ModelPengiriman::with('cabang')->where('id', $id)->first();
 
+        // isi Forms
         $this->pengirimanId = $id;
         $this->no_pengiriman = $this->dbPengiriman['no_pengiriman'];
         $this->tanggal = Carbon::parse($this->dbPengiriman['tanggal_pengiriman'])->format('Y-m-d');
-        $this->cabangId = $this->dbPengiriman['id_cabang'];
-        $this->cabang = $this->dbCabang['nama_cabang'];
-
-        
-        $this->oldDataCabang = ModelCabang::where('id', $this->dbPengiriman['id_cabang'])->first();
+        $this->cabangId = $this->dbPengiriman['cabang']['id'];
+        $this->cabang = $this->dbPengiriman['cabang']['nama_cabang'];
     }
 
     public function update() 
@@ -130,7 +121,7 @@ class Pengiriman extends Component
             $this->tanggal = Carbon::now();
         }
 
-        $oldDataPengiriman = ModelPengiriman::where('id', $this->pengirimanId)->first();
+        // $oldDataPengiriman = ModelPengiriman::where('id', $this->pengirimanId)->first();
         $this->validate([
             'no_pengiriman' => [Rule::unique('pengiriman', 'no_pengiriman')->ignore($this->no_pengiriman, 'no_pengiriman')],
             'cabang' => 'required'
@@ -151,10 +142,10 @@ class Pengiriman extends Component
                     'browser' => $_SERVER['HTTP_USER_AGENT'],
                     'edited_by' => session('nama'),
                     'data_lama' =>  [
-                                'no_pengiriman' => $oldDataPengiriman['no_pengiriman'],
-                                'id_cabang' => $this->oldDataCabang['id'],
-                                'nama_cabang' => $this->oldDataCabang['nama_cabang'],
-                                'tanggal_pengiriman' => $oldDataPengiriman['tanggal_pengiriman'],
+                                        'no_pengiriman' => $this->dbPengiriman['no_pengiriman'],
+                                        'id_cabang' => $this->dbPengiriman['cabang']['id'],
+                                        'nama_cabang' => $this->dbPengiriman['cabang']['nama_cabang'],
+                                        'tanggal_pengiriman' => $this->dbPengiriman['tanggal_pengiriman'],
                     ],
                     'data_baru' =>  [
                                         'no_pengiriman' => $this->no_pengiriman,
@@ -166,6 +157,7 @@ class Pengiriman extends Component
             ]);
 
         } catch (\Exception $ex) {
+            // throw $ex;
             return $this->addError('no_pengiriman', 'No Pengiriman Sudah Ada');
         }
 
@@ -181,9 +173,8 @@ class Pengiriman extends Component
 
     public function delete($id)
     {
-        $query = ModelPengiriman::where(['id' => $id])->first();
-        $cabang = ModelCabang::where('id', $query['id_cabang'])->withTrashed()->first();
-        $query->delete();
+        $getPengiriman = ModelPengiriman::with('cabang')->where(['id' => $id])->first();
+        $getPengiriman->delete();
         
         ModelLogPengiriman::create([
             'id_pengiriman' => $id,
@@ -192,23 +183,21 @@ class Pengiriman extends Component
                 'browser' => $_SERVER['HTTP_USER_AGENT'],
                 'edited_by' => session('nama'),
                 'data_lama' =>  [
-                            'no_pengiriman' => $query['no_pengiriman'],
-                            'id_cabang' => $cabang['id'],
-                            'nama_cabang' => $cabang['nama_cabang'],
-                            'tanggal_pengiriman' => $query['tanggal_pengiriman'],
+                            'no_pengiriman' => $getPengiriman['no_pengiriman'],
+                            'id_cabang' => $getPengiriman['cabang']['id'],
+                            'nama_cabang' => $getPengiriman['cabang']['nama_cabang'],
+                            'tanggal_pengiriman' => $getPengiriman['tanggal_pengiriman'],
                 ],
                 'data_baru' =>  [],
             ],
         ]);
-
-       
     }
 
     public function chooseCabang($id) 
     {
-        $cabangData = ModelCabang::where('id', $id)->first();
-        $this->cabangId = $cabangData['id'];
-        $this->cabang = $cabangData['kode_cabang'].' | '.$cabangData['nama_cabang'];
+        $this->cabangData = ModelCabang::where('id', $id)->first();
+        $this->cabangId = $this->cabangData['id'];
+        $this->cabang = $this->cabangData['kode_cabang'].' | '.$this->cabangData['nama_cabang'];
         $this->reset('cabangSearch');
     }
 

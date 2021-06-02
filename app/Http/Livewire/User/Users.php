@@ -54,15 +54,14 @@ class Users extends Component
             ]
         );
 
-        User::create([
+        $saveUser = User::create([
             'nama' => $this->nama,
             'nik' => (trim($this->nik) == '') ? null : $this->nik,
             'no_telp' => $this->no_telp,
         ]);
 
-        $dataUser = User::latest()->first();
         LogUser::create([
-            'id_user' => $dataUser['id'],
+            'id_user' => $saveUser->id,
             'data_log' => [
                             'aksi' => 'Tambah',
                             'browser' => $_SERVER['HTTP_USER_AGENT'],
@@ -89,7 +88,6 @@ class Users extends Component
     public function delete($id)
     {
       $userQuery = User::where(['id' => $id])->first();
-      $userQuery->delete();
 
       LogUser::create([
         'id_user' => $id,
@@ -105,6 +103,8 @@ class Users extends Component
                         'data_baru' =>  [],
                         ],
         ]);
+
+        $userQuery->delete();
     }
 
     public function edit($id) 
@@ -117,8 +117,6 @@ class Users extends Component
         $this->nik = $this->userData['nik'];
         $this->nama = $this->userData['nama'];
         $this->no_telp = $this->userData['no_telp'];
-
-        $this->oldUserData = User::where('id', $id)->first();
     }
 
     public function update()
@@ -126,7 +124,6 @@ class Users extends Component
             $this->validate(
                 // Rules
                 [
-                    // Gagal validasi unique
                     'nik' => ['numeric', 'nullable', Rule::unique('users', 'nik')->ignore($this->nik, 'nik')],
                     'nama' => 'required|max:100',
                     'no_telp' => 'nullable|max:50',
@@ -148,9 +145,9 @@ class Users extends Component
                                 'browser' => $_SERVER['HTTP_USER_AGENT'],
                                 'edited_by' => session('nama'),
                                 'data_lama' =>  [
-                                                    'nama' => $this->oldUserData['nama'],
-                                                    'nik' => $this->oldUserData['nik'],
-                                                    'no_telp' => $this->oldUserData['no_telp'],
+                                                    'nama' => $this->userData['nama'],
+                                                    'nik' => $this->userData['nik'],
+                                                    'no_telp' => $this->userData['no_telp'],
                                                 ],
                                 'data_baru' =>  [
                                                     'nama' => $this->nama,

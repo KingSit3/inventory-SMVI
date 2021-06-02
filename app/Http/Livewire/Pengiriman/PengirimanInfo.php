@@ -4,8 +4,6 @@ namespace App\Http\Livewire\Pengiriman;
 
 use App\Models\ModelPengiriman;
 use App\Models\ModelPerangkat as Perangkat;
-use App\Models\ModelCabang as Cabang;
-use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -13,19 +11,20 @@ class PengirimanInfo extends Component
 {
     use WithPagination;
     public $sn, $tipe, $cabang, $sistem, $dataPerangkat;
-    public $pengirimanData, $cariSn;
+    public $pengirimanData, $cariSn, $totalPerangkat;
     public $keyword = '';
     public $isOpen = false;
 
     // ambil data dari route parameter
     public function mount($id) 
     {
-        $this->pengirimanData = ModelPengiriman::where('id', $id)->first();
+        $this->pengirimanData = ModelPengiriman::where('id', $id)->withTrashed()->first();
     }
 
     public function render()
     {   
         $keyword = '%'.$this->keyword.'%';
+        $this->totalPerangkat = Perangkat::where('id_pengiriman', $this->pengirimanData['id'])->withTrashed()->count(); 
 
         $hasilSn = '';
         if (strlen($this->cariSn) > 0) {
@@ -37,12 +36,12 @@ class PengirimanInfo extends Component
                             ->where('id_pengiriman', $this->pengirimanData['id'])
                             ->where('sn_pengganti', 'like', $keyword)
                             ->orderBy('updated_at', 'DESC')
+                            ->withTrashed()
                             ->paginate(10);
         $data = [
             'snResult' => $hasilSn,
             'perangkat' => $perangkatQuery,
-            'tanggalPengiriman' => Carbon::parse($this->pengirimanData['tanggal_pengiriman'])->format('d-M-Y'),
-            'totalPerangkat' => Perangkat::where('id_pengiriman', $this->pengirimanData['id'])->count(),
+            'tanggalPengiriman' => date('d-M-Y', strtotime($this->pengirimanData['tanggal_pengiriman'])),
         ];
         return view('livewire.pengiriman.pengiriman-info', $data)
         ->extends('layouts.app');
@@ -55,22 +54,17 @@ class PengirimanInfo extends Component
 
     public function chooseSn($id) 
     {
-      $this->dataPerangkat = Perangkat::where('id', $id)->first();
-      if ($this->dataPerangkat['id_cabang'] != null) {
-        $dataCabang = Cabang::where('id', $this->dataPerangkat['id_cabang'])->first();
-      } else {
-        $dataCabang = ['nama_cabang' => null];
-      }
+      $this->dataPerangkat = Perangkat::with('cabang', 'TipePerangkat', 'TipeSistem')->where('id', $id)->first();
 
       if ($this->dataPerangkat['id_pengiriman'] != null) {
-        $this->resetData();
+        $this->reset('cariSn');
         return $this->addError('cariSn', 'perangkat ada di Pengiriman lain');
       }
 
       $this->sn = $this->dataPerangkat['sn_pengganti'];
-      $this->tipe = $this->dataPerangkat['tipe_perangkat'];
-      $this->cabang = $dataCabang['nama_cabang'];
-      $this->sistem = $this->dataPerangkat['id_sistem'];
+      $this->tipe = $this->dataPerangkat['TipePerangkat']['nama_perangkat'];
+      $this->cabang = ($this->dataPerangkat['cabang']['nama_cabang']) ? $this->dataPerangkat['cabang']['nama_cabang'] : '-';
+      $this->sistem = $this->dataPerangkat['TipeSistem']['kode_sistem'];
     }
 
     public function tambah() 
@@ -90,6 +84,6 @@ class PengirimanInfo extends Component
     public function resetData() 
     {
       $this->resetValidation();
-      $this->reset();
+      $this->reset('sn', 'tipe', 'cabang', 'sistem', 'dataPerangkat', 'cariSn', 'keyword');
     }
 }

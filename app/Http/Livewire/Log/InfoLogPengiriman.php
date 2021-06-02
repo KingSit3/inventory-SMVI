@@ -14,7 +14,7 @@ class InfoLogpengiriman extends Component
 
     public function mount($id) 
     {
-        $this->logData = ModelPengiriman::where('id', $id)
+        $this->logData = ModelPengiriman::with('cabang')->where('id', $id)
                                 ->withTrashed()
                                 ->first();
     }
@@ -25,7 +25,6 @@ class InfoLogpengiriman extends Component
             'logPengiriman' => ModelLogPengiriman::with('pengiriman')->where('id_pengiriman', $this->logData['id'])
                                 ->orderBy('created_at', 'DESC')->paginate(10),
         ];
-
 
         return view('livewire.log.info-log-pengiriman', $data)
         ->extends('layouts.app');

@@ -15,12 +15,9 @@ class InfoLogCabang extends Component
 
     public function mount($id) 
     {
-        $this->logData = ModelCabang::where('id', $id)
+        $this->logData = ModelCabang::with('users')->where('id', $id)
                                 ->withTrashed()
                                 ->first();
-        $this->dataPic = User::where('id', $this->logData['id_pic'])
-                        ->withTrashed()
-                        ->first();
     }
 
     public function render()

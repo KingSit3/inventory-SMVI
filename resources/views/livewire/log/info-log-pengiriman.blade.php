@@ -13,6 +13,11 @@
                     <div class="flex flex-col font-semibold">
                         <table>
                             <tr>
+                                <td class="pr-3">Cabang Tujuan</td>
+                                <td>:</td>
+                                <td class="font-semibold capitalize rounded-lg">{{ $logData['cabang']['nama_cabang'] }}</td>
+                            </tr>
+                            <tr>
                                 <td class="pr-3">Status pengiriman</td>
                                 <td>:</td>
                                 <td class="font-semibold capitalize rounded-lg {{ ($logData['deleted_at']) ? 'text-red-500' : 'text-blue-500' }}">{{ ($logData['deleted_at']) ? 'Terhapus' : 'Aktif' }}</td>

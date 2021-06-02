@@ -36,7 +36,7 @@ class DeletedUsers extends Component
 
     public function restore($id) 
     {
-        $userQuery = User::where('id', $id)->withTrashed()->first();
+        $userQuery = User::where('id', $id)->onlyTrashed()->first();
         $userQuery->restore();
 
         LogUser::create([

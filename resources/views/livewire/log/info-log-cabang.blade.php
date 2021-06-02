@@ -35,7 +35,7 @@
                             <tr>
                                 <td class="pr-3">PIC</td>
                                 <td>:</td>
-                                <td>{{ ($dataPic['name']) ? $dataPic['name'] : '-' }}</td>
+                                <td>{{ ($logData['users']['nama']) ? $logData['users']['nama'] : '-' }}</td>
                             </tr>
                             <tr>
                                 <td class="pr-3">Status Cabang</td>

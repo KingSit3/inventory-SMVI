@@ -3,7 +3,7 @@
         <div>
             {{-- Top Bar --}}
             <div class="text-2xl text-center font-bold text-indigo-600 cursor-default">
-                <p>Log Delivery Order</p>
+                <p>Log Pengiriman</p>
             </div>
             {{-- End Top Bar --}}
 

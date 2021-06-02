@@ -11,7 +11,7 @@ use Livewire\WithPagination;
 class Tipe extends Component
 {
     use WithPagination;
-    public $idPerangkat, $dbPerangkat, $oldDataTipe, 
+    public $idPerangkat, $dbTipe, 
     $kode, $nama, $tipe, $submitType, $keyword;
     public $isOpen = false;
 
@@ -46,22 +46,21 @@ class Tipe extends Component
         $this->validate(
             // Rules
             [
-                'kode' => 'unique:App\Models\ModelTipePerangkat,kode_perangkat',
+                'tipe' => 'max:50',
+                'nama' => 'max:50',
+                'kode' => 'unique:App\Models\ModelTipePerangkat,kode_perangkat|max:50',
             ],
         );
 
-        // $newNik = ;
-
         // Save data
-        tipePerangkat::create([
+        $saveTipe = tipePerangkat::create([
             'nama_perangkat' => $this->nama,
             'tipe_perangkat' => $this->tipe,
             'kode_perangkat' => $this->kode,
         ]);
 
-        $idTipe = tipePerangkat::latest()->first();
         LogTipePerangkat::create([
-            'id_tipe' => $idTipe['id'],
+            'id_tipe' => $saveTipe->id,
             'data_log' =>   [
                                 'aksi' => 'Tambah',
                                 'browser' => $_SERVER['HTTP_USER_AGENT'],
@@ -88,8 +87,7 @@ class Tipe extends Component
     public function delete($id) 
     {
         $tipeQuery = tipePerangkat::where('id', $id)->first();
-        $tipeQuery->delete();
-
+        
         LogTipePerangkat::create([
             'id_tipe' => $id,
             'data_log' =>   [
@@ -104,18 +102,19 @@ class Tipe extends Component
                                 'data_baru' =>  [],
                             ],
         ]);
+
+        $tipeQuery->delete();
     }
 
     public function edit($id) 
     {
       $this->submitType = 'update';
-      $this->dbPerangkat = tipePerangkat::where('id', $id)->first();
-      $this->oldDataTipe = tipePerangkat::where('id', $id)->first();
+      $this->dbTipe = tipePerangkat::where('id', $id)->first();
 
       $this->idPerangkat = $id;
-      $this->nama = $this->dbPerangkat['nama_perangkat'];
-      $this->tipe = $this->dbPerangkat['tipe_perangkat'];
-      $this->kode = $this->dbPerangkat['kode_perangkat'];
+      $this->nama = $this->dbTipe['nama_perangkat'];
+      $this->tipe = $this->dbTipe['tipe_perangkat'];
+      $this->kode = $this->dbTipe['kode_perangkat'];
     }
 
     public function update() 
@@ -123,7 +122,9 @@ class Tipe extends Component
         $this->validate(
             // Rules
             [
-                'kode' => [Rule::unique('tipe_perangkat', 'kode_perangkat')->ignore($this->kode, 'kode_perangkat')],
+                'tipe' => 'max:50',
+                'nama' => 'max:50',
+                'kode' => [Rule::unique('tipe_perangkat', 'kode_perangkat')->ignore($this->kode, 'kode_perangkat'), 'max:50'],
             ]
         );
 
@@ -142,9 +143,9 @@ class Tipe extends Component
                                     'browser' => $_SERVER['HTTP_USER_AGENT'],
                                     'edited_by' => session('nama'),
                                     'data_lama' =>  [
-                                                        'nama_tipe' => $this->oldDataTipe['nama_perangkat'],
-                                                        'tipe_perangkat' => $this->oldDataTipe['tipe_perangkat'],
-                                                        'kode_tipe' => $this->oldDataTipe['kode_perangkat'],
+                                                        'nama_tipe' => $this->dbTipe['nama_perangkat'],
+                                                        'tipe_perangkat' => $this->dbTipe['tipe_perangkat'],
+                                                        'kode_tipe' => $this->dbTipe['kode_perangkat'],
                                                     ],
                                     'data_baru' =>  [
                                                         'nama_tipe' => $this->nama,
@@ -173,6 +174,6 @@ class Tipe extends Component
         // Reset Validasi
         $this->resetValidation();
         // Reset input field
-        $this->reset('nama', 'tipe', 'kode', 'submitType', 'idPerangkat', 'oldDataTipe', 'dbPerangkat');
+        $this->reset();
     }
 }

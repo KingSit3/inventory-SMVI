@@ -14,8 +14,8 @@ class Cabang extends Component
 {
     use WithPagination;
     public  $idCabang, $dbCabang, $submitType, $nama, 
-            $kode, $regional, $alamat, $keyword, $oldDataCabang;
-    public $picNik, $picId, $no_telp, $picName, $picSearch, $dbUser, $oldNik, $oldDataUser = null;
+            $kode, $regional, $alamat, $keyword;
+    public $picNik, $picId, $no_telp, $picName, $picSearch = null;
     public $isOpen, $addNewPic = false;
 
     public function updatingSearch()
@@ -173,30 +173,26 @@ class Cabang extends Component
     public function edit($id)
     {
       $this->submitType = 'update';
-      $this->dbCabang = ModelCabang::where('id', $id)->first();
-      $this->dbUser = ModelUser::where('id', $this->dbCabang['id_pic'])->withTrashed()->first();
+      $this->dbCabang = ModelCabang::with('users')->where('id', $id)->first();
 
       $this->idCabang = $id;
       $this->picId = $this->dbCabang['id_pic'];
+
       // Value input
       $this->nama = $this->dbCabang['nama_cabang'];
       $this->kode = $this->dbCabang['kode_cabang'];
       $this->regional = $this->dbCabang['regional'];
       $this->alamat = $this->dbCabang['alamat_cabang'];
 
-      $this->oldNik = $this->dbUser['nik'];
-      $this->picNik = $this->dbUser['nik'];
-      $this->picName = $this->dbUser['nama'];
-      $this->no_telp = $this->dbUser['no_telp'];
-
-      $this->oldDataCabang = ModelCabang::where('id', $id)->first();
-      $this->oldDataUser = ModelUser::where('id', $this->dbCabang['id_pic'])->withTrashed()->first();
+      $this->picNik = $this->dbCabang['users']['nik'];
+      $this->picName = $this->dbCabang['users']['nama'];
+      $this->no_telp = $this->dbCabang['users']['no_telp'];
     }
 
     public function update() 
     {
       if ($this->addNewPic == true) {
-        $nikValidate = ['numeric', 'nullable', Rule::unique('users', 'nik')->ignore($this->oldNik, 'nik')];
+        $nikValidate = ['numeric', 'nullable', Rule::unique('users', 'nik')->ignore($this->dbCabang['users']['nik'], 'nik')];
       } else {
           $nikValidate = '';
       }
@@ -215,7 +211,6 @@ class Cabang extends Component
 
       if ($this->addNewPic == true) {
         // Tambah data user + Cabang
-        dd('masuk tambah');
         try {
           $saveUser = ModelUser::create([
             'nama' => $this->picName,
@@ -238,12 +233,12 @@ class Cabang extends Component
                           'browser' => $_SERVER['HTTP_USER_AGENT'],
                           'edited_by' => session('nama'),
                           'data_lama' =>  [
-                                              'nama_cabang' => $this->oldDataCabang['nama_cabang'],
-                                              'kode_cabang' => $this->oldDataCabang['kode_cabang'],
-                                              'alamat_cabang' => $this->oldDataCabang['alamat_cabang'],
-                                              'regional' => $this->oldDataCabang['regional'],
-                                              'id_pic' => $this->oldDataUser['id'],
-                                              'nama_pic' => $this->oldDataUser['nama'],
+                                              'nama_cabang' => $this->dbCabang['nama_cabang'],
+                                              'kode_cabang' => $this->dbCabang['kode_cabang'],
+                                              'alamat_cabang' => $this->dbCabang['alamat_cabang'],
+                                              'regional' => $this->dbCabang['regional'],
+                                              'id_pic' => $this->dbCabang['users']['id'],
+                                              'nama_pic' => $this->dbCabang['users']['nama'],
                                           ],
                           'data_baru' =>  [
                                               'nama_cabang' => $this->nama,
@@ -295,12 +290,12 @@ class Cabang extends Component
                           'browser' => $_SERVER['HTTP_USER_AGENT'],
                           'edited_by' => session('nama'),
                           'data_lama' =>  [
-                                              'nama_cabang' => $this->oldDataCabang['nama_cabang'],
-                                              'kode_cabang' => $this->oldDataCabang['kode_cabang'],
-                                              'alamat_cabang' => $this->oldDataCabang['alamat_cabang'],
-                                              'regional' => $this->oldDataCabang['regional'],
-                                              'id_pic' => $this->oldDataUser['id'],
-                                              'nama_pic' => $this->oldDataUser['nama'],
+                                              'nama_cabang' => $this->dbCabang['nama_cabang'],
+                                              'kode_cabang' => $this->dbCabang['kode_cabang'],
+                                              'alamat_cabang' => $this->dbCabang['alamat_cabang'],
+                                              'regional' => $this->dbCabang['regional'],
+                                              'id_pic' => $this->dbCabang['users']['id'],
+                                              'nama_pic' => $this->dbCabang['users']['nama'],
                                           ],
                           'data_baru' =>  [
                                               'nama_cabang' => $this->nama,
@@ -349,10 +344,9 @@ class Cabang extends Component
 
     public function delete($id)
     {
-      $cabangQuery = ModelCabang::where('id', $id)->first();
+      $cabangQuery = ModelCabang::with('users')->where('id', $id)->first();
       $cabangQuery->delete();
 
-      $dataUser  = ModelUser::where('id', $cabangQuery['id_pic'])->withTrashed()->first();
       ModelLogCabang::create([
         'id_cabang' => $id,
         'data_log' => [
@@ -364,8 +358,8 @@ class Cabang extends Component
                                           'kode_cabang' => $cabangQuery['kode_cabang'],
                                           'alamat_cabang' => $cabangQuery['alamat_cabang'],
                                           'regional' => $cabangQuery['regional'],
-                                          'id_pic' => $dataUser['id'],
-                                          'nama_pic' => $dataUser['nama'],
+                                          'id_pic' => $cabangQuery['users']['id'],
+                                          'nama_pic' => $cabangQuery['users']['nama'],
                                       ],
                       'data_baru' =>  [],
                         ],

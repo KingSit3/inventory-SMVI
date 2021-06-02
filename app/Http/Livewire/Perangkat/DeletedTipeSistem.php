@@ -34,9 +34,8 @@ class DeletedTipeSistem extends Component
 
     public function restore($id) 
     {
-        ModelTipeSistem::where('id', $id)->restore();
+        $restoreSistem = ModelTipeSistem::where('id', $id)->onlyTrashed()->first();
 
-        $kodeTipeSistem = ModelTipeSistem::where(['id' => $id])->first();
         ModelLogTipeSistem::create([
             'id_sistem' => $id,
             'data_log' =>   [
@@ -44,10 +43,13 @@ class DeletedTipeSistem extends Component
                                 'browser' => $_SERVER['HTTP_USER_AGENT'],
                                 'edited_by' => session('nama'),
                                 'data_lama' =>  [
-                                                    'kode_sistem' => $kodeTipeSistem['kode_sistem'],
+                                                    'kode_sistem' => $restoreSistem['kode_sistem'],
                                                 ],
                                 'data_baru' =>  [],
                             ],
         ]);
+
+        //Jalankan fungsi restore
+        $restoreSistem->restore();
     }
 }

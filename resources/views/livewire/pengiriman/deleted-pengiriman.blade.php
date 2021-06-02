@@ -46,7 +46,7 @@
                             <td class="py-2">{{ ($pengiriman->firstItem()-1) + $loop->iteration }}</td>
                             <td>{{ ($value['no_pengiriman']) }}</td>
                             <td>{{ ($value['cabang']['nama_cabang']) }}</td>
-                            <td>{{ $value['deleted_at'] }}</td>
+                            <td>{{ $value['tanggal'] }}</td>
 
                             @if (session('role') != 2)
                             <td class="space-x-4 py-1 flex items-center justify-center">

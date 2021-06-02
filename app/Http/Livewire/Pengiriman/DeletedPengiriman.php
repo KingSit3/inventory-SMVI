@@ -4,7 +4,6 @@ namespace App\Http\Livewire\Pengiriman;
 
 use App\Models\ModelPengiriman;
 use App\Models\ModelLogPengiriman;
-use App\Models\ModelCabang;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -35,9 +34,8 @@ class DeletedPengiriman extends Component
 
     public function restore($id) 
     {
-        $query = ModelPengiriman::where(['id' => $id])->onlyTrashed()->first();
+        $query = ModelPengiriman::with('cabang')->where(['id' => $id])->onlyTrashed()->first();
         $query->restore();
-        $cabang = ModelCabang::where('id', $query['id_cabang'])->withTrashed()->first();
 
         ModelLogPengiriman::create([
             'id_pengiriman' => $id,
@@ -47,8 +45,8 @@ class DeletedPengiriman extends Component
                 'edited_by' => session('nama'),
                 'data_lama' =>  [
                             'no_pengiriman' => $query['no_pengiriman'],
-                            'id_cabang' => $cabang['id'],
-                            'nama_cabang' => $cabang['nama_cabang'],
+                            'id_cabang' => $query['cabang']['id'],
+                            'nama_cabang' => $query['cabang']['nama_cabang'],
                             'tanggal_pengiriman' => $query['tanggal_pengiriman'],
                 ],
                 'data_baru' =>  [],

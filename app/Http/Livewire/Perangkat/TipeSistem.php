@@ -13,7 +13,7 @@ class TipeSistem extends Component
     use WithPagination;
     
     public $submitType, $keyword, $kode, 
-    $tipeSistemId, $tipeSistemData, $oldtipeSistemData;
+    $tipeSistemId, $tipeSistemData;
     public $isOpen = false;
 
     public function updatingSearch()
@@ -45,18 +45,17 @@ class TipeSistem extends Component
         $this->validate(
             // Rules
             [
-                'kode' => 'unique:App\Models\ModelTipeSistem,kode_sistem',
+                'kode' => 'unique:App\Models\ModelTipeSistem,kode_sistem|max:25',
             ]
         );
 
         // Save data
-        ModelTipeSistem::create([
+        $saveTipeSistem = ModelTipeSistem::create([
             'kode_sistem' => $this->kode,
         ]);
 
-        $idtipeSistem = ModelTipeSistem::latest()->first();
         ModelLogTipeSistem::create([
-            'id_sistem' => $idtipeSistem['id'],
+            'id_sistem' => $saveTipeSistem->id,
             'data_log' =>   [
                                 'aksi' => 'Tambah',
                                 'browser' => $_SERVER['HTTP_USER_AGENT'],
@@ -80,10 +79,8 @@ class TipeSistem extends Component
 
     public function delete($id)
     {
-        ModelTipeSistem::where(['id' => $id])->delete();
-
-        // Cari kode Tipe Sistem yang dihapus
-        $kodetipeSistem = ModelTipeSistem::where(['id' => $id])->onlyTrashed()->first();
+        $tipeQuery = ModelTipeSistem::where(['id' => $id])->first();
+        
         ModelLogTipeSistem::create([
             'id_sistem' => $id,
             'data_log' =>   [
@@ -91,18 +88,19 @@ class TipeSistem extends Component
                                 'browser' => $_SERVER['HTTP_USER_AGENT'],
                                 'edited_by' => session('nama'),
                                 'data_lama' =>  [
-                                                    'kode_sistem' => $kodetipeSistem['kode_sistem'],
+                                                    'kode_sistem' => $tipeQuery['kode_sistem'],
                                                 ],
                                 'data_baru' =>  [],
                             ],
         ]);
+
+        $tipeQuery->delete();
     }
 
     public function edit($id) 
     {
         $this->submitType = 'update';
         $this->tipeSistemData = ModelTipeSistem::where('id', $id)->first();
-        $this->oldtipeSistemData = ModelTipeSistem::where('id', $id)->first();
 
         // Masukkan value
         $this->tipeSistemId = $id;
@@ -113,7 +111,7 @@ class TipeSistem extends Component
     {
         $this->validate(
             [
-                'kode' => [Rule::unique('tipe_sistem', 'kode_sistem')->ignore($this->kode, 'kode_sistem')],
+                'kode' => [Rule::unique('tipe_sistem', 'kode_sistem')->ignore($this->kode, 'kode_sistem'), 'max:25'],
             ]
         );
 

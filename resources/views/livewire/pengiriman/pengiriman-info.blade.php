@@ -47,7 +47,7 @@
                 <button @click="isOpen = true" class="bg-blue-500 hover:shadow-md hover:bg-blue-700 px-3 py-2 rounded-xl text-white font-semibold duration-150 mb-2">Tambah Perangkat</button>
             @endif
             @if ($totalPerangkat > 0)
-                <a href="/printPengiriman/{{ $pengirimanData['id'] }}" class="bg-yellow-500 hover:shadow-md hover:bg-yellow-600 px-3 py-2 rounded-xl text-white font-semibold duration-150 mb-2">Print pengriman</a>
+                <a href="/printpengiriman/{{ $pengirimanData['id'] }}" class="bg-yellow-500 hover:shadow-md hover:bg-yellow-600 px-3 py-2 rounded-xl text-white font-semibold duration-150 mb-2">Print pengiriman</a>
             @endif
             
             {{-- Table --}}
@@ -147,7 +147,7 @@
                                             @forelse ($snResult as $value)
                                                 <button @click="cariSn = false" wire:click="chooseSn({{ $value['id'] }})" class="w-full text-left p-1 hover:bg-black hover:bg-opacity-10 truncate" type="button"><li>{{ $value['tipe_perangkat'] }} | {{  $value['sn_pengganti'] }}</li></button>
                                             @empty
-                                                <span class="text-sm font-normal"> Data User tidak ditemukan!</span>
+                                                <span class="text-sm font-normal"> Data Perangkat tidak ditemukan!</span>
                                             @endforelse
                                         @endif
                                     </ul>
@@ -159,8 +159,8 @@
                                     <input wire:model="sn" id="serialNumber" class="inputBox"  type="text" disabled>
                                 </div>
                                 <div class="mt-4 font-semibold">
-                                    <label for="witel">Witel</label>
-                                    <input wire:model="witel" id="witel" class="inputBox"  type="text" disabled>
+                                    <label for="cabang">Cabang</label>
+                                    <input wire:model="cabang" id="cabang" class="inputBox"  type="text" disabled>
                                 </div>
                             </div>
                             <div class="flex justify-between space-x-3">
@@ -169,8 +169,8 @@
                                     <input wire:model="tipe" id="tipe" class="inputBox"  type="text" disabled>
                                 </div>
                                 <div class="mt-4 font-semibold">
-                                    <label for="image">Image</label>
-                                    <input wire:model="image" id="image" class="inputBox"  type="text" disabled>
+                                    <label for="sistem">Sistem</label>
+                                    <input wire:model="sistem" id="sistem" class="inputBox"  type="text" disabled>
                                 </div>
                             </div>
 

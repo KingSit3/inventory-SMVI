@@ -21,9 +21,9 @@
                             <tr>
                                 <td style="text-align: left; padding-left: 5vh; padding-right: 5vh;">
                                     {{-- Untuk Production --}}
-                                        <img width="100" src="{{ base_path('public/images/pins_logo.jpg') }}" alt="Logo Pins">
+                                        {{-- <img width="100" src="{{ base_path('public/images/pins_logo.jpg') }}" alt="Logo Pins"> --}}
                                     {{-- Untuk Development --}}
-                                        {{-- <img width="100" src="{{ asset('images/pins_logo.jpg') }}" alt="Logo Pins"> --}}
+                                        <img width="100" src="{{ asset('images/pins_logo.jpg') }}" alt="Logo Pins">
                                 </td>
                                 <td style="text-align: center; padding-left: 5vh; padding-right: 5vh;">
                                     SEAT MANAGEMENT V
@@ -32,9 +32,9 @@
                                 </td>
                                 <td style="text-align: right; padding-left: 5vh; padding-right: 5vh;">
                                     {{-- Untuk Production --}}
-                                        <img width="100" src="{{ base_path('public/images/telkom_logo.jpg') }}" alt="Logo telkom">
+                                        {{-- <img width="100" src="{{ base_path('public/images/telkom_logo.jpg') }}" alt="Logo telkom"> --}}
                                     {{-- Untuk Development --}}
-                                        {{-- <img width="100" src="{{ asset('images/telkom_logo.jpg') }}" alt="Logo telkom"> --}}
+                                        <img width="100" src="{{ asset('images/telkom_logo.jpg') }}" alt="Logo telkom">
                                 </td>
                             </tr>
                         </table>
@@ -59,7 +59,7 @@
                                             <tr>
                                                 <td style="vertical-align: top" width="28%">Penerima</td>
                                                 <td style="vertical-align: top" width="2%">:</td>
-                                                <td style="vertical-align: top" width="70%" style="font-size: 13px; text-transform: capitalize">WITEL ACEH</td>
+                                                <td style="vertical-align: top" width="70%" style="font-size: 13px; text-transform: uppercase">{{ $dataTujuan['nama_cabang'] }}</td>
                                             </tr>
                                             <tr>
                                                 <td></td>
@@ -72,33 +72,34 @@
                                             <tr>
                                                 <td style="vertical-align: top">Alamat Penerima</td>
                                                 <td style="vertical-align: top">:</td>
-                                                <td style="vertical-align: top; font-size: 12px; text-transform: capitalize">IS OPERATION TELKOM WITEL ACEH Jl. S.A. MAHMUDSYAH NO.10 BANDA ACEH</td>
+                                                <td style="vertical-align: top; font-size: 12px; text-transform: uppercase">{{ $dataTujuan['alamat_cabang'] }}</td>
                                             </tr>
                                             <tr>
                                                 <td style="vertical-align: top">PIC</td>
                                                 <td style="vertical-align: top">:</td>
-                                                <td style="font-size: 13px; text-transform: capitalize; vertical-align: top">ZULKARNAIN</td>
+                                                <td style="font-size: 13px; text-transform: uppercase; vertical-align: top">{{ $dataTujuan['users']['nama'] }}</td>
                                             </tr>
                                             <tr>
                                                 <td>Telepon</td>
                                                 <td>:</td>
-                                                <td style="font-size: 13px; text-transform: capitalize">08116897488 / 0651-29444</td>
+                                                <td style="font-size: 13px; text-transform: capitalize">{{ $dataTujuan['users']['no_telp'] }}</td>
                                             </tr>
                                         </table>
                                     </td>
                                 {{-- End Kiri --}}
+
                                 {{-- Kanan --}}
                                     <td>
                                         <table style="font-size: 13px;">
                                             <tr>
-                                                <td width="28%">Nomor DO</td>
+                                                <td width="28%">Nomor Pengiriman</td>
                                                 <td width="2%">:</td>
-                                                <td width="70%" style="text-transform: uppercase; font-size: 13px">do-501554</td>
+                                                <td width="70%" style="text-transform: uppercase; font-size: 13px">{{ $dataPengiriman['no_pengiriman'] }}</td>
                                             </tr>
                                             <tr>
-                                                <td>Tanggal DO</td>
+                                                <td>Tanggal Pengiriman</td>
                                                 <td>:</td>
-                                                <td style="text-transform: uppercase; font-size: 13px">20 Desember 2019</td>
+                                                <td style="text-transform: capitalize; font-size: 13px">{{ $tanggalKirim }}</td>
                                             </tr>
                                             <tr>
                                                 <td>Pengirim</td>

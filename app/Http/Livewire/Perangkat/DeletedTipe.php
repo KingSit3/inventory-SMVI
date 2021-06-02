@@ -35,8 +35,7 @@ class DeletedTipe extends Component
     public function restore($id) 
     {
         $tipeQuery = tipePerangkat::where('id', $id)->onlyTrashed()->first();
-        $tipeQuery->restore();
-
+        
         LogTipePerangkat::create([
             'id_tipe' => $id,
             'data_log' =>   [
@@ -51,5 +50,7 @@ class DeletedTipe extends Component
                                 'data_baru' =>  [],
                             ],
         ]);
+
+        $tipeQuery->restore();
     }
 }

@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Cabang;
 
 use App\Models\ModelLogCabang;
-use App\Models\ModelUser as User;
 use App\Models\ModelCabang;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -36,10 +35,9 @@ class DeletedCabang extends Component
 
     public function restore($id) 
     {
-        $cabangQuery = ModelCabang::where('id', $id)->onlyTrashed()->first();
+        $cabangQuery = ModelCabang::with('users')->where('id', $id)->onlyTrashed()->first();
         $cabangQuery->restore();
 
-        $dataUser  = User::where('id', $cabangQuery['id_pic'])->withTrashed()->first();
         ModelLogCabang::create([
             'id_cabang' => $id,
             'data_log' => [
@@ -52,7 +50,7 @@ class DeletedCabang extends Component
                                               'alamat_cabang' => $cabangQuery['alamat_cabang'],
                                               'regional' => $cabangQuery['regional'],
                                               'id_pic' => $cabangQuery['id_pic'],
-                                              'nama_pic' => $dataUser['nama'],
+                                              'nama_pic' => $cabangQuery['users']['nama'],
                                           ],
                           'data_baru' =>  [],
                             ],

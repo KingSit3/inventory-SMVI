@@ -17,7 +17,7 @@ class ModelPengiriman extends Model
       return $this->hasOne(ModelCabang::class, 'id', 'id_cabang')->withTrashed();
     }
 
-    public function getDeletedAtAttribute()
+    public function getTanggalAttribute()
     {
       return date('d-M-Y', strtotime($this->attributes['deleted_at']));
     }
