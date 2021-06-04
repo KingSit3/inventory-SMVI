@@ -16,16 +16,6 @@ class ModelPerangkat extends Model
       return $this->attributes['sn_pengganti'] = strtoupper($value);
     }
 
-    // public function setSnMonitorAttribute($value) 
-    // {
-    //   return $this->attributes['sn_monitor'] = strtoupper($value);
-    // }
-
-    // public function setSnLamaAttribute($value) 
-    // {
-    //   return $this->attributes['sn_lama'] = strtoupper($value);
-    // }
-
     public function getTanggalDihapusAttribute() 
     {
       return date('d-M-Y', strtotime($this->attributes['deleted_at']));

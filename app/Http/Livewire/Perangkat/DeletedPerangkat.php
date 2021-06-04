@@ -3,12 +3,7 @@
 namespace App\Http\Livewire\Perangkat;
 
 use App\Models\ModelPerangkat as Perangkat;
-use App\Models\ModelPengiriman;
 use App\Models\ModelLogPerangkat as LogPerangkat;
-use App\Models\ModelTipePerangkat as tipePerangkat;
-use App\Models\Modeluser as User;
-use App\Models\ModelTipeSistem;
-use App\Models\ModelCabang;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -40,31 +35,48 @@ class DeletedPerangkat extends Component
 
     public function restore($id) 
     {
-        $getDataPerangkat = Perangkat::where('id', $id)->onlyTrashed()->first();
-        $getDataPerangkat->restore();
-
-        $getDataTipe = tipePerangkat::where('id', $getDataPerangkat['id_tipe'])->withTrashed()->first();
-        $getDataSistem = ModelTipeSistem::where('id', $getDataPerangkat['id_sistem'])->withTrashed()->first();
+        $getDataPerangkat = Perangkat::with('users', 'cabang', 'pengiriman', 'tipePerangkat', 'tipeSistem')
+                                        ->where(['id' => $id])
+                                        ->onlyTrashed()
+                                        ->first();
 
         // get User
-        if ($getDataPerangkat['id_user']) {
-            $getDataUser = User::where('id', $getDataPerangkat['id_user'])->withTrashed()->first();
+        if (!$getDataPerangkat['id_user']) {
+            $getDataUser = [
+                                'id' => null, 
+                                'nama' => null
+                            ];
         } else {
-            $getDataUser = ['id' => null, 'nama' => null];
+            $getDataUser = [
+                                'id' => $getDataPerangkat['users']['id'], 
+                                'nama' => $getDataPerangkat['users']['nama']
+                            ];
         }
 
         // Get Cabang
-        if ($getDataPerangkat['id_cabang']) {
-            $getDataCabang = ModelCabang::where('id', $getDataPerangkat['id_cabang'])->withTrashed()->first();
+        if (!$getDataPerangkat['id_cabang']) {
+            $getDataCabang = [
+                                'id' => null, 
+                                'nama_cabang' => null
+                            ];
         } else {
-            $getDataCabang = ['id' => null, 'nama_cabang' => null];
+            $getDataCabang = [
+                                'id' => $getDataPerangkat['cabang']['id'], 
+                                'nama_cabang' => $getDataPerangkat['cabang']['nama_cabang']
+                            ];
         }
 
         // Get Pengiriman
-        if ($getDataPerangkat['id_pengiriman']) {
-            $getDataPengiriman = ModelPengiriman::where('id', $getDataPerangkat['id_pengiriman'])->withTrashed()->first();
+        if (!$getDataPerangkat['id_pengiriman']) {
+            $getDataPengiriman = [
+                                'id' => null, 
+                                'no_pengiriman' => null
+                            ];
         } else {
-            $getDataPengiriman = ['id' => null, 'no_pengiriman' => null];
+            $getDataPengiriman = [
+                                'id' => $getDataPerangkat['pengiriman']['id'], 
+                                'no_pengiriman' => $getDataPerangkat['pengiriman']['no_pengiriman']
+                            ];
         }
 
         LogPerangkat::create([
@@ -77,12 +89,12 @@ class DeletedPerangkat extends Component
                                                 'sn_lama' => $getDataPerangkat['sn_lama'],
                                                 'sn_pengganti' => $getDataPerangkat["sn_pengganti"],
                                                 'sn_monitor' => $getDataPerangkat['sn_monitor'],
-                                                'id_tipe' => $getDataTipe['id'],
-                                                'tipe' => $getDataTipe['kode_perangkat'],
+                                                'id_tipe' => $getDataPerangkat['tipePerangkat']['id'],
+                                                'tipe' => $getDataPerangkat['tipePerangkat']['kode_perangkat'],
                                                 'id_user' => $getDataUser['id'],
                                                 'user' => $getDataUser['nama'],
-                                                'id_sistem' => $getDataSistem['id'],
-                                                'sistem' => $getDataSistem['kode_sistem'],
+                                                'id_sistem' => $getDataPerangkat['tipeSistem']['id'],
+                                                'sistem' => $getDataPerangkat['tipeSistem']['kode_sistem'],
                                                 'id_cabang' => $getDataCabang['id'],
                                                 'cabang' => $getDataCabang['nama_cabang'],
                                                 'id_pengiriman' => $getDataPengiriman['id'],
@@ -95,5 +107,7 @@ class DeletedPerangkat extends Component
                             'data_baru' =>  [],
                         ],
         ]);
+
+        $getDataPerangkat->restore();
     }
 }

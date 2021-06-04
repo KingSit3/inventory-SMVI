@@ -41,7 +41,7 @@
                 <tr>
                     <td width="45%">Tipe Sistem Perangkat</td>
                     <td width="5%">:</td>
-                    <td width="50%">{{ ($dataPerangkat['id-sistem']) ? $dataPerangkat['tipeSistem']['kode_sistem'] : '-' }}</td>
+                    <td width="50%">{{ ($dataPerangkat['id_sistem']) ? $dataPerangkat['tipeSistem']['kode_sistem'] : '-' }}</td>
                 </tr>
                 <tr>
                     <td width="45%">Gelombang</td>
