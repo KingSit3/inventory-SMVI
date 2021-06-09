@@ -30,10 +30,11 @@ class PrintPengiriman extends Controller
             'totalPerangkat' => $totalPerangkat,
             'namaPerangkat' => $dataPerangkat[0][0]['TipePerangkat']['nama_perangkat'],
         ];
+        // dd($dataPengiriman['no_pengiriman']);
 
         // Untuk Print
-        // $pdf = PDF::loadView('print-pengiriman', $data)->setPaper('a4', 'portrait');
-        // return $pdf->download($dataPengiriman[0]['pengiriman']['no_pengiriman'].'.pdf');
+        $pdf = PDF::loadView('print-pengiriman', $data)->setPaper('a4', 'portrait');
+        return $pdf->download($dataPengiriman['no_pengiriman'].'.pdf');
 
         // Untuk lihat di web
         return view('print-pengiriman', $data);

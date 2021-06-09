@@ -21,9 +21,9 @@
                             <tr>
                                 <td style="text-align: left; padding-left: 5vh; padding-right: 5vh;">
                                     {{-- Untuk Production --}}
-                                        {{-- <img width="100" src="{{ base_path('public/images/pins_logo.jpg') }}" alt="Logo Pins"> --}}
+                                        <img width="100" src="{{ base_path('public/images/pins_logo.jpg') }}" alt="Logo Pins">
                                     {{-- Untuk Development --}}
-                                        <img width="100" src="{{ asset('images/pins_logo.jpg') }}" alt="Logo Pins">
+                                        {{-- <img width="100" src="{{ asset('images/pins_logo.jpg') }}" alt="Logo Pins"> --}}
                                 </td>
                                 <td style="text-align: center; padding-left: 5vh; padding-right: 5vh;">
                                     SEAT MANAGEMENT V
@@ -32,9 +32,9 @@
                                 </td>
                                 <td style="text-align: right; padding-left: 5vh; padding-right: 5vh;">
                                     {{-- Untuk Production --}}
-                                        {{-- <img width="100" src="{{ base_path('public/images/telkom_logo.jpg') }}" alt="Logo telkom"> --}}
+                                        <img width="100" src="{{ base_path('public/images/telkom_logo.jpg') }}" alt="Logo telkom">
                                     {{-- Untuk Development --}}
-                                        <img width="100" src="{{ asset('images/telkom_logo.jpg') }}" alt="Logo telkom">
+                                        {{-- <img width="100" src="{{ asset('images/telkom_logo.jpg') }}" alt="Logo telkom"> --}}
                                 </td>
                             </tr>
                         </table>

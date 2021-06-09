@@ -7,6 +7,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('vendor/sweetalert/sweetalert.all.js') }}"></script>
+    @stack('topScript')
     <title>Inventory</title>
     @livewireStyles
 </head>

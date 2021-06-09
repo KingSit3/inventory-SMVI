@@ -210,7 +210,7 @@ class Cabang extends Component
       
 
       if ($this->addNewPic == true) {
-        // Tambah data user + Cabang
+        // Tambah data user
         try {
           $saveUser = ModelUser::create([
             'nama' => $this->picName,

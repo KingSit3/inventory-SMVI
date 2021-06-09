@@ -8,4 +8,9 @@ class ModelGelombang extends Model
 {
     protected $table = 'gelombang';
     protected $guarded = [];
+
+    public function Perangkat() 
+    {
+      return $this->hasMany(ModelPerangkat::class, 'gelombang', 'nama_gelombang');
+    }
 }
