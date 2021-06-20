@@ -72,7 +72,7 @@
                             <th class="w-1/5">SN Monitor</th>
                             <th class="w-1/5">Cabang</th>
                             <th class="w-1/5">User</th>
-                            <th class="w-1/5">NO DO</th>
+                            <th class="w-1/5">No Pengiriman</th>
                             <th class="w-1/5">Aksi</th>
                         </tr>
                     </thead>

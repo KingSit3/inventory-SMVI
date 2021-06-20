@@ -22,6 +22,11 @@
                                 <td>:</td>
                                 <td>{{ $totalPerangkat }}</td>
                             </tr>
+                            <tr>
+                                <td class="pr-3">Status Pengiriman</td>
+                                <td>:</td>
+                                <td class="font-semibold capitalize rounded-lg {{ ($pengirimanData['deleted_at']) ? 'text-red-500' : 'text-blue-500' }}">{{ ($pengirimanData['deleted_at']) ? 'Terhapus' : 'Aktif' }}</td>
+                            </tr>
                         </table>
                     </div>
                     {{-- Search --}}

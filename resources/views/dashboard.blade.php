@@ -109,7 +109,7 @@
                     'rgb(243, 85, 142)',
                     'rgb(250, 238, 28)',
                     ],
-                    hoverOffset: 4
+                    hoverOffset: 6
                 }]
             },
             options: {

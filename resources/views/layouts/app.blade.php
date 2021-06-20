@@ -86,6 +86,7 @@
                     </div>  
                 {{-- End Master Data --}}
 
+                @if (!session('role') == 2)
                 {{-- Master Data Terhapus --}}
                     <div x-data="{open: false}">
                         <div class="mt-1 mr-3 group">
@@ -119,6 +120,7 @@
                         </div>
                     </div>  
                 {{-- End Master Data Terhapus --}}
+                @endif
                 
                 {{-- Log --}}
                     <div x-data="{open: false}">
@@ -193,7 +195,7 @@
                     {{-- <img class="w-9 rounded-full" src="{{ asset('image/logo.jpg') }}" alt="Profile"> --}}
                 </div>
                 <div class="font-normal flex flex-col leading-8">
-                    <span class="text-white cursor-default">{{ session('name') }}</span>
+                    <span class="text-white cursor-default">{{ session('nama') }}</span>
                     <a class="hover:text-white font-semibold duration-200" href="/logout">Logout</a>
                 </div>
             </div>
