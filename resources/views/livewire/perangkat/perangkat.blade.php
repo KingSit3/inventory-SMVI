@@ -315,7 +315,7 @@
                                         <p class="cursor-default pt-2">Gelombang</p>
                                         <select class="inputBox py-1" wire:model.defer="gelombang" required>
                                             {{-- Sengaja di kosongkan --}}
-                                            <option wire:key="" value="">--Pilih Sp--</option>
+                                            <option wire:key="" value="">--Pilih Gelombang--</option>
                                             {{-- Wire:key sebagai pengganti opsi selected --}}
                                             @foreach ($gelombangDb as $item)
                                                 <option wire:key="{{ $item['nama_gelombang'] }}" value="{{ $item['nama_gelombang'] }}">{{ $item['nama_gelombang'] }}</option>

@@ -123,7 +123,7 @@
                 @endif
                 
                 {{-- Log --}}
-                    <div x-data="{open: false}">
+                    {{-- <div x-data="{open: false}">
                         <div class="mt-1 mr-3 group">
                             <a class="cursor-pointer" @click="open = true">
                             <div class="w-full pl-1 py-2 group-hover:bg-indigo-800 rounded duration-150">
@@ -153,12 +153,12 @@
                             <a href="/logtipeperangkat" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Log Tipe Perangkat</a>
                             <a href="/logpengiriman" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Log Pengiriman</a>
                         </div>
-                    </div>  
+                    </div>   --}}
                 {{-- End Log --}}
 
                 @if (session('role') == 0)
                 {{-- Debug --}}
-                <div class="mt-1 mr-3 group">
+                {{-- <div class="mt-1 mr-3 group">
                     <a href="/telescope">
                     <div class="w-full pl-1 py-2 group-hover:bg-indigo-800 rounded duration-150">
                         <div class="flex">
@@ -169,7 +169,7 @@
                         </div>
                     </div>
                     </a>
-                </div>
+                </div> --}}
                 {{-- End Debug --}}
 
                 {{-- Admin --}}

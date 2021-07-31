@@ -49,7 +49,7 @@ class PengirimanInfo extends Component
 
     public function delete($id) 
     {
-      Perangkat::where('id', $id)->update(['id_pengiriman' => null]);
+      Perangkat::where('id', $id)->withTrashed()->update(['id_pengiriman' => null]);
     }
 
     public function chooseSn($id) 

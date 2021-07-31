@@ -505,6 +505,11 @@ class Perangkat extends Component
                     'perolehan' => $this->perolehan,
                 ]);
 
+                $idUserDb = ($this->dbPerangkat['users']) ? $this->dbPerangkat['users']['id'] : null ; 
+                $namaUserDb = ($this->dbPerangkat['users']) ? $this->dbPerangkat['users']['nama'] : null ; 
+                $idPengirimanDb = ($this->dbPerangkat['pengiriman']) ? $this->dbPerangkat['pengiriman']['id'] : null ; 
+                $noPengirimanDb = ($this->dbPerangkat['pengiriman']) ? $this->dbPerangkat['pengiriman']['no_pengiriman'] : null ; 
+
                 LogPerangkat::create([
                     'id_perangkat' => $this->perangkatId,
                     'data_log' => [
@@ -517,14 +522,14 @@ class Perangkat extends Component
                                                         'sn_monitor' => $this->dbPerangkat['sn_monitor'],
                                                         'id_tipe' => $this->dbPerangkat['TipePerangkat']['id'],
                                                         'tipe' => $this->dbPerangkat['TipePerangkat']['kode_perangkat'],
-                                                        'id_user' => $this->dbPerangkat['users']['id'],
-                                                        'user' => $this->dbPerangkat['users']['nama'],
+                                                        'id_user' => $idUserDb,
+                                                        'user' => $namaUserDb,
                                                         'id_sistem' => $this->dbPerangkat['tipeSistem']['id'],
                                                         'sistem' => $this->dbPerangkat['tipeSistem']['kode_sistem'],
                                                         'id_cabang' => $this->dbPerangkat['cabang']['id'],
                                                         'cabang' => $this->dbPerangkat['cabang']['nama_cabang'],
-                                                        'id_pengiriman' => $this->dbPerangkat['pengiriman']['id'],
-                                                        'no_pengiriman' => $this->dbPerangkat['pengiriman']['no_pengiriman'],
+                                                        'id_pengiriman' => $idPengirimanDb,
+                                                        'no_pengiriman' => $noPengirimanDb,
                                                         'ket' => $this->dbPerangkat['keterangan'],
                                                         'cek_status' => $this->dbPerangkat['cek_status'],
                                                         'perolehan' => $this->dbPerangkat['perolehan'],

@@ -116,7 +116,7 @@
                                 @enderror
                                 <label for="nama" class="cursor-default pt-3">Nama</label>
                                 <input wire:model.defer="nama" class="inputBox" id="nama" type="text" autocomplete="off">
-                                @error('name')
+                                @error('nama')
                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                 @enderror
                                 <label for="no_telp" class="cursor-default pt-3">Nomor Telepon</label>

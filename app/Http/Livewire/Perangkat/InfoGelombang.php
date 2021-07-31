@@ -41,4 +41,9 @@ class Infogelombang extends Component
         return view('livewire.perangkat.info-gelombang', $data)
         ->extends('layouts.app');
     }
+
+    public function delete($id)
+    {
+        Perangkat::where('id', $id)->update(['gelombang' => null]);
+    }
 }
