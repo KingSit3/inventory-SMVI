@@ -16,13 +16,13 @@ class TipeSistemSeeder extends Seeder
     {
         DB::table('tipe_sistem')->insert([
             [
-                'kode_sistem' => 'GEN',
+                'kode_sistem' => 'GCS1',
             ],
             [
-                'kode_sistem' => 'FIN3',
+                'kode_sistem' => 'GCS2',
             ],
             [
-                'kode_sistem' => 'FIN4',
+                'kode_sistem' => 'BFR1',
             ],
         ]);
     }

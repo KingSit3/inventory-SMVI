@@ -172,20 +172,20 @@
                 </div> --}}
                 {{-- End Debug --}}
 
-                {{-- Admin --}}
+                {{-- Pengguna --}}
                 <div class="mt-1 mr-3 group">
-                    <a href="/admin">
+                    <a href="/pengguna">
                     <div class="w-full pl-1 py-2 group-hover:bg-indigo-800 rounded duration-150">
                         <div class="flex">
                             <svg class="group-hover:text-white duration-150 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                             </svg>
-                            <span class="ml-3 group-hover:text-white flex items-center duration-150">Admin</span>
+                            <span class="ml-3 group-hover:text-white flex items-center duration-150">Pengguna</span>
                         </div>
                     </div>
                     </a>
                 </div>
-                {{-- End Admin --}}
+                {{-- End Pengguna --}}
                 @endif
 
             {{-- End SIdebar List --}}

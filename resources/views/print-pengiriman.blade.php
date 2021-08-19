@@ -114,12 +114,12 @@
                                             <tr>
                                                 <td>PIC</td>
                                                 <td>:</td>
-                                                <td style="text-transform: uppercase; font-size: 13px">Ramdhan</td>
+                                                <td style="text-transform: uppercase; font-size: 13px">Satrio</td>
                                             </tr>
                                             <tr>
                                                 <td>Telepon</td>
                                                 <td>:</td>
-                                                <td style="text-transform: uppercase; font-size: 13px">082121254001</td>
+                                                <td style="text-transform: uppercase; font-size: 13px">082194728592</td>
                                             </tr>
                                         </table>
                                     </td>

@@ -16,24 +16,24 @@ class UserSeeder extends Seeder
     {
         DB::table('users')->insert([
             [
-                'nama' => 'SUPRIYANTO',
-                'nik' => '670472',
-                'no_telp' => '081212103633',
+                'nama' => 'Bambang',
+                'nik' => '6701852',
+                'no_telp' => '081018603633',
             ],
             [
-                'nama' => 'PrasetyoWidodo',
+                'nama' => 'Widodo',
                 'nik' => null,
-                'no_telp' => '62 811373790',
+                'no_telp' => '62819583790',
             ],
             [
-                'nama' => 'HERU PRAYOGO',
-                'nik' => '850020',
-                'no_telp' => '0811 522 125',
+                'nama' => 'HERU',
+                'nik' => '8028420',
+                'no_telp' => '08110183125',
             ],
             [
-                'nama' => 'DWI EKO TRI SAPTONO',
-                'nik' => '631818',
-                'no_telp' => '',
+                'nama' => 'EKO',
+                'nik' => '6318019618',
+                'no_telp' => null,
             ],
         ]);
     }

@@ -16,19 +16,19 @@ class PengirimanSeeder extends Seeder
     {
         DB::table('pengiriman')->insert([
             [
-                'no_pengiriman' => 'DO-501562',
+                'no_pengiriman' => 'DO-30285',
                 'id_cabang' => '1',
                 'tanggal_pengiriman' => '2021-04-03 22:08:50',
                 'created_at' => '2021-04-11 15:32:49',
             ],
             [
-                'no_pengiriman' => 'DO-501563',
+                'no_pengiriman' => 'DO-30286',
                 'id_cabang' => '2',
                 'tanggal_pengiriman' => '2021-04-04 22:08:50',
                 'created_at' => '2021-04-12 15:32:49',
             ],
             [
-                'no_pengiriman' => 'DO-501564',
+                'no_pengiriman' => 'DO-30287',
                 'id_cabang' => '2',
                 'tanggal_pengiriman' => '2021-04-05 22:08:50',
                 'created_at' => '2021-04-13 15:32:49',

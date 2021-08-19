@@ -2,12 +2,12 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\ModelAdmin as ModelsAdmin;
+use App\Models\ModelPengguna;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 
-class Admin extends Component
+class Pengguna extends Component
 {
     public $nama, $password, $email, $status, $role, $adminId;
     public $submitType= '';
@@ -17,10 +17,10 @@ class Admin extends Component
     {
         
         $data = [
-            'admin' => ModelsAdmin::paginate(10),
+            'admin' => ModelPengguna::paginate(10),
         ];  
 
-        return view('livewire.admin', $data)
+        return view('livewire.pengguna', $data)
         ->extends('layouts.app');
     }
 
@@ -35,12 +35,12 @@ class Admin extends Component
             // Rules
             [
                 'nama' => 'required',
-                'email' => 'unique:App\Models\Admin,email',
+                'email' => 'unique:App\Models\ModelPengguna,email',
             ]
         );
 
         // Save data
-        ModelsAdmin::create([
+        ModelPengguna::create([
             'nama' => $this->nama,
             'email' => $this->email,
             'password' => Hash::make($this->password),
@@ -56,12 +56,12 @@ class Admin extends Component
         $this->isOpen = false;
 
         // Panggil SweetAlert berhasil
-        $this->emit('success', 'Data Admin Berhasil Ditambahkan');
+        $this->emit('success', 'Data Pengguna Berhasil Ditambahkan');
     }
 
     public function edit($id) 
     {
-      $adminDb = ModelsAdmin::where('id', $id)->first();
+      $adminDb = ModelPengguna::where('id', $id)->first();
 
       $this->submitType = 'update';
       $this->adminId = $id;
@@ -82,13 +82,13 @@ class Admin extends Component
         
         //Kalau password kosong
         if ($this->password == null) {
-            ModelsAdmin::where('id', $this->adminId)->update([
+            ModelPengguna::where('id', $this->adminId)->update([
                 'nama' => $this->nama,
                 'role' => $this->role,
                 'status' => $this->status,
             ]);
         } else {
-            ModelsAdmin::where('id', $this->adminId)->update([
+            ModelPengguna::where('id', $this->adminId)->update([
                 'nama' => $this->nama,
                 'password' => Hash::make($this->password),
                 'role' => $this->role,
@@ -102,7 +102,7 @@ class Admin extends Component
         $this->isOpen = false;
 
         // Panggil SweetAlert berhasil
-        $this->emit('success', 'Data Admin Berhasil Diubah');
+        $this->emit('success', 'Data Pengguna Berhasil Diubah');
 
     }
 

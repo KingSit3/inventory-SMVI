@@ -3,14 +3,14 @@
         <div>
             {{-- Top Bar --}}
             <div class="text-2xl text-center font-bold text-indigo-600 cursor-default">
-                <p>Admin Menu</p>
+                <p>Pengguna Menu</p>
             </div>
             {{-- End Top Bar --}}
 
             {{-- Top Section --}}
                 <div class="flex justify-between px-5 mb-5">
                     {{-- Tambah Button --}}
-                        <button @click="isOpen = true" wire:click="add" class="bg-blue-500 hover:shadow-md hover:bg-blue-700 px-3 py-2 rounded-xl text-white font-semibold duration-150">Tambah Admin</button>
+                        <button @click="isOpen = true" wire:click="add" class="bg-blue-500 hover:shadow-md hover:bg-blue-700 px-3 py-2 rounded-xl text-white font-semibold duration-150">Tambah Pengguna</button>
                 </div>
             {{-- End Top Section --}}
             
@@ -90,7 +90,7 @@
                                 @error('password')
                                     <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
                                 @enderror
-                                <p class="cursor-default pt-3">Role user</p>
+                                <p class="cursor-default pt-3">Role</p>
                                 <select class="inputBox py-1" wire:model="role" required>
                                     {{-- Wire:key sebagai pengganti opsi selected --}}
                                     <option value="">-- Pilih Role --</option>
@@ -99,7 +99,7 @@
                                     <option wire:key="0" value="0">Super Admin</option>
                                 </select>
 
-                                <p class="cursor-default pt-3">Status User</p>
+                                <p class="cursor-default pt-3">Status</p>
                                 <select class="inputBox py-1" wire:model="status" required>
                                     {{-- Wire:key sebagai pengganti opsi selected --}}
                                     <option value="">-- Pilih Status --</option>

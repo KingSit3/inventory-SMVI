@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             TipePerangkatSeeder::class,
             TipeSistemSeeder::class,
             PengirimanSeeder::class,
-            AdminSeeder::class,
+            PenggunaSeeder::class,
             gelombangSeeder::class,
         ]);
     }

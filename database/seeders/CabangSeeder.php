@@ -16,17 +16,17 @@ class CabangSeeder extends Seeder
     {
         DB::table('cabang')->insert([
             [
-                'nama_cabang' => 'REG 02',
-                'kode_cabang' => 'R02',
+                'nama_cabang' => 'Jakarta',
+                'kode_cabang' => 'JKT',
                 'regional' => '2',
-                'alamat_cabang' => 'IS Service Support GMP Telkom lt. M, Jl. Gatot Subroto Kav.52',
+                'alamat_cabang' => 'IS Service Support GMP Telkom',
                 'id_pic' => '1',
             ],
             [
                 'nama_cabang' => 'MADURA',
-                'kode_cabang' => 'P55',
-                'regional' => '5',
-                'alamat_cabang' => 'l. P. Trunojoyo No.67, Barurambat Kota, Pamekasan, 69313',
+                'kode_cabang' => 'MDR',
+                'regional' => '3',
+                'alamat_cabang' => 'l. P. Trunojoyo No.67, Barurambat Kota',
                 'id_pic' => '4',
             ],
         ]);

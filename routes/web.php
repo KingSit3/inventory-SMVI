@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PrintPengiriman;
-use App\Http\Livewire\Admin;
 use App\Http\Livewire\Pengiriman\DeletedPengiriman;
 use App\Http\Livewire\Pengiriman\Pengiriman;
 use App\Http\Livewire\Pengiriman\PengirimanInfo;
@@ -37,6 +36,7 @@ use App\Http\Livewire\cabang\Cabang;
 use App\Http\Livewire\cabang\DeletedCabang;
 use App\Http\Livewire\cabang\InfoCabang;
 use App\Http\Livewire\Log\LogPengiriman;
+use App\Http\Livewire\Pengguna;
 
 /*
 |--------------------------------------------------------------------------
@@ -102,12 +102,12 @@ Route::middleware('login')->group(function(){
     Route::get('/logperangkat', LogPerangkat::class);
     Route::get('/logperangkat/{id}', InfoLogPerangkat::class);
     
-    Route::get('/admin', Admin::class);
+    Route::get('/pengguna', Pengguna::class);
 });
 
-// Kalau Selain super admin tidak boleh kesini
+// Kalau Selain super pengguna tidak boleh kesini
 Route::middleware('selainSuperAdmin')->group(function(){
-    Route::get('/admin', Admin::class);
+    Route::get('/pengguna', Pengguna::class);
 });
 
 

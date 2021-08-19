@@ -16,8 +16,8 @@ class PerangkatSeeder extends Seeder
     {
         DB::table('perangkat')->insert([
             [
-                'sn_lama' => '1SBJCK34400619',
-                'sn_pengganti' => 'FVFZJ3YFL410',
+                'sn_lama' => '1SBKFHND4400619',
+                'sn_pengganti' => 'FVF93JBFFL410',
                 'sn_monitor' => null,
                 'id_tipe' => '1',
                 'id_user' => '1',
@@ -32,7 +32,7 @@ class PerangkatSeeder extends Seeder
             [
                 'sn_lama' => null,
                 'id_tipe' => '2',
-                'sn_pengganti' => 'FVFZJ475L410',
+                'sn_pengganti' => 'FVF8FHV5L410',
                 'sn_monitor' => null,
                 'id_user' => '1',
                 'id_sistem' => '3',
@@ -46,7 +46,7 @@ class PerangkatSeeder extends Seeder
             [
                 'sn_lama' => null,
                 'id_tipe' => '3',
-                'sn_pengganti' => 'FVFYR2SHJ1WT',
+                'sn_pengganti' => 'FVKDHLSHJ1WT',
                 'sn_monitor' => null,
                 'id_user' => '1',
                 'id_sistem' => '1',
@@ -60,7 +60,7 @@ class PerangkatSeeder extends Seeder
             [
                 'sn_lama' => null,
                 'id_tipe' => '1',
-                'sn_pengganti' => 'FVFYR2RHJ1WT',
+                'sn_pengganti' => 'FVFY95KFJ1WT',
                 'sn_monitor' => null,
                 'id_user' => '1',
                 'id_sistem' => '2',
@@ -72,10 +72,10 @@ class PerangkatSeeder extends Seeder
                 'gelombang' => '1',
             ],
             [
-                'sn_lama' => 'SGH516TYSV',
+                'sn_lama' => 'SGHLFJNYSV',
                 'id_tipe' => '2',
-                'sn_pengganti' => '8CG9441HQ7',
-                'sn_monitor' => '3CQ93717GQ',
+                'sn_pengganti' => '8CG058HHQ7',
+                'sn_monitor' => '3CKDH517GQ',
                 'id_user' => '3',
                 'id_sistem' => '2',
                 'id_cabang' => '1',
@@ -88,8 +88,8 @@ class PerangkatSeeder extends Seeder
             [
                 'sn_lama' => null,
                 'id_tipe' => '3',
-                'sn_pengganti' => '8CG9441HMZ',
-                'sn_monitor' => '3CQ93717M0',
+                'sn_pengganti' => '8C84JG1HMZ',
+                'sn_monitor' => '3CQ903KBM0',
                 'id_user' => '3',
                 'id_sistem' => '1',
                 'id_cabang' => '1',

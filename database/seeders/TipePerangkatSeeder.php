@@ -17,23 +17,23 @@ class TipePerangkatSeeder extends Seeder
         DB::table('tipe_perangkat')->insert([
             [
                 'nama_perangkat' => 'MacBook Pro',
-                'tipe_perangkat' => 'KOM',
-                'kode_perangkat' => 'NBE-A',
+                'tipe_perangkat' => 'Laptop',
+                'kode_perangkat' => 'MPRO',
             ],
             [
                 'nama_perangkat' => 'MacBook Air ',
-                'tipe_perangkat' => 'KOM',
-                'kode_perangkat' => 'NB1-A',
+                'tipe_perangkat' => 'Laptop',
+                'kode_perangkat' => 'MAIR',
             ],
             [
                 'nama_perangkat' => 'PC HP',
-                'tipe_perangkat' => 'KOM',
-                'kode_perangkat' => 'PC',
+                'tipe_perangkat' => 'Komputer',
+                'kode_perangkat' => 'KOMPHP',
             ],
             [
-                'nama_perangkat' => 'Projector',
-                'tipe_perangkat' => 'INF',
-                'kode_perangkat' => 'MOB',
+                'nama_perangkat' => 'Projector BenQ',
+                'tipe_perangkat' => 'Projector',
+                'kode_perangkat' => 'PTR',
             ],
         ]);
     }
