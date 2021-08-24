@@ -2,8 +2,8 @@
 
 namespace App\Http\Livewire\User;
 
-use App\Models\LogUser;
-use App\Models\User;
+use App\Models\ModelLogUser as LogUser;
+use App\Models\ModelUser as user;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -24,7 +24,7 @@ class DeletedUsers extends Component
         $data = [
             
             'users' => User::onlyTrashed()
-                                ->where('name', 'like', $keyword)
+                                ->where('nama', 'like', $keyword)
                                 // ->orWhere('nik', 'like', $keyword)
                                 ->orderBy('deleted_at', 'DESC')
                                 ->paginate(10),
@@ -36,7 +36,7 @@ class DeletedUsers extends Component
 
     public function restore($id) 
     {
-        $userQuery = User::where('id', $id)->withTrashed()->first();
+        $userQuery = User::where('id', $id)->onlyTrashed()->first();
         $userQuery->restore();
 
         LogUser::create([
@@ -44,9 +44,9 @@ class DeletedUsers extends Component
             'data_log' => [
                             'aksi' => 'Restore',
                             'browser' => $_SERVER['HTTP_USER_AGENT'],
-                            'edited_by' => session('name'),
+                            'edited_by' => session('nama'),
                             'data_lama' =>  [
-                                                'name' => $userQuery['name'],
+                                                'nama' => $userQuery['nama'],
                                                 'nik' => $userQuery['nik'],
                                                 'no_telp' => $userQuery['no_telp'],
                                             ],

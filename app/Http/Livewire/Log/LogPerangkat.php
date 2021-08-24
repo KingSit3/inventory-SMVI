@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Log;
 
-use App\Models\LogPerangkat as ModelsLogPerangkat;
+use App\Models\ModelLogPerangkat;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -16,7 +16,7 @@ class LogPerangkat extends Component
         $keyword = '%'.$this->keyword.'%';
 
         $data = [
-            'logPerangkat' => ModelsLogPerangkat::whereHas('Perangkat', function($query) use ($keyword){
+            'logPerangkat' => ModelLogPerangkat::with('Perangkat')->whereHas('Perangkat', function($query) use ($keyword){
                 // Jalankan query search seperti biasa
                 $query->where('sn_pengganti', 'like', $keyword);
             })

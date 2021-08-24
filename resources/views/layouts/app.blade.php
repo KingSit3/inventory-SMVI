@@ -7,6 +7,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('vendor/sweetalert/sweetalert.all.js') }}"></script>
+    @stack('topScript')
     <title>Inventory</title>
     @livewireStyles
 </head>
@@ -76,25 +77,26 @@
                             class="bg-gray-100 space-y-2 mr-4 py-2 rounded-xl">
                             <a href="/users" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">User</a>
                             <a href="/perangkat" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Perangkat</a>
-                            <a href="/witel" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Witel</a>
-                            <a href="/image" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Image</a>
+                            <a href="/cabang" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Cabang</a>
+                            <a href="/tipesistem" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Tipe Sistem</a>
                             <a href="/tipe" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Tipe Perangkat</a>
-                            <a href="/sp" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">SP</a>
-                            <a href="/deliveryorder" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Delivery Order</a>
+                            <a href="/gelombang" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Gelombang</a>
+                            <a href="/pengiriman" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">pengiriman</a>
                         </div>
                     </div>  
                 {{-- End Master Data --}}
 
+                @if (!session('role') == 2)
                 {{-- Master Data Terhapus --}}
                     <div x-data="{open: false}">
                         <div class="mt-1 mr-3 group">
                             <a class="cursor-pointer" @click="open = true">
                             <div class="w-full pl-1 py-2 group-hover:bg-indigo-800 rounded duration-150">
                                 <div class="flex">
-                                    <svg class="group-hover:text-white duration-150 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="group-hover:text-white duration-150 w-7" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                     </svg>
-                                    <span class="ml-3 group-hover:text-white flex items-center duration-150">Master Data Terhapus</span>
+                                    <span class="ml-3 group-hover:text-white flex items-center duration-150">Data Terhapus</span>
                                 </div>
                                 
                             </div>
@@ -111,16 +113,17 @@
                             class="bg-gray-100 space-y-2 mr-4 py-2 rounded-xl">
                             <a href="/deletedusers" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">User Terhapus</a>
                             <a href="/deletedperangkat" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Perangkat Terhapus</a>
-                            <a href="/deletedwitel" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Witel Terhapus</a>
-                            <a href="/deletedimage" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Image Terhapus</a>
+                            <a href="/deletedcabang" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Cabang Terhapus</a>
+                            <a href="/deletedtipesistem" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Tipe Sistem Terhapus</a>
                             <a href="/deletedtipe" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Tipe Perangkat Terhapus</a>
-                            <a href="/deleteddeliveryorder" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Delivery Order Terhapus</a>
+                            <a href="/deletedpengiriman" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Pengiriman Terhapus</a>
                         </div>
                     </div>  
                 {{-- End Master Data Terhapus --}}
+                @endif
                 
                 {{-- Log --}}
-                    <div x-data="{open: false}">
+                    {{-- <div x-data="{open: false}">
                         <div class="mt-1 mr-3 group">
                             <a class="cursor-pointer" @click="open = true">
                             <div class="w-full pl-1 py-2 group-hover:bg-indigo-800 rounded duration-150">
@@ -145,29 +148,44 @@
                             class="bg-gray-100 space-y-2 mr-4 py-2 rounded-xl">
                             <a href="/loguser" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Log User</a>
                             <a href="/logperangkat" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Log Perangkat</a>
-                            <a href="/logwitel" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Log Witel</a>
-                            <a href="/logimage" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Log Image</a>
+                            <a href="/logcabang" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Log Cabang</a>
+                            <a href="/logtipesistem" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Log Tipe Sistem</a>
                             <a href="/logtipeperangkat" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Log Tipe Perangkat</a>
-                            <a href="/logdeliveryorder" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Log Delivery Order</a>
+                            <a href="/logpengiriman" class="ml-3 mr-3 p-2 rounded-xl block hover:text-white hover:bg-indigo-500 text-indigo-500  items-center duration-150">Log Pengiriman</a>
                         </div>
-                    </div>  
+                    </div>   --}}
                 {{-- End Log --}}
 
                 @if (session('role') == 0)
-                {{-- Admin --}}
+                {{-- Debug --}}
+                {{-- <div class="mt-1 mr-3 group">
+                    <a href="/telescope">
+                    <div class="w-full pl-1 py-2 group-hover:bg-indigo-800 rounded duration-150">
+                        <div class="flex">
+                            <svg class="group-hover:text-white duration-150 w-7" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16" >
+                                <path d="M4.355.522a.5.5 0 0 1 .623.333l.291.956A4.979 4.979 0 0 1 8 1c1.007 0 1.946.298 2.731.811l.29-.956a.5.5 0 1 1 .957.29l-.41 1.352A4.985 4.985 0 0 1 13 6h.5a.5.5 0 0 0 .5-.5V5a.5.5 0 0 1 1 0v.5A1.5 1.5 0 0 1 13.5 7H13v1h1.5a.5.5 0 0 1 0 1H13v1h.5a1.5 1.5 0 0 1 1.5 1.5v.5a.5.5 0 1 1-1 0v-.5a.5.5 0 0 0-.5-.5H13a5 5 0 0 1-10 0h-.5a.5.5 0 0 0-.5.5v.5a.5.5 0 1 1-1 0v-.5A1.5 1.5 0 0 1 2.5 10H3V9H1.5a.5.5 0 0 1 0-1H3V7h-.5A1.5 1.5 0 0 1 1 5.5V5a.5.5 0 0 1 1 0v.5a.5.5 0 0 0 .5.5H3c0-1.364.547-2.601 1.432-3.503l-.41-1.352a.5.5 0 0 1 .333-.623zM4 7v4a4 4 0 0 0 3.5 3.97V7H4zm4.5 0v7.97A4 4 0 0 0 12 11V7H8.5zM12 6a3.989 3.989 0 0 0-1.334-2.982A3.983 3.983 0 0 0 8 2a3.983 3.983 0 0 0-2.667 1.018A3.989 3.989 0 0 0 4 6h8z"/>
+                            </svg>
+                            <span class="ml-3 group-hover:text-white flex items-center duration-150">Debug</span>
+                        </div>
+                    </div>
+                    </a>
+                </div> --}}
+                {{-- End Debug --}}
+
+                {{-- Pengguna --}}
                 <div class="mt-1 mr-3 group">
-                    <a href="/admin">
+                    <a href="/pengguna">
                     <div class="w-full pl-1 py-2 group-hover:bg-indigo-800 rounded duration-150">
                         <div class="flex">
                             <svg class="group-hover:text-white duration-150 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                             </svg>
-                            <span class="ml-3 group-hover:text-white flex items-center duration-150">Admin</span>
+                            <span class="ml-3 group-hover:text-white flex items-center duration-150">Pengguna</span>
                         </div>
                     </div>
                     </a>
                 </div>
-                {{-- End Admin --}}
+                {{-- End Pengguna --}}
                 @endif
 
             {{-- End SIdebar List --}}
@@ -177,7 +195,7 @@
                     {{-- <img class="w-9 rounded-full" src="{{ asset('image/logo.jpg') }}" alt="Profile"> --}}
                 </div>
                 <div class="font-normal flex flex-col leading-8">
-                    <span class="text-white cursor-default">{{ session('name') }}</span>
+                    <span class="text-white cursor-default">{{ session('nama') }}</span>
                     <a class="hover:text-white font-semibold duration-200" href="/logout">Logout</a>
                 </div>
             </div>

@@ -2,9 +2,8 @@
 
 namespace App\Http\Livewire\User;
 
-use App\Models\LogUser;
-use App\Models\User;
-use Exception;
+use App\Models\ModelLogUser as Loguser;
+use App\Models\ModelUser as User;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -13,7 +12,8 @@ class Users extends Component
 {
     use WithPagination;
 
-    public $userId, $nik, $name, $no_telp, $userData, $oldUserData;
+    public $userId, $nik,
+    $nama, $no_telp, $userData, $oldUserData;
     public $submitType, $keyword = '';
     public $isOpen = false;
 
@@ -28,7 +28,7 @@ class Users extends Component
         $keyword = '%'.$this->keyword.'%';
         
         $data = [
-            'users' => User::where('name', 'like', $keyword)
+            'users' => User::where('nama', 'like', $keyword)
                         ->orWhere('nik', 'like', $keyword)
                         ->paginate(10),
         ];
@@ -48,28 +48,27 @@ class Users extends Component
         $this->validate(
             // Rules
             [
-                'nik' => 'unique:App\Models\User,nik|numeric|nullable',
-                'name' => 'required',
-                'no_telp' => 'nullable',
+                'nik' => 'unique:App\Models\ModelUser,nik|numeric|nullable',
+                'nama' => 'required|max:100',
+                'no_telp' => 'nullable|max:50',
             ]
         );
 
-        User::create([
-            'name' => $this->name,
-            'nik' => $this->nik,
+        $saveUser = User::create([
+            'nama' => $this->nama,
+            'nik' => (trim($this->nik) == '') ? null : $this->nik,
             'no_telp' => $this->no_telp,
         ]);
 
-        $dataUser = User::latest()->first();
         LogUser::create([
-            'id_user' => $dataUser['id'],
+            'id_user' => $saveUser->id,
             'data_log' => [
                             'aksi' => 'Tambah',
                             'browser' => $_SERVER['HTTP_USER_AGENT'],
-                            'edited_by' => session('name'),
+                            'edited_by' => session('nama'),
                             'data_lama' =>  [],
                             'data_baru' =>  [
-                                                'name' => $this->name,
+                                                'nama' => $this->nama,
                                                 'nik' => $this->nik,
                                                 'no_telp' => $this->no_telp,
                                             ],
@@ -89,22 +88,23 @@ class Users extends Component
     public function delete($id)
     {
       $userQuery = User::where(['id' => $id])->first();
-      $userQuery->delete();
 
       LogUser::create([
         'id_user' => $id,
         'data_log' => [
                         'aksi' => 'Hapus',
                         'browser' => $_SERVER['HTTP_USER_AGENT'],
-                        'edited_by' => session('name'),
+                        'edited_by' => session('nama'),
                         'data_lama' =>  [
-                                            'name' => $userQuery['name'],
+                                            'nama' => $userQuery['nama'],
                                             'nik' => $userQuery['nik'],
                                             'no_telp' => $userQuery['no_telp'],
                                         ],
                         'data_baru' =>  [],
                         ],
         ]);
+
+        $userQuery->delete();
     }
 
     public function edit($id) 
@@ -115,10 +115,8 @@ class Users extends Component
         // Masukkan value
         $this->userId = $id;
         $this->nik = $this->userData['nik'];
-        $this->name = $this->userData['name'];
+        $this->nama = $this->userData['nama'];
         $this->no_telp = $this->userData['no_telp'];
-
-        $this->oldUserData = User::where('id', $id)->first();
     }
 
     public function update()
@@ -126,18 +124,17 @@ class Users extends Component
             $this->validate(
                 // Rules
                 [
-                    // Gagal validasi unique
                     'nik' => ['numeric', 'nullable', Rule::unique('users', 'nik')->ignore($this->nik, 'nik')],
-                    'name' => 'required',
-                    'no_telp' => 'nullable',
+                    'nama' => 'required|max:100',
+                    'no_telp' => 'nullable|max:50',
                 ]
             );
 
         // Pakai fitur Try Catch Untuk mengatasi eror unique
         try {
             User::where('id', $this->userId)->update([
-                'nik' => $this->nik,
-                'name' => $this->name,
+                'nik' => (trim($this->nik) == '') ? null : $this->nik,
+                'nama' => $this->nama,
                 'no_telp' => $this->no_telp,
             ]);
 
@@ -146,14 +143,14 @@ class Users extends Component
                 'data_log' => [
                                 'aksi' => 'Edit',
                                 'browser' => $_SERVER['HTTP_USER_AGENT'],
-                                'edited_by' => session('name'),
+                                'edited_by' => session('nama'),
                                 'data_lama' =>  [
-                                                    'name' => $this->oldUserData['name'],
-                                                    'nik' => $this->oldUserData['nik'],
-                                                    'no_telp' => $this->oldUserData['no_telp'],
+                                                    'nama' => $this->userData['nama'],
+                                                    'nik' => $this->userData['nik'],
+                                                    'no_telp' => $this->userData['no_telp'],
                                                 ],
                                 'data_baru' =>  [
-                                                    'name' => $this->name,
+                                                    'nama' => $this->nama,
                                                     'nik' => $this->nik,
                                                     'no_telp' => $this->no_telp,
                                                 ],

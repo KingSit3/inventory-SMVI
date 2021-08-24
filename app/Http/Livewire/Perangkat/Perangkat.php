@@ -2,15 +2,15 @@
 
 namespace App\Http\Livewire\Perangkat;
 
-use App\Models\DoModel;
-use App\Models\Image;
-use App\Models\LogPerangkat;
-use App\Models\LogUser;
-use App\Models\Perangkat as ModelsPerangkat;
-use App\Models\SP;
-use App\Models\tipePerangkat;
-use App\Models\User;
-use App\Models\Witel;
+use App\Models\ModelPengiriman;
+use App\Models\ModelLogPerangkat as LogPerangkat;
+use App\Models\ModelLogUser as LogUser;
+use App\Models\ModelPerangkat as ModelsPerangkat;
+use App\Models\ModelGelombang;
+use App\Models\ModelTipePerangkat as TipePerangkat;
+use App\Models\ModelUser as User;
+use App\Models\ModelCabang as Cabang;
+use App\Models\ModelTipeSistem;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -18,12 +18,14 @@ use Livewire\WithPagination;
 class Perangkat extends Component
 { 
     use WithPagination;
-    public $tipePerangkat, $sn_lama, $sn_pengganti, $sn_monitor, $imagePerangkat, $cekStatus, $perolehan, $spPerangkat, $ket, $oldSnLama, $oldSnPengganti, $oldSnMonitor, $dataLama = null;
-    public $dbPerangkat, $perangkatId, $dbWitel, $dbUser;
+    public $tipePerangkat, $sn_lama, $sn_pengganti, 
+    $sn_monitor, $sistemPerangkat, $cekStatus, $perolehan, 
+    $gelombang, $ket = null;
+    public $dbPerangkat, $perangkatId;
     public $namaUser, $nikUser, $telpUser, $userSearch, $userId;
-    public $witel, $witelSearch, $witelId;
-    public $kodeDo, $doId, $doSearch;
-    public $doData, $witelData, $userData = '';
+    public $cabang, $cabangSearch, $cabangId;
+    public $kodePengiriman, $pengirimanId, $pengirimanSearch;
+    public $pengirimanData, $cabangData, $userData = '';
 
     public $submitType, $keyword = '';
     public $isOpen, $addUser = false;
@@ -35,35 +37,36 @@ class Perangkat extends Component
 
     public function render()
     {
+
         $keyword = '%'.$this->keyword.'%';
 
         $hasilUser = '';
         if (strlen($this->userSearch) > 0) {
             $this->addUser = false;
             $userSearchQuery = '%'.$this->userSearch.'%';
-            $hasilUser = User::where('name', 'like', $userSearchQuery)->limit(5)->get();
+            $hasilUser = User::where('nama', 'like', $userSearchQuery)->limit(5)->get();
         }
 
-        $hasilWitel = '';
-        if (strlen($this->witelSearch) > 0) {
-            $witelSearchQuery = '%'.$this->witelSearch.'%';
-            $hasilWitel = Witel::where('nama_witel', 'like', $witelSearchQuery)->limit(5)->get();
+        $hasilCabang = '';
+        if (strlen($this->cabangSearch) > 0) {
+            $cabangSearchQuery = '%'.$this->cabangSearch.'%';
+            $hasilCabang = Cabang::where('nama_cabang', 'like', $cabangSearchQuery)->limit(5)->get();
         }
 
-        $hasilDo = '';
-        if (strlen($this->doSearch) > 0) {
-            $doSearchQuery = '%'.$this->doSearch.'%';
-            $hasilDo = DoModel::where('no_do', 'like', $doSearchQuery)->limit(5)->get();
+        $hasilPengiriman = '';
+        if (strlen($this->pengirimanSearch) > 0) {
+            $pengirimanSearchQuery = '%'.$this->pengirimanSearch.'%';
+            $hasilPengiriman = ModelPengiriman::where('no_pengiriman', 'like', $pengirimanSearchQuery)->limit(5)->get();
         }
 
         $data = [
-            'doResult' => $hasilDo,
+            'pengirimanResult' => $hasilPengiriman,
             'userResult' => $hasilUser,
-            'witelResult' => $hasilWitel,
-            'sp' => SP::all()->sortDesc(),
-            'image' => Image::all(),
+            'cabangResult' => $hasilCabang,
+            'gelombangDb' => ModelGelombang::all()->sortDesc(),
+            'tipeSistem' => ModelTipeSistem::all(),
             'tipe' => tipePerangkat::all(),
-            'perangkatData' => ModelsPerangkat::with('users', 'witel', 'deliveryOrder', 'TipePerangkat', 'image')
+            'perangkatData' => ModelsPerangkat::with('users', 'cabang', 'pengiriman', 'TipePerangkat', 'tipeSistem')
                             ->where('sn_pengganti', 'like', $keyword)
                             ->paginate(10),
         ];
@@ -71,7 +74,7 @@ class Perangkat extends Component
         return view('livewire.perangkat.perangkat', $data)
         ->extends('layouts.app');
     }
-
+   
     public function add() 
     {
         $this->submitType = 'tambah';
@@ -81,36 +84,41 @@ class Perangkat extends Component
     {
         if ($this->addUser == true) {
             $nikValidate = ['nullable', 'numeric', Rule::unique('users', 'nik')->ignore($this->nikUser, 'nik')];
+            $namaValidate = ['required', 'max:100'];
+            $noTelpvalidate = ['nullable', 'max:50'];
         } else {
             $nikValidate = '';
+            $noTelpvalidate = '';
+            $namaValidate= '';
         }
 
         $this->validate([
-            'sn_lama' => 'unique:App\Models\Perangkat,sn_lama|nullable',
+            'sn_lama' => 'unique:App\Models\ModelPerangkat,sn_lama|nullable',
             'tipePerangkat' => 'required',
-            'sn_pengganti' => 'unique:App\Models\Perangkat,sn_pengganti',
-            'sn_monitor' => 'unique:App\Models\Perangkat,sn_monitor|nullable',
+            'sn_pengganti' => 'unique:App\Models\ModelPerangkat,sn_pengganti',
+            'sn_monitor' => 'unique:App\Models\ModelPerangkat,sn_monitor|nullable',
             'nikUser' => $nikValidate,
-            'imagePerangkat' => 'required',
+            'namaUser' => $namaValidate,
+            'telpUser' => $noTelpvalidate,
+            'sistemPerangkat' => 'required',
         ]);
-        if ($this->sn_lama == null) {
-            $this->sn_lama = null;
+
+        if (!$this->pengirimanData) {
+            $this->pengirimanData = ['id' => null, 'no_pengiriman' => null];
+        }
+        
+        if (!$this->cabangData) {
+            $this->cabangData = ['id' => null, 'nama_cabang' => null];
         }
 
-        if ($this->doData == null) {
-            $this->doData = ['id' => null, 'no_do' => null];
-        }
-        if ($this->witelData == null) {
-            $this->witelData = ['id' => null, 'nama_witel' => null];
-        }
-        if ($this->userData == null) {
-            $this->userData = ['id' => null, 'name' => null];
+        if (!$this->userData) {
+            $this->userData = ['id' => null, 'nama' => null];
         }
 
-        if ($this->imagePerangkat) {
-            $dataImage = Image::where('id', $this->imagePerangkat)->first();
+        if ($this->sistemPerangkat) {
+            $dataSistem = ModelTipeSistem::where('id', $this->sistemPerangkat)->first();
         } else {
-            $dataImage = ['id' => null, 'kode_image' => null];
+            $dataSistem = ['id' => null, 'kode_sistem' => null];
         }
 
         if ($this->tipePerangkat) {
@@ -119,129 +127,432 @@ class Perangkat extends Component
             $dataTipe = ['id' => null, 'kode_perangkat' => null];
         }
         
-
         if ($this->addUser == true) {
             // Jika tambah user
             try {
-                User::create([
-                'name' => $this->namaUser,
-                'nik' => $this->nikUser,
+                $saveUser = User::create([
+                'nama' => $this->namaUser,
+                'nik' => (trim($this->nikUser) == '') ? null : $this->nikUser,
                 'no_telp' => $this->telpUser,
                 ]);
 
-                // Ambil id user terakhir
-                $getLastUser = User::latest()->first();
-                $this->userId = $getLastUser['id'];
-
-                ModelsPerangkat::create([
-                    'sn_lama' => $this->sn_lama,
+                $savePerangkat = ModelsPerangkat::create([
+                    'sn_lama' => (trim($this->sn_lama) == '') ? null : strtoupper($this->sn_lama),
+                    'sn_pengganti' => strtoupper($this->sn_pengganti),
+                    'sn_monitor' => (trim($this->sn_monitor) == '') ? null : strtoupper($this->sn_monitor),
+                    'id_user' => $saveUser->id,
                     'id_tipe' => $this->tipePerangkat,
-                    'sn_pengganti' => $this->sn_pengganti,
-                    'sn_monitor' => $this->sn_monitor,
-                    'id_user' => $this->userId,
-                    'id_image' => $this->imagePerangkat,
-                    'id_witel' => $this->witelId,
-                    'id_do' => $this->doId,
+                    'id_sistem' => $this->sistemPerangkat,
+                    'id_cabang' => $this->cabangId,
+                    'id_pengiriman' => $this->pengirimanId,
                     'keterangan' => $this->ket,
                     'cek_status' => $this->cekStatus,
-                    'sp' => $this->spPerangkat,
+                    'gelombang' => $this->gelombang,
                     'perolehan' => $this->perolehan,
                 ]);
 
-                // Ambil Id Perangkat terakhir
-                $getLastPerangkat = ModelsPerangkat::latest()->first();
-                LogPerangkat::create([
-                    'id_perangkat' => $getLastPerangkat['id'],
+                LogPerangkat::create([ 
+                    'id_perangkat' => $savePerangkat['id'],
                     'data_log' => [
                                     'aksi' => 'Tambah',
                                     'browser' => $_SERVER['HTTP_USER_AGENT'],
-                                    'edited_by' => session('name'),
+                                    'edited_by' => session('nama'),
                                     'data_lama' =>  [],
                                     'data_baru' =>  [
-                                                        'sn_lama' => $this->sn_lama,
-                                                        'sn_pengganti' => $this->sn_pengganti,
-                                                        'sn_monitor' => $this->sn_monitor,
+                                                        'sn_lama' => strtoupper($this->sn_lama),
+                                                        'sn_pengganti' => strtoupper($this->sn_pengganti),
+                                                        'sn_monitor' => strtoupper($this->sn_monitor),
                                                         'id_tipe' => $dataTipe['id'],
                                                         'tipe' => $dataTipe['kode_perangkat'],
                                                         'id_user' => $this->userData['id'],
-                                                        'user' => $this->userData['name'],
-                                                        'id_image' => $dataImage['id'],
-                                                        'image' => $dataImage['kode_image'],
-                                                        'id_witel' => $this->witelData['id'],
-                                                        'witel' => $this->witelData['nama_witel'],
-                                                        'id_delivery_order' => $this->doData['id'],
-                                                        'delivery_order' => $this->doData['no_do'],
+                                                        'user' => $this->userData['nama'],
+                                                        'id_sistem' => $dataSistem['id'],
+                                                        'sistem' => $dataSistem['kode_sistem'],
+                                                        'id_cabang' => $this->cabangData['id'],
+                                                        'cabang' => $this->cabangData['nama_cabang'],
+                                                        'id_pengiriman' => $this->pengirimanData['id'],
+                                                        'no_pengiriman' => $this->pengirimanData['no_pengiriman'],
                                                         'ket' => $this->ket,
                                                         'cek_status' => $this->cekStatus,
                                                         'perolehan' => $this->perolehan,
-                                                        'sp' => $this->spPerangkat,
+                                                        'gelombang' => $this->gelombang,
                                                     ],
                                 ],
                 ]);
 
                 LogUser::create([
-                    'id_user' => $this->userId,
+                    'id_user' => $saveUser->id,
                     'data_log' => [
                                     'aksi' => 'Tambah',
                                     'browser' => $_SERVER['HTTP_USER_AGENT'],
-                                    'edited_by' => session('name'),
+                                    'edited_by' => session('nama'),
                                     'data_lama' =>  [],
                                     'data_baru' =>  [
-                                                        'name' => $getLastUser['name'],
-                                                        'nik' => $getLastUser['nik'],
-                                                        'no_telp' => $getLastUser['no_telp'],
+                                                        'nama' => $saveUser->nama,
+                                                        'nik' => $saveUser->nik,
+                                                        'no_telp' => $saveUser->no_telp,
                                                     ],
                                     ],
                     ]);
 
             } catch (\Exception $ex) {
-                throw $ex;
+                // throw $ex;
                 return $this->addError('nikUser', 'Nik Sudah terdaftar');
             }
             
         } else {
             try {
-                ModelsPerangkat::create([
-                    'sn_lama' => $this->sn_lama,
+                $savePerangkat = ModelsPerangkat::create([
+                    'sn_lama' => (trim($this->sn_lama) == '') ? null : strtoupper($this->sn_lama),
+                    'sn_pengganti' => strtoupper($this->sn_pengganti),
+                    'sn_monitor' => (trim($this->sn_monitor) == '') ? null : strtoupper($this->sn_monitor),
                     'id_tipe' => $this->tipePerangkat,
-                    'sn_pengganti' => $this->sn_pengganti,
-                    'sn_monitor' => $this->sn_monitor,
                     'id_user' => $this->userId,
-                    'id_image' => $this->imagePerangkat,
-                    'id_witel' => $this->witelId,
-                    'id_do' => $this->doId,
+                    'id_sistem' => $this->sistemPerangkat,
+                    'id_cabang' => $this->cabangId,
+                    'id_pengiriman' => $this->pengirimanId,
                     'keterangan' => $this->ket,
                     'cek_status' => $this->cekStatus,
-                    'sp' => $this->spPerangkat,
+                    'gelombang' => $this->gelombang,
                     'perolehan' => $this->perolehan,
                 ]);
 
-                $getLastPerangkat = ModelsPerangkat::latest()->first();
                 LogPerangkat::create([
-                    'id_perangkat' => $getLastPerangkat['id'],
+                    'id_perangkat' => $savePerangkat->id,
                     'data_log' => [
                                     'aksi' => 'Tambah',
                                     'browser' => $_SERVER['HTTP_USER_AGENT'],
-                                    'edited_by' => session('name'),
+                                    'edited_by' => session('nama'),
                                     'data_lama' =>  [],
                                     'data_baru' =>  [
-                                                        'sn_lama' => $this->sn_lama,
-                                                        'sn_pengganti' => $this->sn_pengganti,
-                                                        'sn_monitor' => $this->sn_monitor,
+                                                        'sn_lama' => strtoupper($this->sn_lama),
+                                                        'sn_pengganti' => strtoupper($this->sn_pengganti),
+                                                        'sn_monitor' => strtoupper($this->sn_monitor),
                                                         'id_tipe' => $dataTipe['id'],
                                                         'tipe' => $dataTipe['kode_perangkat'],
                                                         'id_user' => $this->userData['id'],
-                                                        'user' => $this->userData['name'],
-                                                        'id_image' => $dataImage['id'],
-                                                        'image' => $dataImage['kode_image'],
-                                                        'id_witel' => $this->witelData['id'],
-                                                        'witel' => $this->witelData['nama_witel'],
-                                                        'id_delivery_order' => $this->doData['id'],
-                                                        'delivery_order' => $this->doData['no_do'],
+                                                        'user' => $this->userData['nama'],
+                                                        'id_sistem' => $dataSistem['id'],
+                                                        'sistem' => $dataSistem['kode_sistem'],
+                                                        'id_cabang' => $this->cabangData['id'],
+                                                        'cabang' => $this->cabangData['nama_cabang'],
+                                                        'id_pengiriman' => $this->pengirimanData['id'],
+                                                        'no_pengiriman' => $this->pengirimanData['no_pengiriman'],
                                                         'ket' => $this->ket,
                                                         'cek_status' => $this->cekStatus,
                                                         'perolehan' => $this->perolehan,
-                                                        'sp' => $this->spPerangkat,
+                                                        'gelombang' => $this->gelombang,
+                                                    ],
+                                ],
+                ]);
+            }catch (\Exception $ex) {
+                // throw $ex;
+                return $this->addError('sn_lama', 'Sn Sudah ada');
+            }
+        }
+
+        // Panggil fungsi Reset data
+        $this->resetData();
+
+        // Tutup Modal
+        $this->isOpen = false;
+        $this->addUser = false;
+
+        // Panggil SweetAlert berhasil
+        $this->emit('success', 'Data Cabang Berhasil Ditambahkan');
+    }
+
+    public function delete($id)
+    {
+        $getDataPerangkat = ModelsPerangkat::with('tipeSistem', 'tipePerangkat', 'users', 'cabang', 'pengiriman')
+                                            ->where(['id' => $id])
+                                            ->first();
+
+        // get User
+        if (!$getDataPerangkat['id_user']) {
+            $getDataPerangkat['users'] = ['id' => null, 'nama' => null];
+        } 
+
+        // Get Cabang
+        if (!$getDataPerangkat['id_cabang']) {
+            $getDataPerangkat['cabang'] = ['id' => null, 'nama_cabang' => null];
+        }
+
+        // Get Pengiriman
+        if (!$getDataPerangkat['id_pengiriman']) {
+            $getDataPerangkat['pengiriman'] = ['id' => null, 'no_pengiriman' => null];
+        }
+
+        LogPerangkat::create([
+            'id_perangkat' => $id,
+            'data_log' => [
+                            'aksi' => 'Hapus',
+                            'browser' => $_SERVER['HTTP_USER_AGENT'],
+                            'edited_by' => session('nama'),
+                            'data_lama' =>  [
+                                                'sn_lama' => $getDataPerangkat['sn_lama'],
+                                                'sn_pengganti' => $getDataPerangkat["sn_pengganti"],
+                                                'sn_monitor' => $getDataPerangkat['sn_monitor'],
+                                                'id_tipe' => $getDataPerangkat['TipePerangkat']['id'],
+                                                'tipe' => $getDataPerangkat['TipePerangkat']['kode_perangkat'],
+                                                'id_user' => $getDataPerangkat['users']['id'],
+                                                'user' => $getDataPerangkat['users']['nama'],
+                                                'id_sistem' => $getDataPerangkat['tipeSistem']['id'],
+                                                'sistem' => $getDataPerangkat['tipeSistem']['kode_sistem'],
+                                                'id_cabang' => $getDataPerangkat['cabang']['id'],
+                                                'cabang' => $getDataPerangkat['cabang']['nama_cabang'],
+                                                'id_pengiriman' => $getDataPerangkat['pengiriman']['id'],
+                                                'no_pengiriman' => $getDataPerangkat['pengiriman']['no_pengiriman'],
+                                                'ket' => $getDataPerangkat['keterangan'],
+                                                'cek_status' => $getDataPerangkat['cek_status'],
+                                                'perolehan' => $getDataPerangkat['perolehan'],
+                                                'gelombang' => $getDataPerangkat['gelombang'],
+                                            ],
+                            'data_baru' =>  [],
+                        ],
+        ]);
+
+        $getDataPerangkat->delete();
+    }
+
+    public function edit($id) 
+    {
+        $this->submitType = 'update';
+        $this->dbPerangkat = ModelsPerangkat::with('users', 'cabang', 'pengiriman', 'tipeSistem', 'TipePerangkat')->where('id', $id)->first();
+        $this->perangkatId = $id;
+
+        if ($this->dbPerangkat['id_user']) {
+            $this->namaUser = $this->dbPerangkat['users']['nama'];
+            $this->nikUser = $this->dbPerangkat['users']['nik'];
+            $this->telpUser = $this->dbPerangkat['users']['no_telp'];
+            $this->userId = $this->dbPerangkat['id_user'];
+        }
+
+        if ($this->dbPerangkat['id_cabang']) {
+            $this->cabang = $this->dbPerangkat['cabang']['nama_cabang'];
+            $this->cabangId = $this->dbPerangkat['id_cabang'];
+        }
+
+        if ($this->dbPerangkat['id_pengiriman']) {
+            $this->kodePengiriman = $this->dbPerangkat['pengiriman']['no_pengiriman'];
+            $this->pengirimanId = $this->dbPerangkat['id_pengiriman'];
+        }
+
+        // Populate forms
+        $this->sn_lama = $this->dbPerangkat['sn_lama'];
+        $this->tipePerangkat = $this->dbPerangkat['id_tipe'];
+        $this->sn_pengganti = $this->dbPerangkat['sn_pengganti'];
+        $this->sn_monitor = $this->dbPerangkat['sn_monitor'];
+        $this->sistemPerangkat = $this->dbPerangkat['id_sistem'];
+        $this->ket = $this->dbPerangkat['keterangan'];
+        $this->cekStatus = $this->dbPerangkat['cek_status'];
+        $this->gelombang = $this->dbPerangkat['gelombang'];
+        $this->perolehan = $this->dbPerangkat['perolehan'];
+    }
+
+    public function update() 
+    {
+        if ($this->addUser == true) {
+            $nikValidate = ['nullable', 'numeric', Rule::unique('users', 'nik')->ignore($this->nikUser, 'nik')];
+            $namaValidate = ['required', 'max:100'];
+            $noTelpvalidate = ['nullable', 'max:50'];
+        } else {
+            $nikValidate = '';
+            $noTelpvalidate = '';
+            $namaValidate= '';
+        }
+
+        $this->validate([
+            'sn_lama' => [Rule::unique('perangkat', 'sn_lama')->ignore($this->dbPerangkat['sn_lama'], 'sn_lama'), 'nullable'],
+            'tipePerangkat' => 'required',
+            'sn_pengganti' => [Rule::unique('perangkat', 'sn_pengganti')->ignore($this->dbPerangkat['sn_pengganti'], 'sn_pengganti')],
+            'sn_monitor' => [Rule::unique('perangkat', 'sn_monitor')->ignore($this->dbPerangkat['sn_monitor'], 'sn_monitor'), 'nullable'],
+            'nikUser' => $nikValidate,
+            'namaUser' => $namaValidate,
+            'telpUser' => $noTelpvalidate,
+            'sistemPerangkat' => 'required',
+        ]);
+
+        $newTipePerangkat = tipePerangkat::where('id', $this->tipePerangkat)->withTrashed()->first();
+        $newTipeSistem = ModelTipeSistem::where('id', $this->sistemPerangkat)->withTrashed()->first();
+
+        // get User
+        if (!$this->userId) {
+            $getDataUser = ['id' => null, 'nama' => null];
+        } else {
+            $getDataUser = User::where('id', $this->userId)->withTrashed()->first();
+        }
+
+        // Get Cabang
+        if (!$this->cabangId) {
+            $getDataCabang = ['id' => null, 'nama_cabang' => null];
+        } else {
+            $getDataCabang = Cabang::where('id', $this->cabangId)->withTrashed()->first();
+        }
+
+        // Get Pengiriman
+        if (!$this->pengirimanId) {
+            $getDataPengiriman = ['id' => null, 'no_pengiriman' => null];
+        } else {
+            $getDataPengiriman = ModelPengiriman::where('id', $this->pengirimanId)->withTrashed()->first();
+        }
+
+        if ($this->addUser == true) {
+            // Jika tambah user
+            try {
+                $saveUser = User::create([
+                'nama' => $this->namaUser,
+                'nik' => (trim($this->nikUser) == '') ? null : $this->nikUser,
+                'no_telp' => $this->telpUser,
+                ]);
+
+                ModelsPerangkat::where('id', $this->perangkatId)->update([
+                    'sn_lama' => (trim($this->sn_lama) == '') ? null : strtoupper($this->sn_lama),
+                    'sn_pengganti' => strtoupper($this->sn_pengganti),
+                    'sn_monitor' => (trim($this->sn_monitor) == '') ? null : strtoupper($this->sn_monitor),
+                    'id_tipe' => $this->tipePerangkat,
+                    'id_user' => $saveUser->id,
+                    'id_sistem' => $this->sistemPerangkat,
+                    'id_cabang' => $this->cabangId,
+                    'id_pengiriman' => $this->pengirimanId,
+                    'keterangan' => $this->ket,
+                    'cek_status' => $this->cekStatus,
+                    'gelombang' => $this->gelombang,
+                    'perolehan' => $this->perolehan,
+                ]);
+
+                LogPerangkat::create([
+                    'id_perangkat' => $this->perangkatId,
+                    'data_log' => [
+                                    'aksi' => 'Edit',
+                                    'browser' => $_SERVER['HTTP_USER_AGENT'],
+                                    'edited_by' => session('nama'),
+                                    'data_lama' =>  [
+                                                        'sn_lama' => $this->dbPerangkat['sn_lama'],
+                                                        'sn_pengganti' => $this->dbPerangkat['sn_pengganti'],
+                                                        'sn_monitor' => $this->dbPerangkat['sn_monitor'],
+                                                        'id_tipe' => $this->dbPerangkat['TipePerangkat']['id'],
+                                                        'tipe' => $this->dbPerangkat['TipePerangkat']['nama_perangkat'],
+                                                        'id_user' => $this->dbPerangkat['users']['id'],
+                                                        'user' => $this->dbPerangkat['users']['nama'],
+                                                        'id_sistem' => $this->dbPerangkat['tipeSistem']['id'],
+                                                        'sistem' => $this->dbPerangkat['tipeSistem']['kode_sistem'],
+                                                        'id_cabang' => $this->dbPerangkat['cabang']['id'],
+                                                        'cabang' => $this->dbPerangkat['cabang']['nama_cabang'],
+                                                        'id_pengiriman' => $this->dbPerangkat['pengiriman']['id'],
+                                                        'no_pengiriman' => $this->dbPerangkat['pengiriman']['no_pengiriman'],
+                                                        'ket' => $this->dbPerangkat['keterangan'],
+                                                        'cek_status' => $this->dbPerangkat['cek_status'],
+                                                        'perolehan' => $this->dbPerangkat['perolehan'],
+                                                        'gelombang' => $this->dbPerangkat['gelombang'],
+                                                    ],
+                                    'data_baru' =>  [
+                                                        'sn_lama' => strtoupper($this->sn_lama),
+                                                        'sn_pengganti' => strtoupper($this->sn_pengganti),
+                                                        'sn_monitor' => strtoupper($this->sn_monitor),
+                                                        'id_tipe' => $newTipePerangkat['id'],
+                                                        'tipe' => $newTipePerangkat['kode_perangkat'],
+                                                        'id_user' => $saveUser->id,
+                                                        'user' => $saveUser->nama,
+                                                        'id_sistem' => $newTipeSistem['id'],
+                                                        'sistem' => $newTipeSistem['kode_sistem'],
+                                                        'id_cabang' => $getDataCabang['id'],
+                                                        'cabang' => $getDataCabang['nama_cabang'],
+                                                        'id_pengiriman' => $getDataPengiriman['id'],
+                                                        'no_pengiriman' => $getDataPengiriman['no_pengiriman'],
+                                                        'ket' => $this->ket,
+                                                        'cek_status' => $this->cekStatus,
+                                                        'perolehan' => $this->perolehan,
+                                                        'gelombang' => $this->gelombang,
+                                                    ],
+                                ],
+                ]);
+
+                LogUser::create([
+                    'id_user' => $saveUser->id,
+                    'data_log' => [
+                                    'aksi' => 'Tambah',
+                                    'browser' => $_SERVER['HTTP_USER_AGENT'],
+                                    'edited_by' => session('nama'),
+                                    'data_lama' =>  [],
+                                    'data_baru' =>  [
+                                                        'nama' => $saveUser->nama,
+                                                        'nik' => $saveUser->nik,
+                                                        'no_telp' => $saveUser->no_telp,
+                                                    ],
+                                    ],
+                    ]);
+
+            } catch (\Throwable $th) {
+                throw $th;
+                return $this->addError('nikUser', 'Nik Sudah terdaftar');
+            }
+            
+        } else {
+            try {
+                ModelsPerangkat::where('id', $this->perangkatId)->update([
+                    'sn_lama' => (trim($this->sn_lama) == '') ? null : strtoupper($this->sn_lama),
+                    'sn_pengganti' => strtoupper($this->sn_pengganti),
+                    'sn_monitor' => (trim($this->sn_monitor) == '') ? null : strtoupper($this->sn_monitor),
+                    'id_tipe' => $this->tipePerangkat,
+                    'id_user' => $this->userId,
+                    'id_sistem' => $this->sistemPerangkat,
+                    'id_cabang' => $this->cabangId,
+                    'id_pengiriman' => $this->pengirimanId,
+                    'keterangan' => $this->ket,
+                    'cek_status' => $this->cekStatus,
+                    'gelombang' => $this->gelombang,
+                    'perolehan' => $this->perolehan,
+                ]);
+
+                $idUserDb = ($this->dbPerangkat['users']) ? $this->dbPerangkat['users']['id'] : null ; 
+                $namaUserDb = ($this->dbPerangkat['users']) ? $this->dbPerangkat['users']['nama'] : null ; 
+                $idPengirimanDb = ($this->dbPerangkat['pengiriman']) ? $this->dbPerangkat['pengiriman']['id'] : null ; 
+                $noPengirimanDb = ($this->dbPerangkat['pengiriman']) ? $this->dbPerangkat['pengiriman']['no_pengiriman'] : null ; 
+
+                LogPerangkat::create([
+                    'id_perangkat' => $this->perangkatId,
+                    'data_log' => [
+                                    'aksi' => 'Edit',
+                                    'browser' => $_SERVER['HTTP_USER_AGENT'],
+                                    'edited_by' => session('nama'),
+                                    'data_lama' =>  [
+                                                        'sn_lama' => $this->dbPerangkat['sn_lama'],
+                                                        'sn_pengganti' => $this->dbPerangkat['sn_pengganti'],
+                                                        'sn_monitor' => $this->dbPerangkat['sn_monitor'],
+                                                        'id_tipe' => $this->dbPerangkat['TipePerangkat']['id'],
+                                                        'tipe' => $this->dbPerangkat['TipePerangkat']['kode_perangkat'],
+                                                        'id_user' => $idUserDb,
+                                                        'user' => $namaUserDb,
+                                                        'id_sistem' => $this->dbPerangkat['tipeSistem']['id'],
+                                                        'sistem' => $this->dbPerangkat['tipeSistem']['kode_sistem'],
+                                                        'id_cabang' => $this->dbPerangkat['cabang']['id'],
+                                                        'cabang' => $this->dbPerangkat['cabang']['nama_cabang'],
+                                                        'id_pengiriman' => $idPengirimanDb,
+                                                        'no_pengiriman' => $noPengirimanDb,
+                                                        'ket' => $this->dbPerangkat['keterangan'],
+                                                        'cek_status' => $this->dbPerangkat['cek_status'],
+                                                        'perolehan' => $this->dbPerangkat['perolehan'],
+                                                        'gelombang' => $this->dbPerangkat['gelombang'],
+                                                    ],
+                                    'data_baru' =>  [
+                                                        'sn_lama' => strtoupper($this->sn_lama),
+                                                        'sn_pengganti' => strtoupper($this->sn_pengganti),
+                                                        'sn_monitor' => strtoupper($this->sn_monitor),
+                                                        'id_tipe' => $newTipePerangkat['id'],
+                                                        'tipe' => $newTipePerangkat['kode_perangkat'],
+                                                        'id_user' => $getDataUser['id'],
+                                                        'user' => $getDataUser['nama'],
+                                                        'id_sistem' => $newTipeSistem['id'],
+                                                        'sistem' => $newTipeSistem['kode_sistem'],
+                                                        'id_cabang' => $getDataCabang['id'],
+                                                        'cabang' => $getDataCabang['nama_cabang'],
+                                                        'id_pengiriman' => $getDataPengiriman['id'],
+                                                        'no_pengiriman' => $getDataPengiriman['no_pengiriman'],
+                                                        'ket' => $this->ket,
+                                                        'cek_status' => $this->cekStatus,
+                                                        'perolehan' => $this->perolehan,
+                                                        'gelombang' => $this->gelombang,
                                                     ],
                                 ],
                 ]);
@@ -256,380 +567,9 @@ class Perangkat extends Component
 
         // Tutup Modal
         $this->isOpen = false;
-        $this->addUser = false;
 
         // Panggil SweetAlert berhasil
-        $this->emit('success', 'Data Witel Berhasil Ditambahkan');
-    }
-
-    public function delete($id)
-    {
-        $getDataPerangkat = ModelsPerangkat::where(['id' => $id])->first();
-        $getDataPerangkat->delete();
-        $getDataTipe = tipePerangkat::where('id', $getDataPerangkat['id_tipe'])->withTrashed()->first();
-        $getDataImage = Image::where('id', $getDataPerangkat['id_image'])->withTrashed()->first();
-
-        // get User
-        if ($getDataPerangkat['id_user']) {
-            $getDataUser = User::where('id', $getDataPerangkat['id_user'])->withTrashed()->first();
-        } else {
-            $getDataUser = ['id' => null, 'name' => null];
-        }
-
-        // Get Witel
-        if ($getDataPerangkat['id_witel']) {
-            $getDataWitel = Witel::where('id', $getDataPerangkat['id_witel'])->withTrashed()->first();
-        } else {
-            $getDataWitel = ['id' => null, 'nama_witel' => null];
-        }
-
-        // Get DO
-        if ($getDataPerangkat['id_do']) {
-            $getDataDo = DoModel::where('id', $getDataPerangkat['id_do'])->withTrashed()->first();
-        } else {
-            $getDataDo = ['id' => null, 'no_do' => null];
-        }
-
-        LogPerangkat::create([
-            'id_perangkat' => $id,
-            'data_log' => [
-                            'aksi' => 'Hapus',
-                            'browser' => $_SERVER['HTTP_USER_AGENT'],
-                            'edited_by' => session('name'),
-                            'data_lama' =>  [
-                                                'sn_lama' => $getDataPerangkat['sn_lama'],
-                                                'sn_pengganti' => $getDataPerangkat["sn_pengganti"],
-                                                'sn_monitor' => $getDataPerangkat['sn_monitor'],
-                                                'id_tipe' => $getDataTipe['id'],
-                                                'tipe' => $getDataTipe['kode_perangkat'],
-                                                'id_user' => $getDataUser['id'],
-                                                'user' => $getDataUser['name'],
-                                                'id_image' => $getDataImage['id'],
-                                                'image' => $getDataImage['kode_image'],
-                                                'id_witel' => $getDataWitel['id'],
-                                                'witel' => $getDataWitel['nama_witel'],
-                                                'id_delivery_order' => $getDataDo['id'],
-                                                'delivery_order' => $getDataDo['no_do'],
-                                                'ket' => $getDataPerangkat['keterangan'],
-                                                'cek_status' => $getDataPerangkat['cek_status'],
-                                                'perolehan' => $getDataPerangkat['perolehan'],
-                                                'sp' => $getDataPerangkat['sp'],
-                                            ],
-                            'data_baru' =>  [],
-                        ],
-        ]);
-    }
-
-    public function edit($id) 
-    {
-        $this->submitType = 'update';
-        $this->dbPerangkat = ModelsPerangkat::where('id', $id)->first();
-        $this->perangkatId = $id;
-
-        if ($this->dbPerangkat['id_user'] != null) {
-            $this->dbUser = User::where('id', $this->dbPerangkat['id_user'])->withTrashed()->first();
-            $this->namaUser = $this->dbUser['name'];
-            $this->nikUser = $this->dbUser['nik'];
-            $this->telpUser = $this->dbUser['no_telp'];
-            $this->userId = $this->dbPerangkat['id_user'];
-        }
-
-        if ($this->dbPerangkat['id_witel'] != null) {
-            
-            $this->dbWitel = Witel::where('id', $this->dbPerangkat['id_witel'])->withTrashed()->first();
-            $this->witel = $this->dbWitel['nama_witel'];
-            $this->witelId = $this->dbWitel['id_witel'];
-        }
-
-        if ($this->dbPerangkat['id_do'] != null) {
-
-            $dbDo = DoModel::where('id', $this->dbPerangkat['id_do'])->withTrashed()->first();
-            $this->doId = $this->dbPerangkat['id_do'];
-            $this->kodeDo = $dbDo['no_do'];
-        }
-
-        // $this->dbTipePerangkat = tipePerangkat::where('id', $this->dbPerangkat['id_tipe'])->withTrashed()->first();
-        $this->oldSnLama = $this->dbPerangkat['sn_lama'];
-        $this->oldSnPengganti = $this->dbPerangkat['sn_pengganti'];
-        $this->oldSnMonitor = $this->dbPerangkat['sn_monitor'];
-
-        $this->sn_lama = $this->dbPerangkat['sn_lama'];
-        $this->tipePerangkat = $this->dbPerangkat['id_tipe'];
-        $this->sn_pengganti = $this->dbPerangkat['sn_pengganti'];
-        $this->sn_monitor = $this->dbPerangkat['sn_monitor'];
-        $this->imagePerangkat = $this->dbPerangkat['id_image'];
-        
-        $this->ket = $this->dbPerangkat['keterangan'];
-        $this->cekStatus = $this->dbPerangkat['cek_status'];
-        $this->spPerangkat = $this->dbPerangkat['sp'];
-        $this->perolehan = $this->dbPerangkat['perolehan'];
-
-        // untuk Log
-        $getDataTipe = tipePerangkat::where('id', $this->dbPerangkat['id_tipe'])->withTrashed()->first();
-        $getDataImage = Image::where('id', $this->dbPerangkat['id_image'])->withTrashed()->first();
-
-        // get User
-        if ($this->dbPerangkat['id_user']) {
-            $getDataUser = User::where('id', $this->dbPerangkat['id_user'])->withTrashed()->first();
-        } else {
-            $getDataUser = ['id' => null, 'name' => null];
-        }
-
-        // Get Witel
-        if ($this->dbPerangkat['id_witel']) {
-            $getDataWitel = Witel::where('id', $this->dbPerangkat['id_witel'])->withTrashed()->first();
-        } else {
-            $getDataWitel = ['id' => null, 'nama_witel' => null];
-        }
-
-        // Get DO
-        if ($this->dbPerangkat['id_do']) {
-            $getDataDo = DoModel::where('id', $this->dbPerangkat['id_do'])->withTrashed()->first();
-        } else {
-            $getDataDo = ['id' => null, 'no_do' => null];
-        }
-
-        $this->dataLama = [
-            'sn_lama' => $this->dbPerangkat['sn_lama'],
-            'sn_pengganti' => $this->dbPerangkat['sn_pengganti'],
-            'sn_monitor' => $this->dbPerangkat['sn_monitor'],
-            'id_tipe' => $this->dbPerangkat['id_tipe'],
-            'tipe' => $getDataTipe['kode_perangkat'],
-            'id_user' => $this->dbPerangkat['id_user'],
-            'user' => $getDataUser['name'],
-            'id_image' => $this->dbPerangkat['id_image'],
-            'image' => $getDataImage['kode_image'],
-            'id_witel' => $this->dbPerangkat['id_witel'],
-            'witel' => $getDataWitel['nama_witel'],
-            'id_delivery_order' => $this->dbPerangkat['id_do'],
-            'delivery_order' => $getDataDo['no_do'],
-            'ket' => $this->dbPerangkat['keterangan'],
-            'cek_status' => $this->dbPerangkat['cek_status'],
-            'perolehan' => $this->dbPerangkat['perolehan'],
-            'sp' => $this->dbPerangkat['sp'],
-        ];
-    }
-
-    public function update() 
-    {
-        if ($this->addUser == true) {
-            $nikValidate = ['nullable', 'numeric', Rule::unique('users', 'nik')->ignore($this->nikUser, 'nik')];
-        } else {
-            $nikValidate = '';
-        }
-
-        $this->validate([
-            'sn_lama' => [Rule::unique('perangkat', 'sn_lama')->ignore($this->oldSnLama, 'sn_lama'), 'nullable'],
-            // 'sn_lama' => ['unique:App\Models\Perangkat,sn_lama,'.$this->sn_lama, 'nullable'],
-            'tipePerangkat' => 'required',
-            'sn_pengganti' => [Rule::unique('perangkat', 'sn_pengganti')->ignore($this->oldSnPengganti, 'sn_pengganti')],
-            'sn_monitor' => [Rule::unique('perangkat', 'sn_monitor')->ignore($this->oldSnMonitor, 'sn_monitor'), 'nullable'],
-            'nikUser' => $nikValidate,
-            'imagePerangkat' => 'required',
-        ]);
-
-        $getDataTipe = tipePerangkat::where('id', $this->tipePerangkat)->withTrashed()->first();
-        $getDataImage = Image::where('id', $this->imagePerangkat)->withTrashed()->first();
-
-        // Get Witel
-        if ($this->witelId) {
-            $getDataWitel = Witel::where('id', $this->witelId)->withTrashed()->first();
-        } else {
-            $getDataWitel = ['id' => null, 'nama_witel' => null];
-        }
-
-        // get User
-        if ($this->userId) {
-            $getDataUser = User::where('id', $this->userId)->withTrashed()->first();
-        } else {
-            $getDataUser = ['id' => null, 'name' => null];
-        }
-
-        // Get DO
-        if ($this->doId) {
-            $getDataDo = DoModel::where('id', $this->doId)->withTrashed()->first();
-        } else {
-            $getDataDo = ['id' => null, 'no_do' => null];
-        }
-
-        if ($this->addUser == true) {
-            // Jika tambah user
-            try {
-                User::create([
-                'name' => $this->namaUser,
-                'nik' => $this->nikUser,
-                'no_telp' => $this->telpUser,
-                ]);
-
-                // Ambil id user terakhir
-                $getLastUser = User::get()->last();
-                $this->userId = $getLastUser['id'];
-
-                // get User
-                if ($this->userId) {
-                    $getDataUser = User::where('id', $this->userId)->withTrashed()->first();
-                } else {
-                    $getDataUser = ['id' => null, 'name' => null];
-                }
-
-                ModelsPerangkat::where('id', $this->perangkatId)->update([
-                    'sn_lama' => $this->sn_lama,
-                    'id_tipe' => $this->tipePerangkat,
-                    'sn_pengganti' => $this->sn_pengganti,
-                    'sn_monitor' => $this->sn_monitor,
-                    'id_user' => $this->userId,
-                    'id_image' => $this->imagePerangkat,
-                    'id_witel' => $this->witelId,
-                    'id_do' => $this->doId,
-                    'keterangan' => $this->ket,
-                    'cek_status' => $this->cekStatus,
-                    'sp' => $this->spPerangkat,
-                    'perolehan' => $this->perolehan,
-                ]);
-
-                LogPerangkat::create([
-                    'id_perangkat' => $this->perangkatId,
-                    'data_log' => [
-                                    'aksi' => 'Edit',
-                                    'browser' => $_SERVER['HTTP_USER_AGENT'],
-                                    'edited_by' => session('name'),
-                                    'data_lama' =>  [
-                                                        'sn_lama' => $this->dataLama['sn_lama'],
-                                                        'sn_pengganti' => $this->dataLama['sn_pengganti'],
-                                                        'sn_monitor' => $this->dataLama['sn_monitor'],
-                                                        'id_tipe' => $this->dataLama['id_tipe'],
-                                                        'tipe' => $this->dataLama['tipe'],
-                                                        'id_user' => $this->dataLama['id_user'],
-                                                        'user' => $this->dataLama['user'],
-                                                        'id_image' => $this->dataLama['id_image'],
-                                                        'image' => $this->dataLama['image'],
-                                                        'id_witel' => $this->dataLama['id_witel'],
-                                                        'witel' => $this->dataLama['witel'],
-                                                        'id_delivery_order' => $this->dataLama['id_delivery_order'],
-                                                        'delivery_order' => $this->dataLama['delivery_order'],
-                                                        'ket' => $this->dataLama['ket'],
-                                                        'cek_status' => $this->dataLama['cek_status'],
-                                                        'perolehan' => $this->dataLama['perolehan'],
-                                                        'sp' => $this->dataLama['sp'],
-                                                    ],
-                                    'data_baru' =>  [
-                                                        'sn_lama' => $this->sn_lama,
-                                                        'sn_pengganti' => $this->sn_pengganti,
-                                                        'sn_monitor' => $this->sn_monitor,
-                                                        'id_tipe' => $getDataTipe['id'],
-                                                        'tipe' => $getDataTipe['kode_perangkat'],
-                                                        'id_user' => $getDataUser['id'],
-                                                        'user' => $getDataUser['name'],
-                                                        'id_image' => $getDataImage['id'],
-                                                        'image' => $getDataImage['kode_image'],
-                                                        'id_witel' => $getDataWitel['id'],
-                                                        'witel' => $getDataWitel['nama_witel'],
-                                                        'id_delivery_order' => $getDataDo['id'],
-                                                        'delivery_order' => $getDataDo['no_do'],
-                                                        'ket' => $this->ket,
-                                                        'cek_status' => $this->cekStatus,
-                                                        'perolehan' => $this->perolehan,
-                                                        'sp' => $this->spPerangkat,
-                                                    ],
-                                ],
-                ]);
-
-                LogUser::create([
-                    'id_user' => $this->userId,
-                    'data_log' => [
-                                    'aksi' => 'Tambah',
-                                    'browser' => $_SERVER['HTTP_USER_AGENT'],
-                                    'edited_by' => session('name'),
-                                    'data_lama' =>  [],
-                                    'data_baru' =>  [
-                                                        'name' => $getLastUser['name'],
-                                                        'nik' => $getLastUser['nik'],
-                                                        'no_telp' => $getLastUser['no_telp'],
-                                                    ],
-                                    ],
-                    ]);
-
-            } catch (\Throwable $th) {
-                return $this->addError('nikUser', 'Nik Sudah terdaftar');
-            }
-            
-        } else {
-            try {
-                ModelsPerangkat::where('id', $this->perangkatId)->update([
-                    'sn_lama' => $this->sn_lama,
-                    'id_tipe' => $this->tipePerangkat,
-                    'sn_pengganti' => $this->sn_pengganti,
-                    'sn_monitor' => $this->sn_monitor,
-                    'id_user' => $this->userId,
-                    'id_image' => $this->imagePerangkat,
-                    'id_witel' => $this->witelId,
-                    'id_do' => $this->doId,
-                    'keterangan' => $this->ket,
-                    'cek_status' => $this->cekStatus,
-                    'sp' => $this->spPerangkat,
-                    'perolehan' => $this->perolehan,
-                ]);
-
-                LogPerangkat::create([
-                    'id_perangkat' => $this->perangkatId,
-                    'data_log' => [
-                                    'aksi' => 'Edit',
-                                    'browser' => $_SERVER['HTTP_USER_AGENT'],
-                                    'edited_by' => session('name'),
-                                    'data_lama' =>  [
-                                                        'sn_lama' => $this->dataLama['sn_lama'],
-                                                        'sn_pengganti' => $this->dataLama['sn_pengganti'],
-                                                        'sn_monitor' => $this->dataLama['sn_monitor'],
-                                                        'id_tipe' => $this->dataLama['id_tipe'],
-                                                        'tipe' => $this->dataLama['tipe'],
-                                                        'id_user' => $this->dataLama['id_user'],
-                                                        'user' => $this->dataLama['user'],
-                                                        'id_image' => $this->dataLama['id_image'],
-                                                        'image' => $this->dataLama['image'],
-                                                        'id_witel' => $this->dataLama['id_witel'],
-                                                        'witel' => $this->dataLama['witel'],
-                                                        'id_delivery_order' => $this->dataLama['id_delivery_order'],
-                                                        'delivery_order' => $this->dataLama['delivery_order'],
-                                                        'ket' => $this->dataLama['ket'],
-                                                        'cek_status' => $this->dataLama['cek_status'],
-                                                        'perolehan' => $this->dataLama['perolehan'],
-                                                        'sp' => $this->dataLama['sp'],
-                                                    ],
-                                    'data_baru' =>  [
-                                                        'sn_lama' => $this->sn_lama,
-                                                        'sn_pengganti' => $this->sn_pengganti,
-                                                        'sn_monitor' => $this->sn_monitor,
-                                                        'id_tipe' => $getDataTipe['id'],
-                                                        'tipe' => $getDataTipe['kode_perangkat'],
-                                                        'id_user' => $getDataUser['id'],
-                                                        'user' => $getDataUser['name'],
-                                                        'id_image' => $getDataImage['id'],
-                                                        'image' => $getDataImage['kode_image'],
-                                                        'id_witel' => $getDataWitel['id'],
-                                                        'witel' => $getDataWitel['nama_witel'],
-                                                        'id_delivery_order' => $getDataDo['id'],
-                                                        'delivery_order' => $getDataDo['no_do'],
-                                                        'ket' => $this->ket,
-                                                        'cek_status' => $this->cekStatus,
-                                                        'perolehan' => $this->perolehan,
-                                                        'sp' => $this->spPerangkat,
-                                                    ],
-                                ],
-                ]);
-            }catch (\Exception $ex) {
-                throw $ex;
-                // return $this->addError('sn_lama', 'Sn Sudah ada');
-            }
-        }
-
-        // Panggil fungsi Reset data
-        $this->resetData();
-
-        // Tutup Modal
-        $this->isOpen = false;
-
-        // Panggil SweetAlert berhasil
-        $this->emit('success', 'Data Witel Berhasil Diubah');
+        $this->emit('success', 'Data Cabang Berhasil Diubah');
     }
 
     public function addUser() 
@@ -642,26 +582,26 @@ class Perangkat extends Component
     {
       $this->userData = User::where('id', $id)->first();
       $this->userId = $id;
-      $this->namaUser = $this->userData['name'];
+      $this->namaUser = $this->userData['nama'];
       $this->nikUser = $this->userData['nik'];
       $this->telpUser = $this->userData['no_telp'];
       $this->reset('userSearch');
     }
 
-    public function chooseWitel($id) 
+    public function chooseCabang($id) 
     {
-        $this->witelData = Witel::where('id', $id)->first();
-        $this->witelId = $id;
-        $this->witel = $this->witelData['kode_witel'].' | '.$this->witelData['nama_witel'];
-        $this->reset('witelSearch');
+        $this->cabangData = Cabang::where('id', $id)->first();
+        $this->cabangId = $id;
+        $this->cabang = $this->cabangData['kode_cabang'].' | '.$this->cabangData['nama_cabang'];
+        $this->reset('cabangSearch');
     }
 
-    public function chooseDo($id) 
+    public function choosePengiriman($id) 
     {
-        $this->doData = DoModel::where('id', $id)->first();
-        $this->doId = $id;
-        $this->kodeDo = $this->doData['no_do'];
-        $this->reset('doSearch');
+        $this->pengirimanData = ModelPengiriman::where('id', $id)->first();
+        $this->pengirimanId = $id;
+        $this->kodePengiriman = $this->pengirimanData['no_pengiriman'];
+        $this->reset('pengirimanSearch');
     }
 
     public function resetData() 
@@ -670,7 +610,6 @@ class Perangkat extends Component
         // Reset Validasi
         $this->resetValidation();
         // Reset input field
-        // $this->reset('submitType', 'tipePerangkat', 'userSearch', 'witelSearch', 'doSearch', 'sn_lama', 'sn_pengganti', 'sn_monitor', 'imagePerangkat', 'witel', 'witelId', 'kodeDo', 'spPerangkat', 'cekStatus', 'perolehan', 'ket', 'namaUser', 'nikUser', 'telpUser', 'doId');
         $this->reset();
     }
 

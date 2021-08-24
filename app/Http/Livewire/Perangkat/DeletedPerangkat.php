@@ -2,13 +2,8 @@
 
 namespace App\Http\Livewire\Perangkat;
 
-use App\Models\Perangkat;
-use App\Models\DoModel;
-use App\Models\Image;
-use App\Models\LogPerangkat;
-use App\Models\tipePerangkat;
-use App\Models\User;
-use App\Models\Witel;
+use App\Models\ModelPerangkat as Perangkat;
+use App\Models\ModelLogPerangkat as LogPerangkat;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -27,7 +22,7 @@ class DeletedPerangkat extends Component
         $keyword = '%'.$this->keyword.'%';
 
         $data = [
-            'perangkat' => Perangkat::with('users', 'witel', 'DeliveryOrder', 'tipePerangkat', 'image')
+            'perangkat' => Perangkat::with('users', 'cabang', 'pengiriman', 'tipePerangkat', 'tipeSistem')
                         ->where('sn_pengganti', 'like', $keyword)
                         ->orderBy('deleted_at', 'DESC')
                         ->onlyTrashed()
@@ -40,31 +35,48 @@ class DeletedPerangkat extends Component
 
     public function restore($id) 
     {
-        $getDataPerangkat = Perangkat::where('id', $id)->onlyTrashed()->first();
-        $getDataPerangkat->restore();
-
-        $getDataTipe = tipePerangkat::where('id', $getDataPerangkat['id_tipe'])->withTrashed()->first();
-        $getDataImage = Image::where('id', $getDataPerangkat['id_image'])->withTrashed()->first();
+        $getDataPerangkat = Perangkat::with('users', 'cabang', 'pengiriman', 'tipePerangkat', 'tipeSistem')
+                                        ->where(['id' => $id])
+                                        ->onlyTrashed()
+                                        ->first();
 
         // get User
-        if ($getDataPerangkat['id_user']) {
-            $getDataUser = User::where('id', $getDataPerangkat['id_user'])->withTrashed()->first();
+        if (!$getDataPerangkat['id_user']) {
+            $getDataUser = [
+                                'id' => null, 
+                                'nama' => null
+                            ];
         } else {
-            $getDataUser = ['id' => null, 'name' => null];
+            $getDataUser = [
+                                'id' => $getDataPerangkat['users']['id'], 
+                                'nama' => $getDataPerangkat['users']['nama']
+                            ];
         }
 
-        // Get Witel
-        if ($getDataPerangkat['id_witel']) {
-            $getDataWitel = Witel::where('id', $getDataPerangkat['id_witel'])->withTrashed()->first();
+        // Get Cabang
+        if (!$getDataPerangkat['id_cabang']) {
+            $getDataCabang = [
+                                'id' => null, 
+                                'nama_cabang' => null
+                            ];
         } else {
-            $getDataWitel = ['id' => null, 'nama_witel' => null];
+            $getDataCabang = [
+                                'id' => $getDataPerangkat['cabang']['id'], 
+                                'nama_cabang' => $getDataPerangkat['cabang']['nama_cabang']
+                            ];
         }
 
-        // Get DO
-        if ($getDataPerangkat['id_do']) {
-            $getDataDo = DoModel::where('id', $getDataPerangkat['id_do'])->withTrashed()->first();
+        // Get Pengiriman
+        if (!$getDataPerangkat['id_pengiriman']) {
+            $getDataPengiriman = [
+                                'id' => null, 
+                                'no_pengiriman' => null
+                            ];
         } else {
-            $getDataDo = ['id' => null, 'no_do' => null];
+            $getDataPengiriman = [
+                                'id' => $getDataPerangkat['pengiriman']['id'], 
+                                'no_pengiriman' => $getDataPerangkat['pengiriman']['no_pengiriman']
+                            ];
         }
 
         LogPerangkat::create([
@@ -72,28 +84,30 @@ class DeletedPerangkat extends Component
             'data_log' => [
                             'aksi' => 'Restore',
                             'browser' => $_SERVER['HTTP_USER_AGENT'],
-                            'edited_by' => session('name'),
+                            'edited_by' => session('nama'),
                             'data_lama' =>  [
                                                 'sn_lama' => $getDataPerangkat['sn_lama'],
                                                 'sn_pengganti' => $getDataPerangkat["sn_pengganti"],
                                                 'sn_monitor' => $getDataPerangkat['sn_monitor'],
-                                                'id_tipe' => $getDataTipe['id'],
-                                                'tipe' => $getDataTipe['kode_perangkat'],
+                                                'id_tipe' => $getDataPerangkat['tipePerangkat']['id'],
+                                                'tipe' => $getDataPerangkat['tipePerangkat']['kode_perangkat'],
                                                 'id_user' => $getDataUser['id'],
-                                                'user' => $getDataUser['name'],
-                                                'id_image' => $getDataImage['id'],
-                                                'image' => $getDataImage['kode_image'],
-                                                'id_witel' => $getDataWitel['id'],
-                                                'witel' => $getDataWitel['nama_witel'],
-                                                'id_delivery_order' => $getDataDo['id'],
-                                                'delivery_order' => $getDataDo['no_do'],
+                                                'user' => $getDataUser['nama'],
+                                                'id_sistem' => $getDataPerangkat['tipeSistem']['id'],
+                                                'sistem' => $getDataPerangkat['tipeSistem']['kode_sistem'],
+                                                'id_cabang' => $getDataCabang['id'],
+                                                'cabang' => $getDataCabang['nama_cabang'],
+                                                'id_pengiriman' => $getDataPengiriman['id'],
+                                                'no_pengiriman' => $getDataPengiriman['no_pengiriman'],
                                                 'ket' => $getDataPerangkat['keterangan'],
                                                 'cek_status' => $getDataPerangkat['cek_status'],
                                                 'perolehan' => $getDataPerangkat['perolehan'],
-                                                'sp' => $getDataPerangkat['sp'],
+                                                'gelombang' => $getDataPerangkat['gelombang'],
                                             ],
                             'data_baru' =>  [],
                         ],
         ]);
+
+        $getDataPerangkat->restore();
     }
 }

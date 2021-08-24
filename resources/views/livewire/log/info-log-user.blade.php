@@ -3,7 +3,7 @@
         <div>
             {{-- Top Bar --}}
             <div class="text-2xl text-center font-bold  cursor-default">
-                <p class="{{ ($logUser['deleted_at']) ? 'text-red-500' : 'text-blue-600' }}">Info Log User {{ $logData['name'] }}</p>
+                <p class="{{ ($logUser['deleted_at']) ? 'text-red-500' : 'text-blue-600' }}">Info Log User {{ $logData['nama'] }}</p>
             </div>
            
             {{-- End Top Bar --}}
@@ -48,7 +48,7 @@
                         @forelse ($logUser as $value)
                         <tr class="text-center items-center {{ ($loop->odd) ? "bg-indigo-100 bg-opacity-75" : "" }}">
                             <td class="py-2">{{ ($logUser->firstItem()-1) + $loop->iteration }}</td>
-                            <td>{{ $value['user']['name']}}</td>
+                            <td>{{ $value['user']['nama']}}</td>
                             <td class="capitalize">{{ $value['data_log']['aksi']}} Data</td>
                             <td class="capitalize">{{ $value['data_log']['edited_by']}}</td>
                             <td>{{ $value['tanggal'] }}</td>

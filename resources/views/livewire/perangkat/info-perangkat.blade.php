@@ -39,14 +39,14 @@
                     <td width="50%">{{ ($dataPerangkat['id_tipe']) ? $dataPerangkat['TipePerangkat']['kode_perangkat'] : '-' }}</td>
                 </tr>
                 <tr>
-                    <td width="45%">Image Perangkat</td>
+                    <td width="45%">Tipe Sistem Perangkat</td>
                     <td width="5%">:</td>
-                    <td width="50%">{{ ($dataPerangkat['id_image']) ? $dataPerangkat['Image']['kode_image'] : '-' }}</td>
+                    <td width="50%">{{ ($dataPerangkat['id_sistem']) ? $dataPerangkat['tipeSistem']['kode_sistem'] : '-' }}</td>
                 </tr>
                 <tr>
-                    <td width="45%">SP</td>
+                    <td width="45%">Gelombang</td>
                     <td width="5%">:</td>
-                    <td width="50%">{{ ($dataPerangkat['sp']) ? $dataPerangkat['sp'] : '-' }}</td>
+                    <td width="50%">{{ ($dataPerangkat['gelombang']) ? $dataPerangkat['gelombang'] : '-' }}</td>
                 </tr>
                 <tr>
                     <td width="45%">Perolehan</td>
@@ -69,7 +69,7 @@
                 <tr>
                     <td width="45%">Nama User</td>
                     <td width="5%">:</td>
-                    <td width="50%">{{ ($dataPerangkat['id_user']) ? $dataPerangkat['Users']['name'] : '-' }}</td>
+                    <td width="50%">{{ ($dataPerangkat['id_user']) ? $dataPerangkat['Users']['nama'] : '-' }}</td>
                 </tr>
                 <tr>
                     <td width="45%">NIK User</td>
@@ -79,14 +79,14 @@
 
                 <tr><td>&nbsp;</td></tr>
                 <tr>
-                    <td width="45%">Witel</td>
+                    <td width="45%">Cabang</td>
                     <td width="5%">:</td>
-                    <td width="50%">{{ ($dataPerangkat['id_witel']) ? $dataPerangkat['Witel']['nama_witel'] : '-' }}</td>
+                    <td width="50%">{{ ($dataPerangkat['id_cabang']) ? $dataPerangkat['cabang']['nama_cabang'] : '-' }}</td>
                 </tr>
                 <tr>
-                    <td width="45%">No DO</td>
+                    <td width="45%">No Pengiriman</td>
                     <td width="5%">:</td>
-                    <td width="50%">{{ ($dataPerangkat['id_do']) ? $dataPerangkat['DeliveryOrder']['no_do'] : '-' }}</td>
+                    <td width="50%">{{ ($dataPerangkat['id_pengiriman']) ? $dataPerangkat['pengiriman']['no_pengiriman'] : '-' }}</td>
                 </tr>
                 
             </table>

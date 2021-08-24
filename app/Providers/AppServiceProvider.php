@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
     {
         // Ubah ke indonesia
         Carbon::setLocale('id');
-        // config(['app.locale' => 'id']);
-        // date_default_timezone_set('Asia/Jakarta');
+        config(['app.locale' => 'id']);
+        date_default_timezone_set('Asia/Jakarta');
     }
 }

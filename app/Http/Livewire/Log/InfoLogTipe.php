@@ -2,8 +2,8 @@
 
 namespace App\Http\Livewire\Log;
 
-use App\Models\LogTipePerangkat;
-use App\Models\tipePerangkat;
+use App\Models\ModelLogTipePerangkat as LogTipePerangkat;
+use App\Models\ModelTipePerangkat as tipePerangkat;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -22,11 +22,10 @@ class InfoLogTipe extends Component
     public function render()
     {
         $data = [
-            'logTipe' => LogTipePerangkat::where('id_tipe', $this->logData['id'])
+            'logTipe' => LogTipePerangkat::with('TipePerangkat')->where('id_tipe', $this->logData['id'])
                                         ->orderBy('created_at', 'DESC')
                                         ->paginate(7),
                 ];
-        // dd($data['logImage']);
 
         return view('livewire.log.info-log-tipe', $data)
         ->extends('layouts.app');

@@ -15,7 +15,7 @@ class CreateLogTipePerangkatTable extends Migration
     {
         Schema::create('log_tipe_perangkat', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('id_tipe');
+            $table->unsignedBigInteger('id_tipe')->index();
             $table->json('data_log');
             $table->timestamps();
         });

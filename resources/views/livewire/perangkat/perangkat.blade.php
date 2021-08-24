@@ -30,7 +30,7 @@
                                         <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
                                     </svg>
                                 </div>
-                                <input wire:model.debounce.200="keyword" class=" focus:ring-4 outline-none focus:outline-none ring-blue-300 rounded-full pl-7 py-1 duration-150" type="text" placeholder="Cari Sn...">
+                                <input wire:model.debounce.200="keyword" class=" focus:ring-4 outline-none focus:outline-none ring-blue-300 rounded-full pl-7 py-1 duration-150" type="text" placeholder="Cari Perangkat...">
                             </div>
                         </div>
                 </div>
@@ -42,12 +42,12 @@
                         <tr>
                             <th class="w-1/12">No</th>
                             <th class="w-1/12">Tipe</th>
-                            <th class="w-1/3">Serial Number</th>
+                            <th class="w-1/3">SN perangkat</th>
                             <th class="w-1/5">SN Monitor</th>
-                            <th class="w-1/5">Witel</th>
+                            <th class="w-1/5">Cabang</th>
                             <th class="w-1/5">User</th>
-                            <th class="w-1/5">No Do</th>
-                            <th class="w-1/12">SP</th>
+                            <th class="w-1/5">No Pengiriman</th>
+                            <th class="w-1/12">Gelombang</th>
                             <th class="w-1/5">Aksi</th>
                         </tr>
                     </thead>
@@ -58,22 +58,10 @@
                             <td>{{ $value['TipePerangkat']['kode_perangkat'] }}</td>
                             <td>{{ $value['sn_pengganti'] }}</td>
                             <td>{{ ($value['sn_monitor']) ? $value['sn_monitor'] : '-' }}</td>
-                            @if ($value['id_witel'] != null)
-                                <td class="truncate">{{ $value['witel']['nama_witel'] }}</td>
-                            @else
-                                <td>-</td>
-                            @endif
-                            @if ($value['id_user'] != null)
-                                <td class="truncate">{{ $value['users']['name'] }}</td>
-                            @else
-                                <td>-</td>
-                            @endif
-                            @if ($value['id_do'] != null)
-                                <td>{{ $value['deliveryOrder']['no_do'] }}</td>
-                            @else
-                                <td>-</td>
-                            @endif
-                            <td>{{ ($value['sp']) ? $value['sp'] : '-' }}</td>
+                            <td>{{ ($value['id_cabang']) ? $value['cabang']['nama_cabang'] : '-' }}</td>
+                            <td>{{ ($value['id_user']) ? $value['users']['nama'] : '-' }}</td>
+                            <td>{{ ($value['id_pengiriman']) ? $value['pengiriman']['no_pengiriman']  : '-' }}</td>
+                            <td>{{ ($value['gelombang']) ? $value['gelombang'] : '-' }}</td>
                             <td class="space-x-4 py-1 flex items-center justify-center">
 
                                 <button @click="infoPerangkat = true" wire:click="$emit('infoPerangkat', {{ $value['id'] }})" class="focus:outline-none" title="Info">
@@ -133,214 +121,236 @@
                                 <span class="text-xl font-semibold capitalize">{{ $submitType }} Data</span>
                             </div>
                             <div class="mt-4 space-y-1 mx-10 font-semibold">
-                                <div class="flex justify-between space-x-5">
-                                    <div class="w-1/2">
-                                        <label for="sn_lama" class="cursor-default">Serial Number lama</label>
-                                        <input wire:model.defer="sn_lama" class="inputBox" id="sn_lama" type="text" autocomplete="off">
-                                        <p class="text-xs text-gray-500">*Kosongkan jika tidak ada</p>
-                                        @error('sn_lama')
-                                            <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
-                                        @enderror
+                                {{-- SN --}}
+                                    <div class="flex justify-between space-x-5">
+                                        <div class="w-1/2">
+                                            <label for="sn_lama" class="cursor-default">Serial Number lama</label>
+                                            <input wire:model.defer="sn_lama" class="inputBox" id="sn_lama" type="text" autocomplete="off">
+                                            <p class="text-xs text-gray-500">*Kosongkan jika tidak ada</p>
+                                            @error('sn_lama')
+                                                <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <div class="w-1/2"></div>
                                     </div>
-                                    <div class="w-1/2"></div>
-                                </div>
-                                <div class="flex justify-between space-x-6">
-                                    <div class="w-1/2">
-                                        <label for="sn_pengganti" class="cursor-default">Serial Number Pengganti</label>
-                                        <input wire:model.defer="sn_pengganti" class="inputBox" id="sn_pengganti" type="text" required autocomplete="off">
-                                        @error('sn_pengganti')
-                                            <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
-                                        @enderror
+                                    <div class="flex justify-between space-x-6">
+                                        <div class="w-1/2">
+                                            <label for="sn_pengganti" class="cursor-default">Serial Number Pengganti</label>
+                                            <input wire:model.defer="sn_pengganti" class="inputBox" id="sn_pengganti" type="text" required autocomplete="off">
+                                            @error('sn_pengganti')
+                                                <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <div class="w-1/2">
+                                            <label for="sn_monitor" class="cursor-default">Serial Number Monitor</label>
+                                            <input wire:model.defer="sn_monitor" class="inputBox" id="sn_monitor" type="text" autocomplete="off">
+                                            @error('sn_monitor')
+                                                <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
+                                            @enderror
+                                        </div>
                                     </div>
-                                    <div class="w-1/2">
-                                        <label for="sn_monitor" class="cursor-default">Serial Number Monitor</label>
-                                        <input wire:model.defer="sn_monitor" class="inputBox" id="sn_monitor" type="text" autocomplete="off">
-                                        @error('sn_monitor')
-                                            <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
-                                        @enderror
+                                {{-- End SN --}}
+
+                                {{-- Tipe perangkat & Sistem --}}
+                                    <div class="flex justify-between space-x-6">
+
+                                        {{-- Tipe Perangkat --}}
+                                            <div class="w-1/2">
+                                                <p class="cursor-default pt-2">Tipe Perangkat</p>
+                                                <select class="inputBox py-1" wire:model.defer="tipePerangkat" required>
+                                                    {{-- Wire:key sebagai pengganti opsi selected --}}
+                                                    <option wire:key="" value="">-- Pilih Tipe Perangkat --</option>
+                                                    @foreach ($tipe as $item)
+                                                        <option wire:key="{{ $item['kode_perangkat'] }}" value="{{ $item['id'] }}">{{ $item['nama_perangkat'] }}</option>
+                                                    @endforeach
+                                                </select>
+                                                @error('tipePerangkat')
+                                                    <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        {{-- End Tipe Perangkat --}}
+
+                                        {{-- Tipe Sistem --}}
+                                            <div class="w-1/2">
+                                                <p class="cursor-default pt-2">Tipe Sistem</p>
+                                                <select class="inputBox py-1" wire:model.defer="sistemPerangkat" required>
+                                                    {{-- Wire:key sebagai pengganti opsi selected --}}
+                                                    <option wire:key="" value="">-- Pilih Tipe Sistem --</option>
+                                                    @foreach ($tipeSistem as $item)
+                                                        <option wire:key="{{ $item['kode_sistem'] }}" value="{{ $item['id'] }}">{{ $item['kode_sistem'] }}</option>
+                                                    @endforeach
+                                                </select>
+                                                @error('sistemPerangkat')
+                                                    <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        {{-- Tipe Sistem --}}
+
                                     </div>
-                                </div>
-                                <div class="flex justify-between space-x-6">
-                                    <div class="w-1/2">
-                                        <p class="cursor-default pt-2">Tipe Perangkat</p>
-                                        <select class="inputBox py-1" wire:model.defer="tipePerangkat" required>
-                                            {{-- Wire:key sebagai pengganti opsi selected --}}
-                                            <option wire:key="" value="">-- Pilih Tipe Perangkat --</option>
-                                            @foreach ($tipe as $item)
-                                                <option wire:key="{{ $item['kode_perangkat'] }}" value="{{ $item['id'] }}">{{ $item['nama_perangkat'] }}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('tipePerangkat')
-                                            <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    <div class="w-1/2">
-                                        <p class="cursor-default pt-2">Image</p>
-                                        <select class="inputBox py-1" wire:model.defer="imagePerangkat" required>
-                                            {{-- Wire:key sebagai pengganti opsi selected --}}
-                                            <option wire:key="" value="">-- Pilih Image --</option>
-                                            @foreach ($image as $item)
-                                                <option wire:key="{{ $item['kode_image'] }}" value="{{ $item['id'] }}">{{ $item['kode_image'] }}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('imagePerangkat')
-                                            <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
+                                {{-- End Tipe perangkat & Tipe Sistem --}}
 
                                 {{-- User  --}}
-                                <div x-data="{userSearch: false}" class="flex justify-between space-x-10 pt-2">
-                                    <div class="w-3/4">
-                                        <label for="user" class="cursor-default">User</label>
-                                        <div class="flex space-x-3">
-                                            <div class="flex">
-                                                <input wire:model="userSearch" @focus="userSearch = true" @click.away="userSearch = false" class="inputBox" id="user" type="text" placeholder="Cari User" autocomplete="off">
-                                                <div wire:loading wire:target="userSearch" class="absolute animate-spin opacity-50 ml-44 mt-1">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class=" w-5 " fill="currentColor" class="bi bi-circle-half" viewBox="0 0 16 16">
-                                                        <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
+                                    <div x-data="{userSearch: false}" class="flex justify-between space-x-10 pt-2">
+                                        <div class="w-3/4">
+                                            <label for="user" class="cursor-default">User</label>
+                                            <div class="flex space-x-3">
+                                                <div class="flex">
+                                                    <input wire:model="userSearch" @focus="userSearch = true" @click.away="userSearch = false" class="inputBox" id="user" type="text" placeholder="Cari User" autocomplete="off">
+                                                    <div wire:loading wire:target="userSearch" class="absolute animate-spin opacity-50 ml-44 mt-1">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class=" w-5 " fill="currentColor" class="bi bi-circle-half" viewBox="0 0 16 16">
+                                                            <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
+                                                        </svg>
+                                                    </div>
+                                                </div>
+                                                <span wire:click="addUser" class="w-8 hover:text-blue-700 duration-100 cursor-pointer focus:outline-none outline-none" title="Tambah data User">
+                                                    <svg class="stroke-1" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-person-plus" viewBox="0 0 16 16">
+                                                        <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+                                                        <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
                                                     </svg>
+                                                </span>
+                                            </div>
+                                            @if (strlen($userSearch) > 0)
+                                                <div x-show="userSearch">
+                                                    <ul class="absolute mt-2 bg-white border-gray-500 border-opacity-25 border-2 shadow-lg rounded-md w-52 px-2 py-2 space-y-1">
+                                                        @if ($userResult)
+                                                            @forelse ($userResult as $value)
+                                                                <button @click="userSearch = false" wire:click="chooseUser({{ $value['id'] }})" class="w-full text-left p-1 hover:bg-black hover:bg-opacity-10 truncate" type="button"><li>{{ ($value['nik']) ? $value['nik'] : '-' }} | {{  $value['nama'] }}</li></button>
+                                                            @empty
+                                                                <span class="text-sm font-normal"> Data User tidak ditemukan!</span>
+                                                            @endforelse
+                                                        @endif
+                                                    </ul>
+                                                </div>
+                                            @endif
+                                            <label class="cursor-default" for="namaUser">Nama User</label>
+                                            <input id="namaUser" wire:model.defer="namaUser" class="inputBox" type="text" {{ ($addUser == true) ? "required" : "disabled" }} autocomplete="off">
+                                            @error('namaUser')
+                                                <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
+                                            @enderror
+                                            <div class="flex justify-between space-x-5">
+                                                <div>
+                                                    <label class="cursor-default" for="nikUser">Nik</label>
+                                                    <input wire:model.defer="nikUser" id="nikUser" class="inputBox" type="text" {{ ($addUser == true) ? "" : "disabled" }} autocomplete="off">
+                                                    @error('nikUser')
+                                                    <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <div>
+                                                    <label class="cursor-default" for="telpUser">No Telp</label>
+                                                    <input wire:model.defer="telpUser" id="telpUser" class="inputBox" type="text" {{ ($addUser == true) ? "" : "disabled" }} autocomplete="off">
+                                                    @error('telpUser')
+                                                    <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
+                                                    @enderror
                                                 </div>
                                             </div>
-                                            <span wire:click="addUser" class="w-8 hover:text-blue-700 duration-100 cursor-pointer focus:outline-none outline-none" title="Tambah data User">
-                                                <svg class="stroke-1" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-person-plus" viewBox="0 0 16 16">
-                                                    <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
-                                                    <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
-                                                </svg>
-                                            </span>
                                         </div>
-                                        @if (strlen($userSearch) > 0)
-                                            <div x-show="userSearch">
-                                                <ul class="absolute mt-2 bg-white border-gray-500 border-opacity-25 border-2 shadow-lg rounded-md w-52 px-2 py-2 space-y-1">
-                                                    @if ($userResult)
-                                                        @forelse ($userResult as $value)
-                                                            <button @click="userSearch = false" wire:click="chooseUser({{ $value['id'] }})" class="w-full text-left p-1 hover:bg-black hover:bg-opacity-10 truncate" type="button"><li>{{ ($value['nik']) ? $value['nik'] : '-' }} | {{  $value['name'] }}</li></button>
-                                                        @empty
-                                                            <span class="text-sm font-normal"> Data User tidak ditemukan!</span>
-                                                        @endforelse
-                                                    @endif
-                                                </ul>
-                                            </div>
-                                        @endif
-                                        <label class="cursor-default" for="namaUser">Nama User</label>
-                                        <input id="namaUser" wire:model.defer="namaUser" class="inputBox" type="text" {{ ($addUser == true) ? "required" : "disabled" }} autocomplete="off">
-                                        @error('namaUser')
-                                            <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
-                                        @enderror
-                                        <div class="flex justify-between space-x-5">
-                                            <div>
-                                                <label class="cursor-default" for="nikUser">Nik</label>
-                                                <input wire:model.defer="nikUser" id="nikUser" class="inputBox" type="text" {{ ($addUser == true) ? "" : "disabled" }} autocomplete="off">
-                                                @error('nikUser')
-                                                <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
-                                                @enderror
-                                            </div>
-                                            <div>
-                                                <label class="cursor-default" for="telpUser">No Telp</label>
-                                                <input wire:model.defer="telpUser" id="telpUser" class="inputBox" type="text" {{ ($addUser == true) ? "" : "disabled" }} autocomplete="off">
-                                                @error('telpUser')
-                                                <div class="text-red-500 text-sm font-normal">{{ $message }}</div>
-                                                @enderror
-                                            </div>
-                                        </div>
+                                        <div class="w-1/2"></div>
                                     </div>
-                                    <div class="w-1/2"></div>
-                                </div>
                                 {{-- End User --}}
 
-                                <div class="flex space-x-5">
-                                    {{-- Witel --}}
-                                    <div x-data="{witelSearch: false}" class="w-1/2 pt-3">
-                                        <label for="witel" class="cursor-default pt-2">Witel</label>
-                                        <div class="flex">
-                                            <input wire:model="witelSearch" @focus="witelSearch = true" @click.away="witelSearch = false" class="inputBox" id="witel" type="text" placeholder="Cari witel" autocomplete="off">
-                                            <div wire:loading wire:target="witelSearch" class="absolute animate-spin opacity-50 ml-60 mt-1">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class=" w-4 " fill="currentColor" class="bi bi-circle-half" viewBox="0 0 16 16">
-                                                    <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
-                                                </svg>
-                                            </div>
-                                        </div>
-                                        @if (strlen($witelSearch) > 0)
-                                            <div x-show="witelSearch">
-                                                <ul class="absolute mt-2 bg-white border-gray-500 border-opacity-25 border-2 shadow-lg rounded-md w-52 px-2 py-2 space-y-1">
-                                                    @if ($witelResult)
-                                                        @forelse ($witelResult as $value)
-                                                            <button @click="witelSearch = false" wire:click="chooseWitel({{ $value['id'] }})" class="w-full text-left p-1 hover:bg-black hover:bg-opacity-10 truncate" type="button"><li>{{  $value['kode_witel'].' | '.$value['nama_witel'] }}</li></button>
-                                                        @empty
-                                                            <span class="text-sm font-normal"> Data Witel tidak ditemukan!</span>
-                                                        @endforelse
-                                                    @endif
-                                                </ul>
-                                            </div>
-                                        @endif
-                                        <input wire:model.defer="witel" class="inputBox mt-3" type="text" disabled autocomplete="off">
-                                    </div>
-                                    {{-- End Witel --}}
-                                    {{-- DO --}}
-                                    <div x-data="{doSearch: false}" class="w-1/2 pt-3">
-                                        <label for="doSearch" class="cursor-default pt-2">Delivery Order</label>
-                                        <div class="flex">
-                                            <input wire:model="doSearch" @focus="doSearch = true" @click.away="doSearch = false" class="inputBox" id="doSearch" type="text" placeholder="Cari do" autocomplete="off">
-                                            <div wire:loading wire:target="doSearch" class="absolute animate-spin opacity-50 ml-60 mt-1">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class=" w-4 " fill="currentColor" class="bi bi-circle-half" viewBox="0 0 16 16">
-                                                    <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
-                                                </svg>
-                                            </div>
-                                        </div>
-                                        @if (strlen($doSearch) > 0)
-                                            <div x-show="doSearch">
-                                                <ul class="absolute mt-2 bg-white border-gray-500 border-opacity-25 border-2 shadow-lg rounded-md w-52 px-2 py-2 space-y-1">
-                                                    @if ($doResult)
-                                                        @forelse ($doResult as $value)
-                                                            <button @click="doSearch = false" wire:click="chooseDo({{ $value['id'] }})" class="w-full text-left p-1 hover:bg-black hover:bg-opacity-10 truncate" type="button"><li>{{  $value['no_do'] }}</li></button>
-                                                        @empty
-                                                            <span class="text-sm font-normal"> Data do tidak ditemukan!</span>
-                                                        @endforelse
-                                                    @endif
-                                                </ul>
-                                            </div>
-                                        @endif
-                                        <input wire:model.defer="kodeDo" class="inputBox mt-3" type="text" disabled autocomplete="off">
-                                    </div>
-                                    {{-- End Do --}}
-                                </div>
-                                
-                                {{-- SP --}}
-                                <div class="w-1/2">
-                                    <p class="cursor-default pt-2">SP</p>
-                                    <select class="inputBox py-1" wire:model.defer="spPerangkat" required>
-                                        {{-- Sengaja di kosongkan --}}
-                                        <option wire:key="" value="">--Pilih Sp--</option>
-                                        {{-- Wire:key sebagai pengganti opsi selected --}}
-                                        @foreach ($sp as $item)
-                                            <option wire:key="{{ $item['nama_sp'] }}" value="{{ $item['nama_sp'] }}">{{ $item['nama_sp'] }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                {{-- End SP --}}
+                                {{-- Cabang & Pengiriman --}}
+                                    <div class="flex space-x-5">
 
-                                <div class="flex justify-between space-x-5">
+                                        {{-- Cabang --}}
+                                            <div x-data="{cabangSearch: false}" class="w-1/2 pt-3">
+                                                <label for="cabang" class="cursor-default pt-2">Cabang</label>
+                                                <div class="flex">
+                                                    <input wire:model="cabangSearch" @focus="cabangSearch = true" @click.away="cabangSearch = false" class="inputBox" id="cabang" type="text" placeholder="Cari cabang" autocomplete="off">
+                                                    <div wire:loading wire:target="cabangSearch" class="absolute animate-spin opacity-50 ml-60 mt-1">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class=" w-4 " fill="currentColor" class="bi bi-circle-half" viewBox="0 0 16 16">
+                                                            <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
+                                                        </svg>
+                                                    </div>
+                                                </div>
+                                                @if (strlen($cabangSearch) > 0)
+                                                    <div x-show="cabangSearch">
+                                                        <ul class="absolute mt-2 bg-white border-gray-500 border-opacity-25 border-2 shadow-lg rounded-md w-52 px-2 py-2 space-y-1">
+                                                            @if ($cabangResult)
+                                                                @forelse ($cabangResult as $value)
+                                                                    <button @click="cabangSearch = false" wire:click="chooseCabang({{ $value['id'] }})" class="w-full text-left p-1 hover:bg-black hover:bg-opacity-10 truncate" type="button"><li>{{  $value['kode_cabang'].' | '.$value['nama_cabang'] }}</li></button>
+                                                                @empty
+                                                                    <span class="text-sm font-normal"> Data Cabang tidak ditemukan!</span>
+                                                                @endforelse
+                                                            @endif
+                                                        </ul>
+                                                    </div>
+                                                @endif
+                                                <input wire:model.defer="cabang" class="inputBox mt-3" type="text" disabled autocomplete="off">
+                                            </div>
+                                        {{-- End Cabang --}}
+
+                                        {{-- Pengiriman --}}
+                                            <div x-data="{pengirimanSearch: false}" class="w-1/2 pt-3">
+                                                <label for="pengirimanSearch" class="cursor-default pt-2">No Pengiriman</label>
+                                                <div class="flex">
+                                                    <input wire:model="pengirimanSearch" @focus="pengirimanSearch = true" @click.away="pengirimanSearch = false" class="inputBox" id="pengirimanSearch" type="text" placeholder="Cari No pengiriman" autocomplete="off">
+                                                    <div wire:loading wire:target="pengirimanSearch" class="absolute animate-spin opacity-50 ml-60 mt-1">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class=" w-4 " fill="currentColor" class="bi bi-circle-half" viewBox="0 0 16 16">
+                                                            <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
+                                                        </svg>
+                                                    </div>
+                                                </div>
+                                                @if (strlen($pengirimanSearch) > 0)
+                                                    <div x-show="pengirimanSearch">
+                                                        <ul class="absolute mt-2 bg-white border-gray-500 border-opacity-25 border-2 shadow-lg rounded-md w-52 px-2 py-2 space-y-1">
+                                                            @if ($pengirimanResult)
+                                                                @forelse ($pengirimanResult as $value)
+                                                                    <button @click="pengirimanSearch = false" wire:click="choosePengiriman({{ $value['id'] }})" class="w-full text-left p-1 hover:bg-black hover:bg-opacity-10 truncate" type="button"><li>{{  $value['no_pengiriman'] }}</li></button>
+                                                                @empty
+                                                                    <span class="text-sm font-normal"> Data Pengiriman tidak ditemukan!</span>
+                                                                @endforelse
+                                                            @endif
+                                                        </ul>
+                                                    </div>
+                                                @endif
+                                                <input wire:model.defer="kodePengiriman" class="inputBox mt-3" type="text" disabled autocomplete="off">
+                                            </div>
+                                        {{-- End Pengiriman --}}
+
+                                    </div>
+                                {{-- End Cabang & Pengiriman --}}
+                                
+                                {{-- Gelombang --}}
                                     <div class="w-1/2">
-                                        <p class="cursor-default pt-2">Cek Status</p>
-                                        <select class="inputBox py-1" wire:model.defer="cekStatus">
-                                            <option value="">Tidak ada</option>
-                                            <option wire:key="NPS" value="NPS">NPS</option>
-                                            <option wire:key="OBC" value="OBC">OBC</option>
+                                        <p class="cursor-default pt-2">Gelombang</p>
+                                        <select class="inputBox py-1" wire:model.defer="gelombang" required>
+                                            {{-- Sengaja di kosongkan --}}
+                                            <option wire:key="" value="">--Pilih Gelombang--</option>
+                                            {{-- Wire:key sebagai pengganti opsi selected --}}
+                                            @foreach ($gelombangDb as $item)
+                                                <option wire:key="{{ $item['nama_gelombang'] }}" value="{{ $item['nama_gelombang'] }}">{{ $item['nama_gelombang'] }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
-                                    <div class="w-1/2">
-                                        <p class="cursor-default pt-2">Perolehan</p>
-                                        <select class="inputBox py-1" wire:model.defer="perolehan" required>
-                                            <option value="">-- Pilih Perolehan --</option>
-                                            <option wire:key="NCD" value="NCD">NCD</option>
-                                            <option wire:key="COD" value="COD">COD</option>
-                                        </select>
+                                {{-- End Gelombang --}}
+
+                                {{-- Cek Status & Perolehan --}}
+                                    <div class="flex justify-between space-x-5">
+                                        <div class="w-1/2">
+                                            <p class="cursor-default pt-2">Cek Status</p>
+                                            <select class="inputBox py-1" wire:model.defer="cekStatus" required>
+                                                <option value="">Tidak ada</option>
+                                                <option wire:key="NPS" value="NPS">NPS</option>
+                                                <option wire:key="OBC" value="OBC">OBC</option>
+                                            </select>
+                                        </div>
+                                        <div class="w-1/2">
+                                            <p class="cursor-default pt-2">Perolehan</p>
+                                            <select class="inputBox py-1" wire:model.defer="perolehan" required>
+                                                <option value="">-- Pilih Perolehan --</option>
+                                                <option wire:key="NCD" value="NCD">NCD</option>
+                                                <option wire:key="COD" value="COD">COD</option>
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="mt-3">
-                                    <label for="ket" class="cursor-default py-1">Keterangan</label>
-                                    <textarea id="ket" wire:model.defer="ket" class="inputBox" autocomplete="off"> </textarea>
-                                </div>
+                                {{-- End Cek Status & Perolehan  --}}
+                                
+                                {{-- Keterangan --}}
+                                    <div class="mt-3">
+                                        <label for="ket" class="cursor-default py-1">Keterangan</label>
+                                        <textarea id="ket" wire:model.defer="ket" class="inputBox" autocomplete="off"> </textarea>
+                                    </div>
+                                {{-- End Keterangan --}}
 
                             </div>
                         </div>

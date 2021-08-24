@@ -2,15 +2,15 @@
 
 namespace App\Http\Livewire\User;
 
-use App\Models\Perangkat;
-use App\Models\User;
+use App\Models\ModelPerangkat as Perangkat;
+use App\Models\ModelUser as User;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class InfoUser extends Component
 {
     use WithPagination;
-    public $userData, $deletedAt;
+    public $userData;
     public $keyword = '';
     public $isOpen = false;
 
@@ -28,7 +28,7 @@ class InfoUser extends Component
     {
         $keyword = '%'.$this->keyword.'%';
 
-        $dataPerangkat = Perangkat::with(['witel', 'tipePerangkat', 'deliveryOrder'])
+        $dataPerangkat = Perangkat::with(['cabang', 'TipePerangkat', 'pengiriman'])
                                     ->where('id_user', $this->userData['id']) 
                                     ->where('sn_pengganti', 'like', $keyword)
                                     ->orderBy('updated_at', 'DESC')->paginate(7);

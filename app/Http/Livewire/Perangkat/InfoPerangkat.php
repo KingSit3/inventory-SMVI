@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Perangkat;
 
-use App\Models\Perangkat;
+use App\Models\ModelPerangkat;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -27,9 +27,8 @@ class InfoPerangkat extends Component
 
     public function detailPerangkat($id) 
     {
-        $this->dataPerangkat = Perangkat::with(['users', 'Witel', 'TipePerangkat', 'DeliveryOrder'])
+        $this->dataPerangkat = ModelPerangkat::with(['users', 'cabang', 'TipePerangkat', 'pengiriman', 'tipeSistem'])
                                 ->where('id', $id)->withTrashed()->first();
-        // dd($this->dataPerangkat['deleted_at']);
     }
 
     public function resetData() 
