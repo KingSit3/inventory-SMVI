@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
             TipeSistemSeeder::class,
             PengirimanSeeder::class,
             PenggunaSeeder::class,
-            gelombangSeeder::class,
+            GelombangSeeder::class,
         ]);
     }
 }
