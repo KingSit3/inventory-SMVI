@@ -32,9 +32,9 @@ use App\Http\Livewire\Perangkat\InfoTipe;
 use App\Http\Livewire\Perangkat\Perangkat;
 use App\Http\Livewire\Perangkat\Gelombang;
 use App\Http\Livewire\User\InfoUser;
-use App\Http\Livewire\cabang\Cabang;
-use App\Http\Livewire\cabang\DeletedCabang;
-use App\Http\Livewire\cabang\InfoCabang;
+use App\Http\Livewire\Cabang\Cabang;
+use App\Http\Livewire\Cabang\DeletedCabang;
+use App\Http\Livewire\Cabang\InfoCabang;
 use App\Http\Livewire\Log\LogPengiriman;
 use App\Http\Livewire\Pengguna;
 
